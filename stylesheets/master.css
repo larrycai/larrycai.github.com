@@ -38,8 +38,8 @@ a:visited {
   margin-top: 10px;
   display: block;
   background: url(/images/title.gif) no-repeat top left;
-  width: 405px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   text-indent: -999em;
 }
 
@@ -69,6 +69,7 @@ a:visited {
 }
 
 #menu ul li a#twitter_link { background-image: url(/images/twitter.gif); }
+#menu ul li a#weibo_link { background-image: url(/images/weibo.gif); }
 #menu ul li a#blog_link { background-image: url(/images/blog.gif); }
 #menu ul li a#linkedin_link { background-image: url(/images/linkedin.gif); }
 #menu ul li a#github_link { background-image: url(/images/github.gif); }
