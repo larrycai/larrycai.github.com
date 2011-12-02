@@ -1,0 +1,129 @@
+---
+layout: post
+title: 用veewee创建vagrant的虚拟机
+---
+#{{ page.title }}
+#简介#
+虚拟机有很多好处，不仅仅节省硬件资源，而且还可以快速切换系统环境，显然会在软件开发中起到极大作用。
+
+在[上一篇vagrant和jenkins的文章][vagrant-jenkins]中我提到了vagrant这个工具，有点麻烦的是你必须有先要有一个盒子（vagrant box)，盒子是vagrant对virtualbox的虚拟机的进一步封装，自己的虚拟机转变成vagrant的盒子有点麻烦，可以参见[vagrant的说明][vagrant]，因此一般都是找一个现成的来用。
+
+但又没有更好的办法呢，现在网络的开放精神真是强大，你想到的一般就存在了，它就是我要介绍的[veewee][veewee]，它的功能就是从你的ISO光盘从无到有装出需要的vagrant虚拟机（盒子）。
+
+#veewee使用入门#
+这一块有篇英文文章[Building Vagrant boxes with veewee][vagrantwithveewee]讲的不错，github上的官方网站[veewee][veewee]也是蛮详尽的，我在这儿快速的重复一下，再加上一些自己的小技巧。
+## 安装 ##
+首先你当然要安装好vagrant，virtualbox，veewee实际上是vagrant的一个插件，因此也肯定是ruby写的，安装也很方便（象我这种ruby菜鸟也能完成）。
+
+	rdccaiy@ubuntu:~ $ sudo gem install veewee
+	
+## 使用 ##
+如果安装顺利，那么你就可以打个命令试试到底有何奥妙了。
+
+	rdccaiy@ubuntu:~ $ vagrant basebox templates
+	The following templates are available:
+	vagrant basebox define '<boxname>' 'Fedora-14-amd64-netboot'
+	vagrant basebox define '<boxname>' 'ubuntu-10.04.2-server-i386-netboot'
+	vagrant basebox define '<boxname>' 'CentOS-6.0-x86_64-netboot'
+	vagrant basebox define '<boxname>' 'CentOS-4.8-i386'
+	vagrant basebox define '<boxname>' 'Debian-5.0.8-amd64-netboot'
+	vagrant basebox define '<boxname>' 'CentOS-5.6-i386'
+	vagrant basebox define '<boxname>' 'CentOS-5.6-i386-netboot'
+	vagrant basebox define '<boxname>' 'freebsd-8.2-experimental'
+	vagrant basebox define '<boxname>' 'Fedora-15-i386-netboot'
+	vagrant basebox define '<boxname>' 'ubuntu-11.04-server-i386'
+	vagrant basebox define '<boxname>' 'ubuntu-8.04.4-server-amd64'
+	vagrant basebox define '<boxname>' 'archlinux-x86_64'
+	..
+	
+basebox就是veewee插件装好后变成的vagrant中的一个任务，从结果中可以看到已经有好多模板了，怎么用呢，先见一个目录如veewee，然后来创一个自己的机器。
+
+    rdccaiy@ubuntu:~$ mkdir veewee ; cd veewee
+	rdccaiy@ubuntu:~/veewee$ vagrant basebox define 'ubuntu1104' 'ubuntu-11.04-server-i386'
+	
+现在来看看新创了点什么东东。
+
+    rdccaiy@ubuntu:~/veewee$ find .
+	./definitions/ubuntu1104
+	./definitions/ubuntu1104/postinstall.sh
+	./definitions/ubuntu1104/preseed.cfg
+	./definitions/ubuntu1104/definition.rb
+
+`definition.rb`中指定了iso文件
+
+	Veewee::Session.declare({
+	  :cpu_count => '1', :memory_size=> '384',
+	  :disk_size => '10140', :disk_format => 'VDI', :hostiocache => 'off',
+      :os_type_id => 'Ubuntu',
+	  :iso_file => "ubuntu-11.04-server-i386.iso",
+      :iso_src => "http://releases.ubuntu.com/11.04/ubuntu-11.04-server-i386.iso",
+
+iso文件就是操作系统的安装光盘，建议先从网上下载，veewee要求本地的话就必须放在和`definitions`平级（也就是上面veewee的下面一级）的`iso`目录下。
+
+    rdccaiy@ubuntu:~/veewee$ ls iso
+	ubuntu-11.04-server-i386.iso
+	
+闲话少说，让veewee工作起来吧
+
+    rdccaiy@ubuntu:~/veewee$ vagrant basebox build ubuntu1104
+	
+理论上它应该能无图形化执行，不过我的还是需要打开X-Windows，你应该看到virtualbox虚拟机起来，然后自动按键运行，中间还会重启，我蛮顺利的做出了虚拟机，真是很棒，如下图。（不知怎么的，每次看到电脑帮我自动打字，我进很开心）
+
+![veewee自动安装][img-veewee]
+  
+可以看到在终端上的漂亮log
+
+	rdccaiy@ubuntu:~/veewee$ vagrant basebox build ubuntu1104
+
+	Verifying the isofile ubuntu-11.04-server-i386.iso is ok.
+	We found no good state so we are destroying the previous machine+disks
+	VBoxManage unregistervm  'ubuntu1104' --delete
+	Deleting vm ubuntu1104
+	Deleting disk /home/rdccaiy/VirtualBox VMs/ubuntu1104/ubuntu1104.vdi
+	VBoxManage closemedium disk '/home/rdccaiy/VirtualBox VMs/ubuntu1104/ubuntu1104.vdi' --delete
+	Creating vm ubuntu1104 : 384M - 1 CPU - Ubuntu
+	Creating new harddrive of size 10140
+	VBoxManage createhd --filename '/home/rdccaiy/VirtualBox VMs/ubuntu1104/ubuntu1104.vdi' --size '10140' --format vdi > /dev/null
+	Attaching disk: /home/rdccaiy/VirtualBox VMs/ubuntu1104/ubuntu1104.vdi
+	Mounting cdrom: /home/rdccaiy/veewee/iso/ubuntu-11.04-server-i386.iso
+	Waiting for the machine to boot
+	....
+
+时间应该蛮长的，一切的OK的话，你就可以产生出vagrant的虚拟机了。
+
+	rdccaiy@ubuntu:~/veewee$ vagrant basebox export 'ubuntu1104'
+	
+然后就用vagrant的方法去尝试了，如`vagrant box add ‘ubuntu1104’ ubuntu1104.box`。
+
+如果你要的操作系统模板没找到，可以到[veewee的最新代码中的模板库看看][veeweetemplates]
+	
+#veewee的原理#
+如果你对操作系统安装（如linux）熟悉的话，应该能很快琢磨出道道来，veewee调用了[virtualbox的API-VBoxManage][vboxmanage]来控制虚拟机,如构建裸盘（`VBoxManage createhd`）和加载光盘。
+
+现在再来看看那三个文件是干嘛的。
+
+ * `definition.rb` 中是你的一些基本硬件配置，每个模板都差不多，中间一段定义了机器启动时如何加载，注意不同的操作系统会用不同的方法，redhat是kickstart，ubuntu是preseed 
+ * `preseed.cfg`中就是ubuntu自动安装的配置参数，如果是SuSE，那就是`autoinst.xml`了，它来完成你的初始光盘安装。
+ * `postinstall.sh` 顾名思义就是装完操作系统后的后续工作，这和你想要的配置有关，为了vagrant，要加上相应的包，当然别做复杂了，记住你只是做一个操作系统的初始虚拟机，具体里面的东西可以让vagrant用puppet或chef来完成。
+ 	
+#总结#
+这篇文章主要简单讲了一下用[veewee][veewee]这个软件来如何快速创建vagrant虚拟机，有没有体会到持续交付中反复提到的配置管理了，所有的东西都写成配置文件，然后有软件自动生成你要的东西，慢慢试试在体会吧。 
+
+下次我该来谈谈[puppet][puppet]了，而且是无主机模式的，给些建议鼓励鼓励吧 [@larrycai][larryweibo]，让我持续交付。
+
+#参考#
+1. larry的英文博客：http://codeslife.com/2011/10/25/create-virtualbox-on-fly-using-veewee/
+2. veewee的官网：http://github.com/jedi4ever/veewee
+3. 老外介绍的如何用veewee建立vagrant盒子：[Building Vagrant boxes with veewee][vagrantwithveewee]
+4. VirtualBox API - VBoxManage: https://www.virtualbox.org/manual/ch08.html
+5. 持续交付：http://www.continuousdelivery.info/
+
+[img-veewee]: /blog/images/veewee.png
+[vagrant]: http://vagrantup.com/
+[puppet]: http://puppetlabs.com/
+[veewee]: http://github.com/jedi4ever/veewee
+[vboxmanage]: https://www.virtualbox.org/manual/ch08.html
+[vagrantwithveewee]: http://www.ducea.com/2011/08/15/building-vagrant-boxes-with-veewee/
+[veeweetemplates]: https://github.com/jedi4ever/veewee/tree/master/templates
+[larryweibo]: http://weibo.com/larrycai
+[vagrant-jenkins]: http://www.continuousdelivery.info/index.php/2011/10/27/vagrant_jenkins_vm/

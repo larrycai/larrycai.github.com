@@ -1,0 +1,99 @@
+---
+layout: post
+title: 使用vagrant+jenkins来管理虚拟机的技巧
+---
+#{{ page.title }}
+#简介#
+虚拟机有很多好处，不仅仅节省硬件资源，而且还可以快速切换系统环境，显然会在软件开发中起到极大作用。
+
+在《持续交付》第十一章（11.7.1）中就提到了虚拟机环境的管理。如下图
+![通过虚拟机创建虚拟环境][img-vmm]
+
+它描述的是在你的持续集成的Jenkins CI服务器（以下简称jenkins）中，需要各种服务器来测试一个应用。我们可以快速的从虚拟机的VMM模板库中，启动需要的各种类型虚拟机，而不是每个都重新安装（省时），完成测试，产生报告后，也快速消失（省钱）。
+
+让我们一起来看看一种漂亮的实现方案vagrant+jenkins实现技巧。
+
+#基本知识#
+## vagrant ##
+不同的虚拟机技术（virtualbox，vmware，xen/kvm等等)可能用不同的方法管理，[vagrant][vagrant]是virtualbox的前端，它简化了virtualbox虚拟机的操作，而且增加了对自动化（provisioning)的puppet/chef的支持，这里就不详细介绍。[vagrant][vagrant]的入门介绍已经很详细了，有一篇[博客][vagrantblog]也可以借鉴一下。
+
+你要知道的就是下面的几个命令
+
+    $ cd ubuntu1104-vm # 进入已有的 ubuntu 11.04 虚拟机目录
+	$ vagrant up # 启动 ubuntu 虚拟机
+	$ vagrant ssh -c "pwd"
+	/home/vagrant
+	$ vagrant halt # 停止虚拟机
+
+## jenkins CI ##
+jenkins 是一个最常用的持续集成服务器，可单独运行或者放在Web服务器中运行。
+
+直接启动一个任务（jenkins job)去调用vagrant操作虚拟机不是一个很好的方式，因为启动jenkins的用户（如tomcat）的权限都比较小，以防止任务误操作。
+
+幸好jenkins有个超级棒的主从模式（master/slave)来解决。
+
+#方案搭建#
+## 建立vagrant用户##
+最好先在一个机器上（可以和jenkins主机不在一起）创建一个vagrant用户，建立一套vagrant的用户环境。
+
+因为无密码访问，所以要配好ssh环境，我们可以重用vagrant虚拟机的公私密钥，如下面的 IdentityFile就是私钥。
+
+    vagrant@host:~/vm/ubuntu1104$ vagrant ssh_config
+	Host default
+	  HostName 127.0.0.1
+	  User vagrant
+      Port 2222
+	  UserKnownHostsFile /dev/null
+	  StrictHostKeyChecking no
+	  PasswordAuthentication no
+	  IdentityFile /var/lib/gems/1.8/gems/vagrant-0.8.7/keys/vagrant
+	  IdentitiesOnly yes
+
+把公私密钥拷到vagrant用户的.ssh目录下。
+
+    vagrant@host:~$ mkdir .ssh 
+	vagrant@host:~$ cp /var/lib/gems/1.8/gems/vagrant-0.8.7/keys/vagrant .ssh/id_rsa
+	vagrant@host:~$ chmod 600 .ssh/id_rsa
+	vagrant@host:~$ cat /var/lib/gems/1.8/gems/vagrant-0.8.7/keys/vagrant.pub >> .ssh/authorized_keys
+
+## jenkins slave设置##
+然后到jenkins主机的 系统管理->管理节点->新建节点 来增加vagrant虚拟机节点，如下图。
+
+![配置jenkins虚拟机节点][img-jenkins-node]
+
+例子中，vagrant节点和jenkins主机在一台机器上，所以是localhost，配好了私有密钥，并且设置标签为vagrant-vm
+
+## jenkins 任务设置##
+现在可以设置新的任务了，选定自由风格（freestyle)，如下图
+
+![配置jenkins任务][img-jenkins-job1]
+
+限定它去vagrant-vm去执行，到时它就会触发jenkins从机(slave)的启动。
+
+![配置jenkins任务][img-jenkins-job2]
+
+然后设置一个构建内容，就是启动虚拟机，执行命令（真实情况会用puppet安装，并进行测试）。
+
+最后就可以让它跑起来。
+
+#总结#
+这篇文章主要简单讲了一下在jenkins中管理虚拟机的一种方案，自动化的安装[puppet][puppet]并没提到，可自己尝试。另外vagrant创立虚拟机也没有谈到，一般可以用[veewee][veewee]这个软件来完成，有空下次讲。
+
+给些建议鼓励鼓励吧 [@larrycai][larryweibo]
+
+#参考#
+1. larry的英文博客：http://codeslife.com/2011/10/21/make-ci-easier-with-jenkins-ci-and-vagrant/
+2. stackoverflow的问题讨论：[How to combine Vagrant with Jenkins for the perfect Continuous Integration Environment?][sof-6941547]
+
+
+[img-vmm]: /blog/images/vmm.png
+[img-jenkins-node]: /blog/images/jenkins-node.png
+[img-jenkins-job1]: /blog/images/jenkins-job1.png
+[img-jenkins-job2]: /blog/images/jenkins-job2.png
+[sof-6941547]: http://stackoverflow.com/questions/6941547
+[vagrant]: http://vagrantup.com/
+[vagrantblog]: http://blog.crowdint.com/2011/06/21/vagrant.html
+[puppet]: http://puppetlabs.com/
+[veewee]: http://github.com/jedi4ever/veewee
+[larryweibo]: http://weibo.com/larrycai
+
