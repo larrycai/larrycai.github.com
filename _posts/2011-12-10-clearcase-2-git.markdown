@@ -64,7 +64,7 @@ gerrit有很强大的代码审查（code review)功能，因此这个功能也�
 
 #结束语#
 
-（此处引用高翌翔的文章）
+（此处引用高翌翔的写的“布道体”结束语）
 
 子曰：己所不欲，勿施于人。因此，布道者在布道前，须识道、行道，而布道时应谨记“己之所欲，慎施于人”，身教重于言教，务必身体力行、以身示道！
 
@@ -73,4 +73,4 @@ gerrit有很强大的代码审查（code review)功能，因此这个功能也�
 #其他#
 本文用git记录在[github](https://github.com/larrycai/larrycai.github.com)。
 
-如果对此文有兴趣，帮忙顶一下，别忘了 [@larrycaiyu](http://weibo.com/larrycaiyu 希望有机会在QConf中分享。
+如果对此文有兴趣，帮忙顶一下，别忘了 [@larrycaiyu](http://weibo.com/larrycaiyu) 希望有机会有人推荐到QConf 2012中分享。
