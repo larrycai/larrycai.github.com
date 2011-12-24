@@ -20,7 +20,8 @@ title: 敏捷和工具
 #背景知识：应用程序生命周期管理#
 聊到软件开发中的工具，一般都会提到这个术语--“应用程序生命周期管理（Application Lifecycle Management ：简称 ALM）” ，说句老实话，有点烂，谁都想把自己往上靠，谁都有自己的一套说法，下图为笔者心中贯穿企业开发项目全程的ALM全局观。
 
-![图一：开发项目中应用程序生命周期管理及其工具][img-jenkins-job2]
+![图一：开发项目中应用程序生命周期管理及其工具][img-alm-overview]
+图一：开发项目中应用程序生命周期管理及其工具
 
 图一中列出了ALM中的各个子系统，以及笔者略有研究的相对应工具的名称，让我们一起先来简单地过一遍整个过程。
 
@@ -104,7 +105,7 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
 
 水能载舟，也能覆舟，工具和敏捷的关系亦如此，这正体现了中国文化中的平衡，下面笔者给出几点建议：
 
- *	积极尝试新工具，如今的软件开发世界中，工具层出不穷，要不断的与时俱进，了解最新动向和如何用有效的工具去辅助敏捷的实施，在自己的软件开发环境中去尝试和了解这些工具，尝试这一点很重要，不要只看说明或戴有色眼睛去看待这些工具，应该通过实践摸索找到最适合你的选择。
+ * 积极尝试新工具，如今的软件开发世界中，工具层出不穷，要不断的与时俱进，了解最新动向和如何用有效的工具去辅助敏捷的实施，在自己的软件开发环境中去尝试和了解这些工具，尝试这一点很重要，不要只看说明或戴有色眼睛去看待这些工具，应该通过实践摸索找到最适合你的选择。
  *	人总是第一位的，要了解你的团队，了解他们的需求，有些时候甚至可以为了团队，冒险一下采用新技术、新工具，这样可以提高团队的凝聚力（敏捷要素之一）。笔者待过的一些部门推动git时，就是这么来的，很多时候过多的讨论其优缺点反而是浪费时间，不如多花点时间多试试。
  *	实施敏捷也离不开组织的支持，特别大型企业涉及到的人很多（可能水平不一），这时候推动者就必须用专业的手段建立一个持续渐进的工具引入过程，这样会使得实施更容易些。
 	
@@ -113,27 +114,27 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
 本文得到了《Maven实战》作者许晓斌【13】，敏捷宣言简体中文版翻译的协调者徐毅【1】，敏捷之旅中国组织者滕振宇【14】和同事代鹏的帮助，他们提供了很多宝贵的意见，谢谢！
 
 #参考#
- 1. 中文敏捷宣言： http://agilemanifesto.org/iso/zhchs/
- 2.	Redmine: http://redmine.org/
- 3.《Agile ALM》：http://www.manning.com/huettermann/
- 4.	持续集成理论和实践的新进展：http://www.infoq.com/cn/articles/ci-theory-practice
- 5.	Jenkins：http://jenkins-ci.org/
- 6.	Hudson正式更名为Jenkins：http://www.infoq.com/cn/news/2011/02/jenkins
- 7.	Oracle proposes to move Hudson to Eclipse：http://kohsuke.org/2011/05/04/oracle-proposes-to-move-hudson-to-eclipse/
- 8.	Jenkins: The Definitive Guide》：http://www.wakaleo.com/books/jenkins-the-definitive-guide
- 9.	李剑翻译的《硝烟中的Scrum和XP》： http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches
- 10. Gerrit：http://code.google.com/p/gerrit/
- 11. Android的代码审阅： https://review.source.android.com/
- 12.《Git权威指南》：http://www.ossxp.com/doc/gotgit/
- 13. Maven实战》和许晓斌：http://www.juvenxu.com/mvn-in-action/
- 14. 敏捷之旅中国：http://agiletour.cn/
+ 1. 中文敏捷宣言：<http://agilemanifesto.org/iso/zhchs/>
+ 2.	Redmine: <http://redmine.org/>
+ 3.《Agile ALM》：<http://www.manning.com/huettermann/>
+ 4.	持续集成理论和实践的新进展：<http://www.infoq.com/cn/articles/ci-theory-practice>
+ 5.	Jenkins：<http://jenkins-ci.org/>
+ 6.	Hudson正式更名为Jenkins：<http://www.infoq.com/cn/news/2011/02/jenkins>
+ 7.	Oracle proposes to move Hudson to Eclipse：<http://kohsuke.org/2011/05/04/oracle-proposes-to-move-hudson-to-eclipse/>
+ 8.	Jenkins: The Definitive Guide》：<http://www.wakaleo.com/books/jenkins-the-definitive-guide>
+ 9.	李剑翻译的《硝烟中的Scrum和XP》： <http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches>
+ 10. Gerrit：<http://code.google.com/p/gerrit/>
+ 11. Android的代码审阅：<https://review.source.android.com/>
+ 12.《Git权威指南》：<http://www.ossxp.com/doc/gotgit/>
+ 13.《Maven实战》和许晓斌：<http://www.juvenxu.com/mvn-in-action/>
+ 14. 敏捷之旅中国：<http://agiletour.cn/>
  
 #作者简介#
-[@larrycai][larryweibo]作为软件实践的先行者，主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
+[@larrycai][larryweibo]作为软件实践的先行者，公司的主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
 
-本文提到的内容在 ScrumGathering上海2011上做过专题演讲，参见演讲稿件 ( http://t.cn/aCKFrd )。
+本文提到的内容在 ScrumGathering上海2011上做过专题演讲，参见[演讲稿件](http://t.cn/aCKFrd)。
 
-[img-vmm]: /images/vmm.png
+[img-alm-overview]: /images/alm-overview.png
 [img-whiteboard]: /images/whiteboard.jpg
 [img-jenkins-job1]: /images/jenkins-job1.png
 [img-jenkins-job2]: /images/jenkins-job2.png
