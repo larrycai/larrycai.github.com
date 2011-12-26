@@ -1,0 +1,142 @@
+﻿---
+layout: post
+title: 用什么格式来写技术书-markdown篇
+---
+#{{ page.title }}#
+#介绍#
+。。还没写完。。
+
+看到[霍泰稳关于infoq的架构师电子书问题的微博](http://weibo.com/1404949082/xDeyDEaDq)和图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)，我就想写几篇文章介绍一下常见的几种写书的格式。
+
+我并没有写书的经历，这里只是对电子书出版技术的入门介绍而已。
+
+Microsoft的Word格式虽然在国内出版界如日中天，不过在国外技术书领域，docbook格式却是最有名的（从SGML演化过来？），很方便的转化出出版要的各种样式。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。markdown和reStructureText是纯文本（plain text)的，写起来顺畅的多。
+
+Oreilly。。 
+
+CI。。
+
+今天介绍markdown。Git的著名的ProGit开源书就是用它写的。
+
+#试验环境#
+你只需要一台Linux机器（虚拟机就可以了）和简单的Linux命令就可以试验了。有git和ruby的知识那就更方便了。
+
+我用的是Ubuntu 11.04
+
+##下载ProGit##
+    
+	$ git clone https://github.com/progit/progit.git
+	
+##.mobi/.epub##
+
+做电子书相对简单一点，因为的要求没有PDF的高，字体可以不带，用系统的就可以了，[calibre]()就可以满足了。
+
+    $ sudo apt-get install calibre rubygems ruby
+	$ gem install rdiscount ruby-debug
+	
+    user@puppet1:~/progit$ ./makeebooks zh
+    using .mobi (you can change it via FORMAT environment variable. try 'mobi' or 'epub')
+    convert content for 'zh' language
+    processing /home/user/progit/zh/01-introduction/01-chapter1.markdown
+    processing /home/user/progit/zh/02-git-basics/01-chapter2.markdown
+    processing /home/user/progit/zh/03-git-branching/01-chapter3.markdown
+    processing /home/user/progit/zh/04-git-server/01-chapter4.markdown
+    processing /home/user/progit/zh/05-distributed-git/01-chapter5.markdown
+    processing /home/user/progit/zh/06-git-tools/01-chapter6.markdown
+    processing /home/user/progit/zh/07-customizing-git/01-chapter7.markdown
+    processing /home/user/progit/zh/08-git-and-other-scms/01-chapter8.markdown
+    processing /home/user/progit/zh/09-git-internals/01-chapter9.markdown
+    1% Converting input to HTML...
+    InputFormatPlugin: HTML Input running
+    on /home/user/progit/progit.zh.html
+    Language not specified
+    Creator not specified
+    Building file list...
+    Normalizing filename cases
+    Rewriting HTML links
+    34% Running transforms on ebook...
+    Merging user specified metadata...
+    Detecting structure...
+    Auto generated TOC with 234 entries.
+    Flattening CSS and remapping font sizes...
+    Source base font size is 12.00000pt
+    Cleaning up manifest...
+    Trimming unused files from manifest...
+    Creating MOBI Output...
+    67% Creating MOBI Output
+    Generating in-line TOC...
+	Applying case-transforming CSS...
+	SVG rasterizer unavailable, SVG will not be converted
+	Converting XHTML to Mobipocket markup...
+	Serializing markup content...
+	  Compressing markup content...
+	Generating flat CTOC ...
+	  CNCX utilization: 1 record, 5% full
+	Indexing navPoints ...
+	Generating INDX ...
+	Serializing images...
+	MOBI output written to /home/user/progit/progit.zh.mobi
+	Output saved to   /home/user/progit/progit.zh.mobi
+	
+其中的SVG图形处理，是用Qt的（不是ImageMagick），需要X-Windows的支持。
+
+	SVG rasterizer unavailable, SVG will not be converted
+	http://www.mobileread.mobi/forums/showthread.php?t=148217
+	
+##pdf##
+
+生成PDF是一个很复杂的东西，他用的Latex，一般用TexLive系统能搞定，pandoc ....
+
+TexLive可以用Ubuntu的方式安装，也可以下载最新的TexLive包安装。
+    
+    $ sudo apt-get install pandoc 
+    $ sudo apt-get install texlive-xetex
+
+xelatex [LaTeX中文排版（使用XeTeX）](http://linux-wiki.cn/wiki/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89)
+
+    user@puppet1:~/progit$ sudo apt-get install texlive-xetex
+	
+! LaTeX Error: File `xkeyval.sty' not found.
+
+	$ apt-cache search xkeyval
+	texlive-latex-recommended - TeX Live: LaTeX recommended packages
+	$ sudo apt-get install texlive-latex-recommended	
+		
+### TexLive manual install ###
+
+http://www.tug.org/texlive/acquire-netinstall.html
+http://blog.csdn.net/ustc_dylan/article/details/6196129
+http://bbs.ctex.org/index.php
+http://www.ctex.org/BasicKnowledge	
+http://blog.csdn.net/lostaway/article/details/6177486
+     
+### font ##
+http://www.ztxz.cn/search/result/?searchid=3315	 
+
+配字体
+http://www.tug.org/texlive/doc/texlive-zh-cn/texlive-zh-cn.pdf
+
+#### XeTEX 的字体配 ####
+
+如果你在 Unix 兼容的系统中安装了 xetex 软件包，需要把系统配置一番 XeTEX 才能找到随
+TEX Live 安装的那些字体。为了进行配置，xetex 安装后 (不管是初始安装还是后来安装的) 都会在
+TEXMFSYSVAR/fonts/conf/texlive-fontconfig.conf 创建一个必需的配置文件。
+
+要在整个系统中使用 TEX Live 的字体 (假定你有足够的权限)，请依照下面的步骤来做：
+
+ 1. 将 texlive-fontconfig.conf 文件复制到 /etc/fonts/conf.d/09-texlive.conf。
+ 2. 运行 fc-cache -fsv。
+ 
+如果你没有足够的权限执行上述操作，可以用下面的步骤将 TEX Live 字体提供给你自己，作为独
+立的 XeTEX 用户：
+ 
+ 1. 将 texlive-fontconfig.conf 文件复制到 ~/.fonts.conf，其中 ~ 是你的主目录。
+ 2. 运行 fc-cache -fv
+
+    
+#其他#
+
+本文也是我用git记录在[github](https://github.com/larrycai/larrycai.github.com)上的，你可以看到每次的变化。
+    
+如果对此文有兴趣，帮忙顶一下，别忘了 [@larrycaiyu](http://weibo.com/larrycaiyu)。
+    
