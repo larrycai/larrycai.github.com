@@ -1,11 +1,11 @@
 ﻿---
 layout: post
-title: 开源书和开源技术-markdown篇
+title: 开源书和开源技术-Markdown篇
 ---
 #{{ page.title }}#
 #背景#
 
-看到[霍泰稳关于infoq的架构师电子书问题的微博](http://weibo.com/1404949082/xDeyDEaDq)和图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)，我就想通过一个[Pro Git](http://progit.org/)开源书 的例子来介绍其中用到的技术。希望能借此机会推动国内电子书，特别是开源电子书的发展。
+看到[霍泰稳关于infoq的架构师电子书问题的微博](http://weibo.com/1404949082/xDeyDEaDq)和图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)，我就想通过一个用Markdown格式写的[Pro Git](http://progit.org/)开源书 的例子来介绍其中用到的技术。希望能借此机会推动国内电子书，特别是开源电子书的发展。
 
 【声明】我并没有写书的经历，这里只是对电子书出版技术的入门介绍而已。
 
@@ -16,7 +16,7 @@ title: 开源书和开源技术-markdown篇
 这一切就归功于开源社区和它后面用到的技术。
 
 #开源书#
-这里我不用多讲，开源书就像其他的开源产品（如维基百科）一样，只要是开放的，社区就有人会贡献，。[Pro Git](http://progit.org/)的作者Scott很慷慨得把书的内容全部共享在[github/progit](http://github.com/progit/progit)库中，使用得是[CC BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/us/)。
+这里我不用多讲，开源书就像其他的开源产品（如维基百科）一样，只要是开放的，社区就有人会贡献。[Pro Git](http://progit.org/)的作者Scott很慷慨得把书的内容全部共享在[github/progit](http://github.com/progit/progit)库中，使用得是[CC BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/us/)。
 
 Scott只负责英文版，其他许许多多语言的翻译都是社区贡献的，中国翻译相当有质量，你可以在线读[Pro Git中文版](http://progit.org/book/zh/)。
 
@@ -35,7 +35,7 @@ Scott只负责英文版，其他许许多多语言的翻译都是社区贡献的
 Ruby的[rdiscount](https://github.com/rtomayko/rdiscount)帮你从markdown转成html格式，然后有[Calibre](calibre)附带的命令`ebook-convert`生成最终的`.mobi` (Kindle) 和 `.epub` (iPad)。
 
 ###PDF格式###
-为了能达到出版的质量，Latex是一个常用的格式，PDF也能很容易的产生出来，有关Latex，自己找找材料吧。
+为了能达到出版的质量，Latex是一个常用的格式，PDF也能很容易的产生出来，有关Latex，自己看看参考链接学习吧。
 
 [pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出latex格式，然后[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
 
