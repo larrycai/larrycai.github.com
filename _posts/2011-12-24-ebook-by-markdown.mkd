@@ -61,70 +61,27 @@ ruby的[rdiscount](https://github.com/rtomayko/rdiscount)帮你从markdown转成
 	
 ###PDF格式###
 
-生成PDF是一个很复杂的东西，用的Latex，一般用TexLive系统能搞定，pandoc ....
-
-TexLive可以用Ubuntu的方式安装，也可以下载最新的TexLive包安装。
+生成PDF是一个比较复杂的东西，pandoc用Ubuntu库里的，TexLive建议下载最新的[TexLive](http://www.tug.org/texlive/)包安装，并配置到搜索路径中。
     
     $ sudo apt-get install pandoc 
-    $ sudo apt-get install texlive-xetex
 
-xelatex [LaTeX中文排版（使用XeTeX）](http://linux-wiki.cn/wiki/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89)
+因为是中文PDF，需要把字体嵌入在文件中，因此需要安装字体文件（如果不是Ubuntu中文版）
 
-    user@puppet1:~/progit$ sudo apt-get install texlive-xetex
-	
-! LaTeX Error: File `xkeyval.sty' not found.
+    $ sudo apt-get install language-support-fonts-zh-hans
 
-	$ apt-cache search xkeyval
-	texlive-latex-recommended - TeX Live: LaTeX recommended packages
-	$ sudo apt-get install texlive-latex-recommended	
-		
-### TexLive manual install ###
+现在你就可以生成pdf文件了。
 
-http://www.tug.org/texlive/acquire-netinstall.html
-http://blog.csdn.net/ustc_dylan/article/details/6196129
-http://bbs.ctex.org/index.php
-http://www.ctex.org/BasicKnowledge	
-http://blog.csdn.net/lostaway/article/details/6177486
-     
-### font ##
-http://www.ztxz.cn/search/result/?searchid=3315	 
+    $ ./makepdfs zh	
 
-配字体
-http://www.tug.org/texlive/doc/texlive-zh-cn/texlive-zh-cn.pdf
+# 其他出版格式 #
 
-#### XeTEX 的字体配 ####
-
-如果你在 Unix 兼容的系统中安装了 xetex 软件包，需要把系统配置一番 XeTEX 才能找到随
-TEX Live 安装的那些字体。为了进行配置，xetex 安装后 (不管是初始安装还是后来安装的) 都会在
-TEXMFSYSVAR/fonts/conf/texlive-fontconfig.conf 创建一个必需的配置文件。
-
-要在整个系统中使用 TEX Live 的字体 (假定你有足够的权限)，请依照下面的步骤来做：
-
- 1. 将 texlive-fontconfig.conf 文件复制到 /etc/fonts/conf.d/09-texlive.conf。
- 2. 运行 fc-cache -fsv。
- 
-如果你没有足够的权限执行上述操作，可以用下面的步骤将 TEX Live 字体提供给你自己，作为独
-立的 XeTEX 用户：
- 
- 1. 将 texlive-fontconfig.conf 文件复制到 ~/.fonts.conf，其中 ~ 是你的主目录。
- 2. 运行 fc-cache -fv
-
-   sudo apt-get install language-support-fonts-zh-hans
-   
-另外两个package
-
-   * cmap-adobe-gb1 - CMaps for Adobe-GB1
-   * gs-cjk-resource - Resource files for gs-cjk, ghostscript CJK-TrueType extension
-#
-
-
-图书出版我的理解主要有几种：
+图书出版我的理解主要有几种，有机会再介绍。
 
  1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它。简单好学，但是不擅长自动化，是开源的死敌。
  2. Latex格式，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
  3. docbook格式是最有名的（从SGML演化过来？），
     很方便的转化出出版要的各种样式。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
- 4. markdown和reStructureText是纯文本（plain text)的，写起来顺畅的多。
+ 4. markdown和reStructureText是纯文本（plain text)的，写起来顺畅得多，越来越流行了。
    
 #其他#
 
@@ -132,7 +89,7 @@ TEXMFSYSVAR/fonts/conf/texlive-fontconfig.conf 创建一个必需的配置文件
     
 如果对此文有兴趣，帮忙顶一下，别忘了 [@larrycaiyu](http://weibo.com/larrycaiyu)。
     
-# Reference #
+# 参考 #
  1. http://share.chinatex.org/	
  2. http://manual.calibre-ebook.com/conversion.html
  3. http://calibre-ebook.com/download_linux
