@@ -1,91 +1,67 @@
 ﻿---
 layout: post
-title: 用什么格式来写技术书-markdown篇
+title: 用markdown来写开源书
 ---
 #{{ page.title }}#
-#介绍#
-。。还没写完。。
+#背景#
 
-看到[霍泰稳关于infoq的架构师电子书问题的微博](http://weibo.com/1404949082/xDeyDEaDq)和图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)，我就想写几篇文章介绍一下常见的几种写书的格式。
+看到[霍泰稳关于infoq的架构师电子书问题的微博](http://weibo.com/1404949082/xDeyDEaDq)和图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)，我就想通过通过一个例子来介绍后面可能用到的技术。希望能借此机会推动国内电子书，特别是开源电子书的发展。
 
-我并没有写书的经历，这里只是对电子书出版技术的入门介绍而已。
+【声明】我并没有写书的经历，这里只是对电子书出版技术的入门介绍而已。
 
-Microsoft的Word格式虽然在国内出版界如日中天，不过在国外技术书领域，docbook格式却是最有名的（从SGML演化过来？），很方便的转化出出版要的各种样式。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。markdown和reStructureText是纯文本（plain text)的，写起来顺畅的多。
+#从Pro Git说起#
 
-Oreilly。。 
+如果你了解Git，或者想了解Git。那么你就应该知道[Pro Git](http://progit.org/)，它是Git的书中写得最好的一本（至少是之一），可是你是否知道它有中文版，而且能在iPad上及其漂亮得阅读它。并且是免费的，不是盗版的免费！如果你想要最新的，你甚至可以自己生成它。哈哈，我就是这么干的。
 
-CI。。
+这一切就归功于开源社区和它后面用到的技术。
 
-今天介绍markdown。Git的著名的ProGit开源书就是用它写的。
+#开源书#
+这里我不用多讲，就像维基百科一样，只要是开放的，社区就有人会贡献。[Pro Git]的作者Scott很慷慨的把书的内容全部共享在[github/progit](http://github.com/progit/progit)库中，使用的是[CC BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/us/)。
 
-#试验环境#
+Scott只负责英文版，社区牛人把它翻译成了中文和其他许许多多语言，你可以在线读[Pro Git中文版](http://progit.org/book/zh/)
+
+#开源技术生成电子书#
+不仅仅开源了内容，使用的技术也整个开源了。让我们看看他是怎么做的。
+
+## markdown原始文件 ##
+由于github和stackoverflow都支持markdown，markdown也越来越流行。赞一个的是，图灵社区也支持markdown，用起来超级方便。简单来说，看着像一般的文本文件，里面加了很少的格式标记，因此看文本文件也不影响理解，格式有工具去自动化解决。
+
+你可以直接看一下【Pro Git】的[第一章介绍的markdown原始文件](https://raw.github.com/progit/progit/master/zh/01-introduction/01-chapter1.markdown)，顺便看看github自动生成的简单[第一章介绍的html](https://github.com/progit/progit/blob/master/zh/01-introduction/01-chapter1.markdown)。
+
+## 产生电子书 ##
+### epub/mobi格式 ###
+ruby的[rdiscount](https://github.com/rtomayko/rdiscount)帮你从markdown转成html格式，然后有[Calibre](calibre)附带的命令`ebook-convert`生成最终的`.mobi` (Kindle) 和 `.epub` (for iPad)。
+
+### pdf格式###
+为了能达到出版的质量，Latex是一个常用的格式，PDF也能很容易的产生出来，有关Latex，自己找找材料吧。
+
+[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出latex格式，然后[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
+
+##试验环境##
 你只需要一台Linux机器（虚拟机就可以了）和简单的Linux命令就可以试验了。有git和ruby的知识那就更方便了。
 
-我用的是Ubuntu 11.04
+我用的是Ubuntu 11.04 (Natty)
 
-##下载ProGit##
+###下载Pro Git开源书###
     
 	$ git clone https://github.com/progit/progit.git
 	
-##.mobi/.epub##
+###epub/mobi格式###
 
-做电子书相对简单一点，因为的要求没有PDF的高，字体可以不带，用系统的就可以了，[calibre]()就可以满足了。
+做电子书相对简单一点，因为要求没有PDF的高，字体可以不带，用Ubuntu系统的就可以了，[calibre](http://calibre-ebook.com/)就可以满足了。
 
-    $ sudo apt-get install calibre rubygems ruby
-	$ gem install rdiscount ruby-debug
+如果装的Ubuntu是服务器版的（没有X-Windows），建议安装[xvfb](http://en.wikipedia.org/wiki/Xvfb)无头(headless)X服务器。
+
+    $ sudo apt-get install ruby rubygems # ruby 1.8.7 is used
+	$ sudo apt-get install calibre # calibre 0.7.44 for ubuntu 11.04
+	$ gem install rdiscount ruby-debug 
+	$ xvfb-run ./makeebooks zh  # 缺省.mobi格式
+	$ export FORMAT=epub
+	$ xvfb-run ./makeebooks zh # .epub格式
 	
-    user@puppet1:~/progit$ ./makeebooks zh
-    using .mobi (you can change it via FORMAT environment variable. try 'mobi' or 'epub')
-    convert content for 'zh' language
-    processing /home/user/progit/zh/01-introduction/01-chapter1.markdown
-    processing /home/user/progit/zh/02-git-basics/01-chapter2.markdown
-    processing /home/user/progit/zh/03-git-branching/01-chapter3.markdown
-    processing /home/user/progit/zh/04-git-server/01-chapter4.markdown
-    processing /home/user/progit/zh/05-distributed-git/01-chapter5.markdown
-    processing /home/user/progit/zh/06-git-tools/01-chapter6.markdown
-    processing /home/user/progit/zh/07-customizing-git/01-chapter7.markdown
-    processing /home/user/progit/zh/08-git-and-other-scms/01-chapter8.markdown
-    processing /home/user/progit/zh/09-git-internals/01-chapter9.markdown
-    1% Converting input to HTML...
-    InputFormatPlugin: HTML Input running
-    on /home/user/progit/progit.zh.html
-    Language not specified
-    Creator not specified
-    Building file list...
-    Normalizing filename cases
-    Rewriting HTML links
-    34% Running transforms on ebook...
-    Merging user specified metadata...
-    Detecting structure...
-    Auto generated TOC with 234 entries.
-    Flattening CSS and remapping font sizes...
-    Source base font size is 12.00000pt
-    Cleaning up manifest...
-    Trimming unused files from manifest...
-    Creating MOBI Output...
-    67% Creating MOBI Output
-    Generating in-line TOC...
-	Applying case-transforming CSS...
-	SVG rasterizer unavailable, SVG will not be converted
-	Converting XHTML to Mobipocket markup...
-	Serializing markup content...
-	  Compressing markup content...
-	Generating flat CTOC ...
-	  CNCX utilization: 1 record, 5% full
-	Indexing navPoints ...
-	Generating INDX ...
-	Serializing images...
-	MOBI output written to /home/user/progit/progit.zh.mobi
-	Output saved to   /home/user/progit/progit.zh.mobi
-	
-其中的SVG图形处理，是用Qt的（不是ImageMagick），需要X-Windows的支持。
+###PDF格式###
 
-	SVG rasterizer unavailable, SVG will not be converted
-	http://www.mobileread.mobi/forums/showthread.php?t=148217
-	
-##pdf##
-
-生成PDF是一个很复杂的东西，他用的Latex，一般用TexLive系统能搞定，pandoc ....
+生成PDF是一个很复杂的东西，用的Latex，一般用TexLive系统能搞定，pandoc ....
 
 TexLive可以用Ubuntu的方式安装，也可以下载最新的TexLive包安装。
     
@@ -133,10 +109,33 @@ TEXMFSYSVAR/fonts/conf/texlive-fontconfig.conf 创建一个必需的配置文件
  1. 将 texlive-fontconfig.conf 文件复制到 ~/.fonts.conf，其中 ~ 是你的主目录。
  2. 运行 fc-cache -fv
 
-    
+   sudo apt-get install language-support-fonts-zh-hans
+   
+另外两个package
+
+   * cmap-adobe-gb1 - CMaps for Adobe-GB1
+   * gs-cjk-resource - Resource files for gs-cjk, ghostscript CJK-TrueType extension
+#
+
+
+图书出版我的理解主要有几种：
+
+ 1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它。简单好学，但是不擅长自动化，是开源的死敌。
+ 2. Latex格式，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
+ 3. docbook格式是最有名的（从SGML演化过来？），
+    很方便的转化出出版要的各种样式。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
+ 4. markdown和reStructureText是纯文本（plain text)的，写起来顺畅的多。
+   
 #其他#
 
 本文也是我用git记录在[github](https://github.com/larrycai/larrycai.github.com)上的，你可以看到每次的变化。
     
 如果对此文有兴趣，帮忙顶一下，别忘了 [@larrycaiyu](http://weibo.com/larrycaiyu)。
     
+# Reference #
+ 1. http://share.chinatex.org/	
+ 2. http://manual.calibre-ebook.com/conversion.html
+ 3. http://calibre-ebook.com/download_linux
+ 4. http://johnmacfarlane.net/pandoc/
+ 5. http://latex.yo2.cn/articles/latex-introduction0.html
+ 6. http://product.china-pub.com/54569
