@@ -1,0 +1,111 @@
+---
+layout: post
+title: Travis CI会替代Jenkins吗？
+---
+
+#介绍#
+你可能用Github了。但是你是怎么自动构建你的开源项目的呢？你的Github项目有“构建状态”标签吗？
+
+![Github上的项目构建状态][img-building-status-tag]
+
+如果你还不知道这个，你就有些落伍了，因为这是Travis CI带来的持续集成的革新，它可能会替代Jenkins现在的地位。
+
+让我们一起来看看Travis-ci到底带来了什么，先从Jenkins说起。
+
+在写这篇博客时，发现好友晓斌也写了一篇[Travis CI，翩翩而至的CI云](http://www.juvenxu.com/2012/03/06/travis-ci/)，可以参考阅读。
+
+## Jenkins介绍 ##
+
+持续集成是敏捷软件开发的一个重要工具，开源工具[Jenkins](http://jenkins-ci.org/)是实施持续集成首选，大概占据了半壁江山。
+
+![Jenkins界面][img-jenkins-jobs]
+
+Jenkins以前叫Hudson，后来由于Oracle收购了Sun公司，Oracle与开源软件社区谈崩了。Hudson创始人Kohsuke Kawaguchi(简称 KK)一怒之下，和社区的人其他人重起炉灶，建立了Jenkins社区。详细可以看看InfoQ的文章[Hudson社区提议将项目更名为Jenkins](http://www.infoq.com/cn/news/2011/01/hudson-jenkins2)。
+
+### Jenkins功能 ###
+它有很多极佳的特性：
+
+ 1. 易于安装：一个命令就可启动，也方便部署到各种Web容器中（如tomcat)。
+ 2. 易于配置：所有的配置都在Web界面实现，权限控制得也不错。
+ 3. 插件支持：基本上所有的扩展都是有插件完成的，开发插件也很方便，由此产生了庞大的社区。
+ 4. 支持分布式构建：Jenkins能够让通过主从模式（master/slave）多台机器一起构建。
+  
+### Jenkins在企业中常见步骤 ###
+Jenkins服务器一般先架设在一台服务器上，有配置管理人员管理。
+
+产品有构建需求后，配置管理人员就新建一个任务，配好源码仓库，设置构建时间，指定运行脚本来编译测试产品，并且设置报告输出。一切都可以在Web界面中运行。
+
+## Jenkins的一些弊端 ##
+Jenkins虽然非常好用，但还是有些弊端。
+
+### 多平台或依赖的包 ###
+
+如果你的软件想在不同的操作系统软件构建并验​​证，这将是相当有难度和技巧性，一般主要是准备不同的操作系统的机器，然后使用主/从模式进行分布式构建。
+
+在C++中你可以使用有关的交叉编译器，一个不错的解决方案。
+
+但是再进一步如果你的第三方软件和不同的依赖比较多，那么这个环境的准备是非常困难的，因为这个组合将很大。
+
+当然你可有使用虚拟机的技术vagrant/virtualbox，参见[使用vagrant+jenkins来管理虚拟机的技巧](http://larrycai.github.com/2011/10/25/vagrant-jenkins-ci.html)。可以工作，不太优雅。因为它不是原生的，有点复杂。
+
+### 配置管理人员的工作 ###
+
+一般来说Jenkins的构建任务，它是集中控制的。大多来说都是有专职的配置管理人员来管理，否者权限会混乱。
+
+当有需求时，他们负责在CI服务器创建任务（记住：这些配置文件不是有版本控制的）。这个就涉及到了沟通成本，你有变化需求，很难及时满足。
+
+由于服务器是有限的，它主要构建重要分支的内容。在你自己的私有分支上运行CI是比较奢侈的，而且环境不一样，也不推荐。
+
+你可以想象如果在一个C/C++产品的公司，你要为一个Lisp的项目创建CI要花多久？
+
+作为开发者，为什么不能随时构建你想要的东西呢？这就是Travis CI想做的。
+
+## Travis CI 介绍 ##
+Travis CI 这里就不介绍怎么使用了具体可以先看晓斌的博客和[免费的持续集成测试服务](http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html)，强烈建议你先试一下。
+
+初看Travis CI象和Jenkins没啥区别，指定你Github中的项目，然后他帮你编译，而且它使用的也是Vagrant/Virtualbox技术。但实际上里面有很多好点子。
+
+## Travis CI带来的变革 ##
+### 配置本地化和可读性 ###
+不像以前，构建的任务是在Jenkins服务器上的，现在构建的配置文件直接就和源码放在一起，而且配置文件使用DSL写的，可读性更高。
+
+    before_script:
+      - sudo apt-get install pandoc
+      - sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
+      - sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra
+      - gem install mkbok
+
+    rvm:
+      - 1.9.3
+      - 1.8.7
+    script: mkbok --lang zh --build pdf
+
+    after_script: 
+        - which curl ; curl -v --upload-file sdcamp.zh.pdf http://blobs.ge.tt/3iBcNNC/sdcamp.zh.pdf?sig=-TY5O1GAx8xHwWiCqd8aySlQiroFAnHK2o4
+
+作为用户，关心的是要哪些依赖包，然后怎么构建就行了，上面的配置每一行都没有浪费。
+
+### 多版本支持 ###
+像上面的例子中，我要求在两个Ruby环境中运行，它就帮我做到了，我并不关心它是怎么切换的。
+
+![多版本构建结果][img-build-matrix]
+
+### 原生的云技术来分布式构建 ###
+Travis CI使用的Ruby语言，一开始考虑的就是分布式构建，比Jenkins的插件式进了一步。
+
+虽然Travis CI并不是直接用到了云机器，它的虚拟机部分只是Vagrant/Virtualbox，但是这一块是很容易迁移到其他的技术的。
+
+# 总结 #
+Jenkins有点可惜，改了名字以后，功能上面并没有突破。当然这就是开源竞争的好处，总有新的理念，新的工具产生。你不前进，别人就迎头赶上。
+
+Travis CI现在只是支持Github的公开项目，但已经爆发出它的优点了。要不了多久，我相信就能运行在你公司内部了。
+
+让我们一起期待这个革新吧！
+
+# 相关阅读 #
+ 1. Juven Xu的“Travis CI，翩翩而至的CI云” <http://www.juvenxu.com/2012/03/06/travis-ci/>
+ 2. 免费的持续集成测试服务 <http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html>
+
+ [img-jenkins-jobs]: http://larrycai.github.com//images/jenkins-jobs.jpg
+ [img-building-status-tag]: ../images/building-status-tag.png
+ [img-build-matrix]: ../images/build-matrix.png
