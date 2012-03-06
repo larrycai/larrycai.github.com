@@ -61,7 +61,7 @@ Jenkins虽然非常好用，但还是有些弊端。
 作为开发者，为什么不能随时构建你想要的东西呢？这就是Travis CI想做的。
 
 ## Travis CI 介绍 ##
-Travis CI 这里就不介绍怎么使用了具体可以先看晓斌的博客和[免费的持续集成测试服务](http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html)，强烈建议你先试一下。
+Travis CI 这里就不介绍怎么使用了具体可以先看[晓斌的博客](http://www.juvenxu.com/2012/03/06/travis-ci/)和[免费的持续集成测试服务](http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html)，强烈建议你先试一下。
 
 初看Travis CI象和Jenkins没啥区别，指定你Github中的项目，然后他帮你编译，而且它使用的也是Vagrant/Virtualbox技术。但实际上里面有很多好点子。
 
@@ -107,5 +107,5 @@ Travis CI现在只是支持Github的公开项目，但已经爆发出它的优�
  2. 免费的持续集成测试服务 <http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html>
 
  [img-jenkins-jobs]: http://larrycai.github.com//images/jenkins-jobs.jpg
- [img-building-status-tag]: ../images/building-status-tag.png
- [img-build-matrix]: ../images/build-matrix.png
+ [img-building-status-tag]: http://larrycai.github.com/images/building-status-tag.png
+ [img-build-matrix]: http://larrycai.github.com/images/build-matrix.png
