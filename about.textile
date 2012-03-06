@@ -7,6 +7,7 @@ h2. About Larry Cai
 
 Larry Cai is the author of this blog, which records his software development experience.
 
+private "English blog:http://codeslife.com":http://codeslife.com
 
 h2. About This Site
 
