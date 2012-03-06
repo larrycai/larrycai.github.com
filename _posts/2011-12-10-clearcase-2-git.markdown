@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 企业版本控制的改革：从ClearCase到Git--我的布道之旅
 ---

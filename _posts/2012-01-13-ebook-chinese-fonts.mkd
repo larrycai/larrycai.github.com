@@ -1,8 +1,8 @@
-﻿---
+---
 layout: post
 title: 开源书和开源技术-PDF中蛋疼的中文字体
 ---
-#{{ page.title }}#
+
 #介绍#
 
 上次我介绍了一个用[Markdown格式来写开源书和相关的开源技术](http://www.ituring.com.cn/article/828)，还留了个在Linux下产生PDF所需要的中文字体这个大尾巴。这次我想借用我写[【跟我学企业敏捷开发】](http://weibo.com/2104936813/y0oXC350t)的一点经验，给不太了解这一块知识的朋友一起探讨一下。

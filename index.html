@@ -1,24 +1,45 @@
 ---
 layout: master
 title: Larry Cai's blog on the github
+full_posts: 3
 ---
 
 <div class='home_box' id='home_left'>
-  <h2><a href='http://feeds.feedburner.com/~u/14174549791849888941' class='float-right'><img src='/images/subscribe-icon.gif' alt='Subscribe'/></a> Latest Blog Post (<a href='/blog.html'>More</a>)</h2>
+  <h2><a href='http://feeds.feedburner.com/~u/14174549791849888941' class='float-right'><img src='/images/subscribe-icon.gif' alt='Subscribe'/></a
+  >最新博客 (<a href='/blog.html'>更多</a>)</h2>
   
+  {% for post in site.posts limit:page.full_posts %}
   <div class='post'>
-    <h1><a href='{{site.posts.first.url}}'>{{site.posts.first.title}}</a></h1>
-    <div class='body'>{{ site.posts.first.content }}</div>
-    <a href='{{site.posts.first.url}}#disqus_thread'>Comments</a>
+    <span class='date'>{{post.date | date_to_string}}</span>
+    <h1><a href='{{post.url}}'>{{post.title}}</a></h1>
+    <div class='body'>{{post.content}}</div>
+    <a href='{{post.url}}#disqus_thread'>View Comments</a>
   </div>
+  {% endfor %}
 </div>
+
 <div class='home_box' id='home_right'>
+  
+  <h2>联系方式</h2>
+  <div class='sidebar'>
+    <div class="sidebar-item">
+    <dl>
+      <dt>邮件：</dt>
+      <dd>larry.caiyu AT gmail.com </dd>
+
+      <dt>微博：</dt>
+      <dd><a href="http://weibo.com/larrycaiyu">http://weibo.com/larrycaiyu</a></dd>
+
+    </dl>
+
+    </div>
+  </div>
   <h2>Open Source</h2>
   <div id='github-projects'>
     <div class="repo">  <h3><a href="http://github.com/larrycai/doxia-module-markdown">doxia-module-markdown</a></h3>  <span class="desc">markdown plugin for maven site</span></div>
   <div class="repo">  <h3><a href="http://github.com/larrycai/astyleclipse">astyleclipse</a></h3>  <span class="desc">astyle c++ format plugin for eclipse 3.1 (doesn't works now)</span></div>
   <div class="repo">  <h3><a href="http://github.com/larrycai/redmine-plugin">redmine-plugin (forked)</a></h3>  <span class="desc">redmine plugin inside jenkins to connect with redmine</span></div>
-  </div>
+  </div>  
 </div>
 
 <script type="text/javascript" charset="utf-8">

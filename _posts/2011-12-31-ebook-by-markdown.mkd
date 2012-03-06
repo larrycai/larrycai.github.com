@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 开源书和开源技术-Markdown篇
 ---
