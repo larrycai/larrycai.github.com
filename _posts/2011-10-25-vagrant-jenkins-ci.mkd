@@ -79,7 +79,7 @@ jenkins 是一个最常用的持续集成服务器，可单独运行或者放在
 #总结#
 这篇文章主要简单讲了一下在jenkins中管理虚拟机的一种方案，自动化的安装[puppet][puppet]并没提到，可自己尝试。另外vagrant创立虚拟机也没有谈到，一般可以用[veewee][veewee]这个软件来完成，有空下次讲。
 
-给些建议鼓励鼓励吧 [@larrycai][larryweibo]
+给些建议鼓励鼓励吧 [@larrycaiyu][larryweibo]
 
 #参考#
 1. larry的英文博客：http://codeslife.com/2011/10/21/make-ci-easier-with-jenkins-ci-and-vagrant/
@@ -95,5 +95,5 @@ jenkins 是一个最常用的持续集成服务器，可单独运行或者放在
 [vagrantblog]: http://blog.crowdint.com/2011/06/21/vagrant.html
 [puppet]: http://puppetlabs.com/
 [veewee]: http://github.com/jedi4ever/veewee
-[larryweibo]: http://weibo.com/larrycai
+[larryweibo]: http://weibo.com/larrycaiyu
 

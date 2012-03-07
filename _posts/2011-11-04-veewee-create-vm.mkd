@@ -109,7 +109,7 @@ iso文件就是操作系统的安装光盘，建议先从网上下载，veewee�
 #总结#
 这篇文章主要简单讲了一下用[veewee][veewee]这个软件来如何快速创建vagrant虚拟机，有没有体会到持续交付中反复提到的配置管理了，所有的东西都写成配置文件，然后有软件自动生成你要的东西，慢慢试试在体会吧。 
 
-下次我该来谈谈[puppet][puppet]了，而且是无主机模式的，给些建议鼓励鼓励吧 [@larrycai][larryweibo]，让我持续交付。
+下次我该来谈谈[puppet][puppet]了，而且是无主机模式的，给些建议鼓励鼓励吧 [@larrycaiyu][larryweibo]，让我持续交付。
 
 #参考#
 1. larry的英文博客：http://codeslife.com/2011/10/25/create-virtualbox-on-fly-using-veewee/
@@ -125,5 +125,5 @@ iso文件就是操作系统的安装光盘，建议先从网上下载，veewee�
 [vboxmanage]: https://www.virtualbox.org/manual/ch08.html
 [vagrantwithveewee]: http://www.ducea.com/2011/08/15/building-vagrant-boxes-with-veewee/
 [veeweetemplates]: https://github.com/jedi4ever/veewee/tree/master/templates
-[larryweibo]: http://weibo.com/larrycai
+[larryweibo]: http://weibo.com/larrycaiyu
 [vagrant-jenkins]: http://www.continuousdelivery.info/index.php/2011/10/27/vagrant_jenkins_vm/

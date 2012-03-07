@@ -139,7 +139,7 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
  14. 敏捷之旅中国：<http://agiletour.cn/>
  
 #作者简介#
-[@larrycai][larryweibo]作为软件实践的先行者，公司的主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
+[@larrycaiyu][larryweibo]作为软件实践的先行者，公司的主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
 
 本文提到的内容在 ScrumGathering上海2011上做过专题演讲，参见[演讲稿件](http://t.cn/aCKFrd)。
 
@@ -148,5 +148,5 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
 [img-jenkins-logo]: http://larrycai.github.com//images/jenkins-logo.jpg
 [img-jenkins-jobs]: http://larrycai.github.com//images/jenkins-jobs.jpg
 [img-gerrit-demo]: http://larrycai.github.com//images/gerrit-demo.jpg
-[larryweibo]: http://weibo.com/larrycai
+[larryweibo]: http://weibo.com/larrycaiyu
 
