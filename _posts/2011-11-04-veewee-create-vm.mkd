@@ -111,6 +111,16 @@ iso文件就是操作系统的安装光盘，建议先从网上下载，veewee�
 
 下次我该来谈谈[puppet][puppet]了，而且是无主机模式的，给些建议鼓励鼓励吧 [@larrycaiyu][larryweibo]，让我持续交付。
 
+# test #
+
+``` bash
+rdccaiy@ubuntu:~/veewee$ find .
+./definitions/ubuntu1104
+./definitions/ubuntu1104/postinstall.sh
+./definitions/ubuntu1104/preseed.cfg
+./definitions/ubuntu1104/definition.rb
+```
+
 #参考#
 1. larry的英文博客：http://codeslife.com/2011/10/25/create-virtualbox-on-fly-using-veewee/
 2. veewee的官网：http://github.com/jedi4ever/veewee
