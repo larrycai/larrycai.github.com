@@ -1,0 +1,34 @@
+---
+layout: post
+title: 5分钟快速架设个人博客
+---
+
+#介绍#
+现在很多人都有博客，为什么不自己来一个呢。最方便的是放在Github上，假设你有个Github账号`sample`
+
+    gem install mkblog
+    mkblog --generate sample
+    cd sample.github.com
+    jekyll --server
+
+好了打开浏览器访问 <http://localhost:4000> 。
+
+当然还没做好，你看到的是Larry Cai的东西，试着改成你自己的吧，我会用模板自动化起来，现在还是手工吧。
+
+    about.title
+    blog.html
+    index.html
+
+现在就可以把东西放到Github上了。在<http://github.com/sample>建一个`sample.github.com`，然后上传。
+
+再在你的项目中按照[github:pages](http://pages.github.com/)配好。
+
+现在你就可以看到 <http://sample.github.com> 了，如果有自己的域名就可以转过来了。
+
+忘了说怎么写博客了，把文件放在 `_posts`即可。
+
+# 相关阅读 #
+ 1. 蒋鑫的《Github权威指南》<http://www.worldhello.net/gotgithub/03-project-hosting/050-homepage.html>
+ 2. 展新的 “搭建 Jekyll 博客的一些小技巧” <http://www.pizn.me/2012/03/01/some-tips-for-jekyll-blog.html>
+ 3. 关注mkblog项目 <https://github.com/larrycai/mkblog>
+ 
