@@ -12,7 +12,7 @@ rdccaiy@ubuntu:~/veewee$ find .
 ./definitions/ubuntu1104/definition.rb
 ```
 
-~~~~~~~ {.ruby}
+~~~~~~~ {ruby}
 require 'albino'
 @syntaxer = Albino.new(File.new('albino.rb'), :ruby, :bbcode)
 puts @syntaxer.colorize

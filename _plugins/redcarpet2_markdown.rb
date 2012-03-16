@@ -12,14 +12,8 @@ class Redcarpet2Markdown < Redcarpet::Render::HTML
   def block_code(code, lang)
     lang = lang || "text"
     path = File.join(PYGMENTS_CACHE_DIR, "#{lang}-#{Digest::MD5.hexdigest code}.html")
-    puts path
-    puts Albino.colorize('puts "Hello World"', :ruby)
     cache(path) do
-      puts code 
       colorized = Albino.colorize(code, lang)
-      puts "hhddddddddddddd"
-      puts colorized
-      puts colorized
       add_code_tags(colorized, lang)
     end
   end
