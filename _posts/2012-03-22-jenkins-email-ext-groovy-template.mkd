@@ -1,0 +1,81 @@
+---
+layout: post
+title: 搞定Jenkins的groovy模板的邮件通知
+---
+
+#介绍#
+上次在[Travis CI会替代Jenkins吗？](http://larrycai.github.com/2012/03/06/travis-ci-is-evolution.html)中简单介绍了Travis CI，它的邮件通知做的也是很到位的。
+
+![Travis-CI的邮件通知][img-travis-ci-email]
+
+在标题中，清晰地告诉你构建的状态，内容也很干净（像晓斌说的“小清新”）。它的服务是由[Postmark](http://postmarkapp.com/)提供的。
+
+很多时候这是用户体验的极佳表现：界面一目了然，要的东西一下子就能看到，而不是让你反复点链接。当然看起来也蛮酷的。
+
+那这个是不是很难做呢？能不能在现有的Jenkins中使用呢？
+
+简单地说：可以，但是需要好的模板。先让你看看我做的效果，有兴趣再看下去。
+
+![Jenkins中的HTML邮件通知][img-groovy-email]
+
+# email-ext插件 #
+Jenkins社区果然庞大，很快就搜索到能发HTML通知邮件的email-ext插件。同时也很高兴在晓斌的网站上看见[Jdonee](http://www.jdonee.com/)贡献过一篇博客[使用email-ext替换Jenkins(Hudson)的默认邮件通知](http://www.juvenxu.com/2011/05/18/hudson-email-ext/)。其中详细介绍了怎么使用，不过并没有深入探讨html模板的使用。
+
+还有一个是email-ext插件中除了Jelly外，还支持[Groovy](groovy.codehaus.org/)。
+
+## 使用Groovy模板 ##
+照着[Jenkins Email Extension Plugin](http://wiki.jenkins-ci.org/display/JENKINS/Email-ext+plugin)上的说明，配置了
+
+    Content type：    HTML (text/html)
+    Default content： ${SCRIPT, template="groovy-html.template"}
+
+结果发现了两个问题：
+
+  1. 不管结果成功与否，显示总是黄色（错误）。实际上成功(Success)的时候应该显示蓝色，只有黄色才是失败。
+  2. 我用的是git，只要又提交，收到的信提示hudsonUser找不到。
+  
+啃了半天Groovy的知识，结果意识到这些是BUG，就顺手在Jenkins网站上注册了：[JENKINS-13191](https://issues.jenkins-ci.org/browse/JENKINS-13191)，[JENKINS-13192](https://issues.jenkins-ci.org/browse/JENKINS-13192) 。
+
+第一个BUG的[补丁](https://github.com/jenkinsci/email-ext-plugin/pull/28)的提交在我在Github中`Pull request`不久就合并进去了。
+
+第二个有点复杂（可能涉及到SVN，CVS），希望他们自己解决，我自己使用的时候就简化了。
+
+然后套用了Travis-CI的HTML格式就接近完美了。
+
+## 标准模板的问题 ##
+
+再来谈谈email-ext提供的[Groovy标准HTML模板:groovy-html.template](https://github.com/jenkinsci/email-ext-plugin/blob/master/src/main/resources/hudson/plugins/emailext/templates/groovy-html.template)的问题，这里先简单介绍一点Groovy的知识（我也只学了几个小时而已）。
+
+Groovy是一种Java平台语言。它能够与Java代码很好地结合，也能用于扩展现有代码。来看看[groovy-html.template源文件](https://github.com/jenkinsci/email-ext-plugin/blob/master/src/main/resources/hudson/plugins/emailext/templates/groovy-html.template)
+
+    <% def changeSet = build.changeSet
+    if(changeSet != null) {
+	  def hadChanges = false %>
+	  <TABLE width="100%">
+      <TR><TD class="bg1" colspan="2"><B>CHANGES</B></TD></TR>
+    <% 	changeSet.each() { cs ->
+		hadChanges = true
+		def aUser = cs.hudsonUser %>	
+
+`build`就是Groovy能访问到的jenkins的**构建**`build`实例，`changeSet`就是他的一个函数`getChangeSet`，可以看看[AbstractBuild.java](https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/AbstractBuild.java#L767)
+
+现在的文档还很烂，如果碰到出错了，需要查查Java的源文件。
+
+第一个补丁我就发现是`build.result`的返回不是`String`。所以比较总是`false`。查看原代码后，强制转换成`String`就好了。
+
+# 总结 #
+可能你会觉得怎么没有讨论HTML，实际上这只是个模板，你只要有心（UX），参照一般的email newsletter的模板（如[Getting Started with HTML Emails](http://net.tutsplus.com/tutorials/html-css-techniques/getting-started-with-html-emails/)，套上Jenkins构建任务的一些参数（参见标准模板）就可以了。
+
+我有空再做一个，这个毕竟是有“盗版嫌疑”。
+
+不管怎样，如果把你的HTML通知邮件简单改造一下，效果会好很多。
+
+非常希望你也贡献一些模板到这个插件中去！
+
+# 相关阅读 #
+ 1. 自己的博客：Travis CI会替代Jenkins吗？<http://larrycai.github.com/2012/03/06/travis-ci-is-evolution.html>
+ 2. Juvenxu网站上：使用email-ext替换Jenkins(Hudson)的默认邮件通知：<http://www.juvenxu.com/2011/05/18/hudson-email-ext/>
+ 3. email-ext插件： <http://wiki.jenkins-ci.org/display/JENKINS/Email-ext+plugin>
+ 
+  [img-travis-ci-email]: http://larrycai.github.com/images/travis-ci-email.png
+  [img-groovy-email]: http://larrycai.github.com/images/groovy-email.png
