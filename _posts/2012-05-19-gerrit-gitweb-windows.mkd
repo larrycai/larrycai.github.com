@@ -1,0 +1,57 @@
+---
+layout: post
+title: 在Windows上集成Gerrit和Gitweb
+---
+
+#介绍#
+Git现在如日中天，在企业中最好用的服务器是Gerrit。它不仅提供了极强的认证和权限控制，而且它的代码审阅功能也极其出色。
+
+Gitweb是Git缺省的代码网上浏览的一个模块，附带在Git发布版本中。
+
+这里聊一下，如何不用Apache服务器使Gitweb在Gerrit中工作。这个在搭实验和演示环境中特别有用。
+
+有关Gerrit具体安装可以参见蒋鑫的[Git权威指南](http://wordhello.net/gotgit)一书，或者[Gerrit官方说明](http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/index.html)。
+
+## Gitweb在Windows问题 ##
+Gitweb实际上是用perl写的CGI脚本，一般都是在Apache中使用。在Gerrit中，它也可以直接被调用转换成HTML显示。
+
+但是如果你用“Git for Windows”(mingsys)来安装Git环境的话有两个问题：
+
+ 1. 它的安装中没有CGI模块，因此不能正确启动Gitweb脚本。
+ 2. 在windows上，Gerrit要调用能执行的Windows命令，`gitweb.cgi`不能直接被执行。
+
+## 解决办法 ##
+知道了问题，解决起来就相对简单了点。
+
+首先下载对应的CGI模块，<http://search.cpan.org/~markstos/CGI/>，现在是[CGI 3.59版本](http://search.cpan.org/CPAN/authors/id/M/MA/MARKSTOS/CGI.pm-3.59.tar.gz)
+
+展开后，把`lib`库拷入Git标准安装的Perl lib目录`/usr/lib/perl5/site_perl/`
+
+    $ tar -ztvf ~/Downloads/CGI.pm-3.59.tar.gz CGI.pm-3.59/lib # 只要这几个就可以了
+    $ mv CGI.pm-3.59/lib/* /usr/lib/perl5/site_perl
+    
+现在在命令行下运行`gitweb.cgi`就可以成功了。
+
+    $ "/c/Program Files/git/share/gitweb/gitweb.cgi"
+    
+下一步就是弄一个脚本`gitweb.bat`把`gitweb.cgi`包装一下，使它成为Windows命令。
+
+    $ cat "/c/Program Files/git/share/gitweb/gitweb.bat"
+    @echo off
+    "C:\Program Files\Git\bin\perl" "C:\Program Files\Git\share\gitweb\gitweb.cgi %*
+
+其中`%*`就是把参数传递进去。
+
+最后就是在Gerrit中配置它了。
+
+    $ git config --file $site_path/etc/gerrit.config gitweb.cgi "/c/Program Files/git/share/gitweb/gitweb.bat"
+    
+这样就可以了。重新启动Gerrit脚本，你就可以看到了。
+
+![集成了Gitweb的Gerrit][img-gerrit-gitweb]
+
+## 相关链接 ##
+ * Git for Windows <http://msysgit.github.com/>
+ * Gerrit Code Review for Git <http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/index.html>
+
+  [img-gerrit-gitweb]: http://larrycai.github.com/images/gerrit-gitweb.png
