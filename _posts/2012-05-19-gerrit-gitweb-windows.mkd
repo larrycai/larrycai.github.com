@@ -10,7 +10,7 @@ Gitweb是Git缺省的代码网上浏览的一个模块，附带在Git发布版�
 
 这里聊一下，如何不用Apache服务器使Gitweb在Gerrit中工作。这个在搭实验和演示环境中特别有用。
 
-有关Gerrit具体安装可以参见蒋鑫的[Git权威指南](http://wordhello.net/gotgit)一书，或者[Gerrit官方说明](http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/index.html)。
+有关Gerrit具体安装可以参见蒋鑫的[Git权威指南](http://www.worldhello.net/gotgit/)一书，或者[Gerrit官方说明](http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/index.html)。
 
 ## Gitweb在Windows问题 ##
 Gitweb实际上是用perl写的CGI脚本，一般都是在Apache中使用。在Gerrit中，它也可以直接被调用转换成HTML显示。
