@@ -79,6 +79,35 @@ Latex是一个出版界（至少是科技界）常用的格式，PDF也能很容
 
 这里主要讨论Pdf的格式，实际上epub/mobi格式的用pandoc生成也很方便。
 
+## mkbok 脚本 ##
+多说一点，因为我有点讨厌多个脚本，而且想废弃掉calibre，(码农心中总是追求简洁高效)。就在原有的基础上进行了扩展，统一为`mkbok`脚本。
+
+	$ ./mkbok --build pdf,html,epub --lang zh --template latex/template.tex
+
+这样就可一次性完成电子书的活，而且还改造了Latex模板（加了前言、致谢和页眉等，使它最后的结果更像一份标准的书。
+
+再试着在你的虚拟机中执行
+
+	$  sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
+	$ git clone https://github.com/larrycai/kaiyuanbook.git
+	$ ./mkbok
+
+第一个命令又装了几个更适合的中文字体，第二个命令是我演示用的小册子，第三个命令不用参数，因为配置都放在了文件`.mkbok.yml`中。
+
+	$ cat .mkbok.yml
+	---
+	  name: kaiyuanbook
+	  build: pdf,epub,html
+	  lang: zh
+	  license: ccbyncnd30
+	  config: latex/config.yml
+	  template: latex/template.tex
+	  preface-files: preface/*.markdown
+	  chapter-files: chapters/*.markdown
+	  appendix-files: appendix/*.markdown
+
+东西差不多，但是扩展应该会更好些，特别是有机会更方便的采用不同的专业模板。
+
 # 在线方案 #
 ## github + travis-ci ##
 Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌的博客](http://www.juvenxu.com/2012/03/06/travis-ci/)和蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)，强烈建议你先试一下。
@@ -96,7 +125,6 @@ Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌�
 	  - 1.9.3
 	script: 
 	  - ./mkbok --lang zh --build pdf
-
 
 ## 把Travis-ci的结果上传回Github ##
 那我们能不能把运行的结果传回Github的下载区呢？还是可以。
@@ -145,12 +173,21 @@ Github早已经提供了“仓库下载API”来帮助你上传文件到你Git�
  2. Latex格式（就是Donald E. Knuth（高德纳）发明的，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
  3. docbook格式是最有名的（从SGML演化过来？），Orielly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
  4. 通过蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)开源书，我也了解reStructureText也是和markdown差不多纯文本（plain text)的，也是蛮流行的，结合[sphinx](http://sphinx-doc.org/)也所向无敌。
- 
    
 # 展望 #
 
+设想中有一天上面提到的各个环节都能打磨得非常流畅，吸引更多的使用者。然后有很多人有兴趣用它来写书，可能是自娱自乐，也可能免费出版。
+
+出版界或者LaTeX的高手可以提供设计些更好的LaTeX模板（可以收费）供大家使用。
+
+图灵出版社也提供网上的编辑服务（当然是可以收费的），对一些想把书写得专业点的作者提供额外的帮助，这样或许是一个很好的增值服务。至少像我这样的文笔超烂的技术人员很想得到的。
+
+这些本是我2012想做到的事情（域名都买好了），留个遗憾放到明年吧。
+
+技术无极限，只怕没追求。
     
 # 相关资料 #
  * 图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)
+ * 设想中的开源书项目 https://github.com/larrycai/kaiyuanbook
  * Pandoc : http://johnmacfarlane.net/pandoc/
  
