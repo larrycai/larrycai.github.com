@@ -3,75 +3,75 @@ layout: post
 title: 用Markdown来写自由书籍-开源技术的方案
 ---
 #{{ page.title }}#
-#背景#
+## 背景 ##
 
-随着互联网的进步和技术积累，国内技术圈交流的气氛越来越浓，微博博客上到处可见有质量的技术贴，但是有时候想系统阅读时不是很方便，如果能够整理成册自由分享该多好呢。
+随着互联网的进步和技术积累，国内技术圈交流的气氛越来越浓，微博博客上到处可见有质量的技术贴，但是有时候想系统阅读时却不是很方便，如果能够整理成册自由分享该多好呢。
 
 虽然少数人有幸通过出版社出书了，但代价太大，也不能普及大众，现在技术那么发达，那有没有办法自己自助出版呢？
 
 技术无极限，办法现在有好几种，在本文中，我就介绍用现在流行的Markdown格式的方式来产生专业的书籍，而且还可以做到利用互联网，不需要本地机器参与的完美方案。
 
-你可以先看一下我的一本小册子：[跟我学企业敏捷开发](https://github.com/downloads/larrycai/sdcamp/sdcamp.zh.snapshot.pdf) 来体会一下效果来确定要不要读下去。
-
 如果你喜欢微软的Word，觉得用它已经足够了，那我们不是同道，不用往下看了。
 
-#从Pro Git说起#
+## markdown能做出什么效果呢 ##
 
-因为我的markdown写书的经验和一些脚本是从[Pro Git](http://progit.org/)这本书开始的，因此还是先从鼻祖说起吧。
+多说无益，先来看看效果吧。下面是我去年写的一本小册子：[跟我学企业敏捷开发](https://github.com/downloads/larrycai/sdcamp/sdcamp.zh.snapshot.pdf) 在PDF阅读器中的效果。注意还有完整的目录和页眉。
 
-如果你了解Git，或者想了解Git。那么你就应该知道[Pro Git](http://progit.org/)，它是Git的书中写得最好的一本（至少是之一），可是你是否知道它有网络中文版，而且能在iPad上极其漂亮得阅读。并且是免费的，不是盗版的免费！如果你想要最新的，你甚至可以自己生成它。哈哈，我就是这么干的。
+书的内容就全是用markdown格式写的，上图相对应的文件内容片断如下。
 
-这一切就归功于它后面用到的基于markdown技术的电子书方案。
+	## Cucumber 简介 ##
+	Cucumber（英文：黄瓜）(官方网站是<http://cukes.info/>)是一个实例化需求的极佳实现伴侣。它是基于Ruby的开源测试工具，得益于Ruby便于创建和使用DSL的特性，它可以通过自然语言（文本文字）来描述需求（业务层），并通过关键字驱动和正则表达式匹配告诉去做哪些事情（驱动层），在运行自动化测试结束以后，还会给出详细的报告。
 
-这本书不仅仅开源了内容，使用的技术也是开源的。让我们先来看看他是怎么做到的。
+	Insert 18333fig0601.png
+	图 6-1. Cucumber的架构
 
-## markdown原始文件 ##
-首先书的内容是用markdown格式写的。markdown格式的普及要归功于[Github](github.com)和[StackOverflow](http://stackoverflow.com/)。因为它们越来越流行，它们支持markdown格式也越来越流行。这里要赞一个的是，国内的[图灵社区](http://www.ituring.com.cn/)也支持markdown，用起来超级方便。
+	下面就是一个加法例子的需求描述，Cucumber文件以`.feature`结尾。
 
-简单来说，markdown格式的文件看着像一般的文本文件，里面只是加了很少的格式标记，因此看文本文件也不影响理解，这种格式也有很多工具帮你去转化，而且很容自动化解决。并且这些技术大多数是开源或免费的。
+	  # 加法 adding.feature
+	  Feature: Adding
+	    In order to avoid silly mistakes
+	    As a math idiot
+	    I want to be told the sum of two numbers
 
-你可以直接看一下【Pro Git】的[“第一章 介绍” 的markdown原始文件](https://raw.github.com/progit/progit/master/zh/01-introduction/01-chapter1.markdown)，顺便看看github自动生成的简单[“第一章 介绍” 的html](https://github.com/progit/progit/blob/master/zh/01-introduction/01-chapter1.markdown)。
+下面就是书的全部章节文件，我把它分成了序、前言、致谢、正文和附录，蛮像回事吧。标准的书就是这样的，有兴趣的朋友可以看看[作译者手册](http://www.phei.com.cn/wstg/zyzxz)
 
-余下的就是用工具把这些markdown文件转换成电子书，先强烈建议自己试一试，稍后再来解释。
+	$ find zh
+	zh
+	zh/0preface
+	zh/0preface/00-chapter1-preface.markdown
+	zh/0preface/00-chapter2-changes.markdown
+	zh/0preface/00-chapter3-acknowledgement.markdown
+	zh/1chapters
+	zh/1chapters/01-chapter1-agile-scrum.markdown
+	zh/1chapters/01-chapter2-git-gerrit.markdown
+	zh/1chapters/01-chapter3-ci.markdown
+	zh/1chapters/01-chapter4-java.markdown
+	zh/1chapters/01-chapter5-sbe.markdown
+	zh/1chapters/01-chapter6-cucumber.markdown
+	zh/1chapters/01-chapter7-workshop.markdown
+	zh/2appendix
+	zh/2appendix/02-chapter1-sample.markdown
+	zh/2appendix/02-chapter2-cc2git.markdown
 
-## 产生电子书 ##
-你只需要一台Linux机器（虚拟机就可以了）和简单的Linux命令就可以试验了。有git和ruby的知识那就更方便了。
+全书的内容够可以在github上找到<https://github.com/larrycai/sdcamp/tree/master/zh>
 
-我用的试验环境是Ubuntu 12.04 (Precise) 版本。
+### 那什么是markdown ？###
 
-### 下载Pro Git书的源代码 ###
-很简单，`git clone`一下就可以了，下载它的源文件包我觉得还是烦了点。
-    
-	$ git clone https://github.com/progit/progit.git
-	
-### epub/mobi格式 ###
-做epub/mobi格式的电子书相对简单一点，`makeebooks`脚本使用了[calibre](http://calibre-ebook.com/)和[rdiscount](https://github.com/rtomayko/rdiscount)工具。
+有兴趣了，就可以聊聊markdown了，简单来说，markdown格式的文件看着像一般的文本文件，里面只是加了很少的格式标记，因此看文本文件也不影响理解，这种格式也有很多工具帮你去转化，而且很容自动化解决。并且这些技术大多数是开源或免费的。
 
-    $ sudo apt-get install ruby rubygems 
-	$ sudo apt-get install calibre 
-	$ sudo gem install rdiscount ruby-debug 
-	$ ./makeebooks zh  # 缺省.mobi格式
-	$ export FORMAT=epub
-	$ ./makeebooks zh # .epub格式
-	
-你可以从看到日志中看到中间转换出了html中间文件，好了不管这样，可以用你Kindle或Apple产品看看产生的电子书。
+如 `## Cucumber 简介 ##`就可以转换成html的`h2`或者书中的小节, 空四个就是表示代码。具体可以看图灵社区的文章 [Markdown语法说明（详解版](http://www.ituring.com.cn/article/504)
 
-### PDF格式 ###
-生成PDF是一个比较复杂的东西，`makepdfs`脚本用到了[pandoc](http://johnmacfarlane.net/pandoc/)和[TexLive](http://www.tug.org/texlive/)软件，用Ubuntu库里就可以了。
-    
-    $ sudo apt-get install pandoc 
-	$ sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra # 安装texlive 2011
+### 那为什么要用markdown呢？###
 
-因为是中文PDF，需要把字体嵌入在文件中，因此需要安装字体文件（如果不是Ubuntu中文版）
+原因很简单，因为简洁和流行。markdown格式的普及要归功于[Github](github.com)和[StackOverflow](http://stackoverflow.com/)。因为它们越来越流行，它们支持markdown格式也越来越流行。这里要赞一个的是，国内的[图灵社区](http://www.ituring.com.cn/)也支持markdown，用起来超级方便。
 
-    $ sudo apt-get install ttf-arphic-ukai ttf-arphic-uming
+我的体会是，它让你关注内容，格式怎么显示不是要你在写得时候关注的。Word让我讨厌的原因就是老要关注格式。
 
-现在你就可以生成pdf文件了。
+实际上核心是软件思想中的分离，就像HTML关注内容，CSS关注格式变现一样。
 
-    $ ./makepdfs zh	
+## 背后的魔法 ##
 
-# 方案解析 #
-产生电子书一般有两种方案，一种是产生HTML中间格式在转换出电子书，另一种是产生[Latex](http://zh.wikipedia.org/zh/LaTeX)格式，再产生PDF，达到标准书籍出版的质量（完整的封面，目录，页眉等等），这里主要讨论第二种。
+产生电子书一般有两种方案，一种是产生HTML中间格式再转换出电子书，另一种是产生[LaTeX](http://zh.wikipedia.org/zh/LaTeX)格式，再产生PDF，达到标准书籍出版的质量（完整的封面，目录，页眉等等），这里主要讨论第二种。
 
 Latex是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，有关Latex，自己看看相关学习吧。
 
@@ -79,20 +79,51 @@ Latex是一个出版界（至少是科技界）常用的格式，PDF也能很容
 
 这里主要讨论Pdf的格式，实际上epub/mobi格式的用pandoc生成也很方便。
 
-## mkbok 脚本 ##
-多说一点，因为我有点讨厌多个脚本，而且想废弃掉calibre，(码农心中总是追求简洁高效)。就在原有的基础上进行了扩展，统一为`mkbok`脚本。
+
+
+## 其他常用格式的出版方案 ##
+
+计算机类图书对格式要求不是很多，图文、章节、源代码基本就够了，就算有些复杂公式，也可用图来显示。这也从理论上说明，它不需要复杂的格式。现在对这类技术书出版我的理解主要有几种：
+
+ 1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它（对技术没追求，鄙视）。简单好学，但是不擅长自动化，是开源的死敌。
+ 2. Latex格式（就是Donald E. Knuth（高德纳）发明的，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
+ 3. docbook格式是最有名的（从SGML演化过来？），Orielly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
+ 4. 通过蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)开源书，我也了解reStructureText也是和markdown差不多纯文本（plain text)的，也是蛮流行的，结合[sphinx](http://sphinx-doc.org/)也所向无敌。
+
+## 自己动手产生电子书 ##
+
+讲了那么多，作为码农，该动手实践一下，其他读者可以跳过这一章。
+
+你需要一台Linux机器（虚拟机就可以了）和简单的Linux命令就可以试验了。有git和ruby的知识那就更方便了。
+
+我用的试验环境是Ubuntu 12.04 (Precise) 版本。
+
+### 下载书的源代码 ###
+
+很简单，`git clone`一下就可以了，下载它的源文件包我觉得还是烦了点。
+    
+	$ git clone https://github.com/larrycai/sdcamp.git
+	
+生成PDF是一个比较复杂的东西，用到了[pandoc](http://johnmacfarlane.net/pandoc/)和[TexLive](http://www.tug.org/texlive/)软件，用Ubuntu库里就可以了。
+    
+    $ sudo apt-get install pandoc 
+	$ sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra # 安装texlive 2011
+
+因为是中文PDF，需要把字体嵌入在文件中，因此需要安装字体文件（如果不是Ubuntu中文版）
+
+	$ sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
+
+现在你就可以生成pdf文件了。
+
+    $ ./mkbok	
+
+### mkbok 脚本 ###
+
+多说一点，`mkbok`是基于[Pro Git](http://github.com/progit/progit)里面的脚本`makeebooks`和`makepdfs`开发的。Scott原来还用[calibre](http://calibre-ebook.com/)产生epub文件，我统一用pandoc。还在原有的基础上进行了扩展，统一为`mkbok`脚本。
 
 	$ ./mkbok --build pdf,html,epub --lang zh --template latex/template.tex
 
-这样就可一次性完成电子书的活，而且还改造了Latex模板（加了前言、致谢和页眉等，使它最后的结果更像一份标准的书。
-
-再试着在你的虚拟机中执行
-
-	$  sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
-	$ git clone https://github.com/larrycai/kaiyuanbook.git
-	$ ./mkbok
-
-第一个命令又装了几个更适合的中文字体，第二个命令是我演示用的小册子，第三个命令不用参数，因为配置都放在了文件`.mkbok.yml`中。
+这样就可一次性完成电子书的活，而且还改造了LaTeX模板（加了前言、致谢和页眉等，使它最后的结果更像一份标准的书。
 
 	$ cat .mkbok.yml
 	---
@@ -108,75 +139,21 @@ Latex是一个出版界（至少是科技界）常用的格式，PDF也能很容
 
 东西差不多，但是扩展应该会更好些，特别是有机会更方便的采用不同的专业模板。
 
-# 在线方案 #
-## github + travis-ci ##
-Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌的博客](http://www.juvenxu.com/2012/03/06/travis-ci/)和蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)，强烈建议你先试一下。
+## 基于Github和Travis-ci的互联网在线方案 ##
 
-简单道理就是当你把代码推送到Github时，就可以触发Travis-ci的构建。Travis-ci会启动一个基于Virtualbox的Ubuntu的虚拟机（当前是12.04版本），然后根据你的`.travis-ci.yml`中的配置来`构建`你的产品。构建结束后，虚拟机会被删除掉。
+我一直想建一套使用上述技术的更方便的出版系统，一直没时间搞下去。现在最简单的还是应用互联网的服务，混搭一下。Github和Travis-ci就是我要利用的。
 
-这样我们就可以告诉Travis-ci安装好我们需要的包并来执行我们的程序。
+Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌的博客](http://www.juvenxu.com/2012/03/06/travis-ci/)和蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)，强烈建议你先试一下。要不下期码农吧。
 
-	before_script:
-	  - sudo apt-get install pandoc
-	  - sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
-	  - sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra
+简单道理就是当你把代码推送到Github时，就可以触发Travis-ci的构建。Travis-ci会启动一个基于Virtualbox的Ubuntu的虚拟机（当前是12.04版本），然后根据你的`.travis-ci.yml`中的配置来`构建`你的产品，也就是执行上面的步骤来产生PDF文件。
 
-	rvm:
-	  - 1.9.3
-	script: 
-	  - ./mkbok --lang zh --build pdf
+构建结束后，虚拟机会被删除掉，而且Travis-ci网站本身没有提供归档功能，但是Github的API提供了极好的方法来上传文件。所以我们可以用__Github API和Travis-ci的保密环境变量__的方式来把Travis-ci的结果上传回Github。
 
-## 把Travis-ci的结果上传回Github ##
-那我们能不能把运行的结果传回Github的下载区呢？还是可以。
+具体看我的博客[把Travis-ci的结果上传回Github](http://larrycai.github.com/2012/11/06/publish-the-artifacts-inside-travis-ci-to-github.html)
+  
+## 展望 ##
 
-Travis-ci网站本身没有提供归档功能，但是Github的API提供了极好的方法来上传文件。所以我们可以用__Github API和Travis-ci的保密环境变量__的方式来把Travis-ci的结果上传回Github
-
-### Github API ###
-Github早已经提供了“仓库下载API”来帮助你上传文件到你Git仓库的"下载（Download）"页，详见<http://developer.github.com/v3/repos/downloads/>
-
-你可以使用`curl`命令来获取令牌，并且使用开源的脚本`github-upload.rb` (<https://github.com/wereHamster/ghup>)来处理余下的事情。建议看看里面的README文件，还是简单明了的，这里就不重复了。
-
-### 保密环境变量 ###
-保密环境变量（Secure environment variables）是Travis-ci提供的功能，它能确保你的私有信息（如密码或私钥）安全。实现方法很优雅，也很实用。就是提前加密（其中包含了你的用户名和Git仓库名），拿到加密串，到时凭加密串拿到你的环境变量，因为系统自动上传你的用户名和Git仓库名，其他人看到令牌也没用。
-
-具体使用就是，先用`travis`命令（先下载travis gem包）加密你的信息，这里是`GITHUB_TOKEN=66b79b8c91e236b16ab99d88cb3379839ce98d25`
-
-    $ gem install travis
-    $ travis encrypt larrycai/sdcamp GITHUB_TOKEN=66b79b8c91e236b16ab99d88cb3379839
-    ce98d25
-
-    About to encrypt 'GITHUB_TOKEN=66b79b8c91e236b16ab99d88cb3379839ce98d25' for 'la
-    rrycai/sdcamp'
-
-    Please add the following to your .travis.yml file:
-
-    secure: "qkE5/TVKQV/+xBEW5M7ayWMMtFwhu44rQb9zh3n0LH4CkVb+b748lOuW3htc\nXfnXU8a
-    GzOsQBeCJZQstfzsHFPkll+xfhk38cFqNQp7tpMo/AOZIkqd2AIUL\n0bgaFD+1kFAxKTu02m11xzkDN
-    w6FuHMVvoMEQu/fo115i2YmWHo="
-
-在travis-ci的构建中，你需要告诉系统这一串加密的令牌来拿回你的环境变量`GITHUB_TOKEN`和它的值，因为它是绑定你的用户名和Git仓库，是安全的。
-
-然后你就可以在`github-upload.rv`脚本中使用`$GITHUB_TOKEN`这个令牌去访问你的github库了。
-
-    env:
-    global:
-      - secure: "qkE5/TVKQV/+xBEW5M7ayWMMtFwhu44rQb9zh3n0LH4CkVb+b748lOuW3htc\nXfnXU8aGzOsQBeCJZQstfzsHFPkll+xfhk38cFqNQp7tpMo/AOZIkqd2AIUL\n0bgaFD+1kFAxKTu02m11xzkDNw6FuHMVvoMEQu/fo115i2YmWHo="  
-      
-    after_script:
-    - ./github-upload.rb sdcamp.zh.pdf larrycai/sdcamp --description "generated by travis-ci, $TRAVIS_JOB_ID" --force --name sdcamp.zh.snapshot.pdf --skip-ssl-verification -t $GITHUB_TOKEN
-
-# 其他常用格式的出版方案 #
-
-计算机类图书对格式要求不是很多，图文、章节、源代码基本就够了，就算有些复杂公式，也可用图来显示。这也从理论上说明，它不需要复杂的格式。现在对这类技术书出版我的理解主要有几种：
-
- 1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它（对技术没追求，鄙视）。简单好学，但是不擅长自动化，是开源的死敌。
- 2. Latex格式（就是Donald E. Knuth（高德纳）发明的，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
- 3. docbook格式是最有名的（从SGML演化过来？），Orielly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
- 4. 通过蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)开源书，我也了解reStructureText也是和markdown差不多纯文本（plain text)的，也是蛮流行的，结合[sphinx](http://sphinx-doc.org/)也所向无敌。
-   
-# 展望 #
-
-设想中有一天上面提到的各个环节都能打磨得非常流畅，吸引更多的使用者。然后有很多人有兴趣用它来写书，可能是自娱自乐，也可能免费出版。
+设想中有一天上面提到的各个环节都能打磨得非常流畅，吸引更多的使用者。然后有很多人有兴趣用它来写书，可能是自娱自乐，也可以免费出版。
 
 出版界或者LaTeX的高手可以提供设计些更好的LaTeX模板（可以收费）供大家使用。
 
