@@ -17,6 +17,8 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 多说无益，先来看看效果吧。下面是我去年写的一本小册子：[跟我学企业敏捷开发](https://github.com/downloads/larrycai/sdcamp/sdcamp.zh.snapshot.pdf) 在PDF阅读器中的效果。注意还有完整的目录和页眉。
 
+![Markdown产生的书][http://larrycai.github.com/images/mkbokpdf.png]
+
 书的内容就全是用markdown格式写的，上图相对应的文件内容片断如下。
 
 	## Cucumber 简介 ##
@@ -33,7 +35,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 	    As a math idiot
 	    I want to be told the sum of two numbers
 
-下面就是书的全部章节文件，我把它分成了序、前言、致谢、正文和附录，蛮像回事吧。标准的书就是这样的，有兴趣的朋友可以看看[作译者手册](http://www.phei.com.cn/wstg/zyzxz)
+下面就是书的全部章节文件，我把它分成了序、前言、致谢、正文和附录，蛮像回事吧。有兴趣的朋友可以看看[作译者手册](http://www.phei.com.cn/wstg/zyzxz)，来了解标准的书是怎么组成的。
 
 	$ find zh
 	zh
@@ -59,11 +61,11 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 有兴趣了，就可以聊聊markdown了，简单来说，markdown格式的文件看着像一般的文本文件，里面只是加了很少的格式标记，因此看文本文件也不影响理解，这种格式也有很多工具帮你去转化，而且很容自动化解决。并且这些技术大多数是开源或免费的。
 
-如 `## Cucumber 简介 ##`就可以转换成html的`h2`或者书中的小节, 空四个就是表示代码。具体可以看图灵社区的文章 [Markdown语法说明（详解版](http://www.ituring.com.cn/article/504)
+如 `## Cucumber 简介 ##`就可以转换成html的`h2`或者书中的小节, 空四个就是表示代码，是否很简单。具体可以看图灵社区的文章 [Markdown语法说明（详解版](http://www.ituring.com.cn/article/504)
 
 ### 那为什么要用markdown呢？###
 
-原因很简单，因为简洁和流行。markdown格式的普及要归功于[Github](github.com)和[StackOverflow](http://stackoverflow.com/)。因为它们越来越流行，它们支持markdown格式也越来越流行。这里要赞一个的是，国内的[图灵社区](http://www.ituring.com.cn/)也支持markdown，用起来超级方便。
+原因也很简单，因为简洁和流行。markdown格式的普及要归功于[Github](github.com)和[StackOverflow](http://stackoverflow.com/)。因为它们越来越流行，它们支持markdown格式也越来越流行。这里要赞一个的是，国内的[图灵社区](http://www.ituring.com.cn/)也支持markdown，用起来超级方便。
 
 我的体会是，它让你关注内容，格式怎么显示不是要你在写得时候关注的。Word让我讨厌的原因就是老要关注格式。
 
@@ -73,21 +75,28 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 产生电子书一般有两种方案，一种是产生HTML中间格式再转换出电子书，另一种是产生[LaTeX](http://zh.wikipedia.org/zh/LaTeX)格式，再产生PDF，达到标准书籍出版的质量（完整的封面，目录，页眉等等），这里主要讨论第二种。
 
-Latex是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，有关Latex，自己看看相关学习吧。
+![Markdown产生的书技术方案][http://larrycai.github.com/images/mk2pdf.jpg]]
 
-[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出latex格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
+LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，有关LaTeX，自己看看相关学习吧。
 
-这里主要讨论Pdf的格式，实际上epub/mobi格式的用pandoc生成也很方便。
+在这里LaTeX和markdown就有点像HTML和CSS的关系: Markdown管内容，LaTeX负责表现形式。像页眉、目录、字体之类的和内容无关就全部有LaTeX搞定了。
 
+	\tableofcontents\newpage\thispagestyle{empty} % 设定了目录显示
+	\fancyhead[LE]{\color{colorheader}\quad\small\textbf\thepage\quad\quad\small\leftmark} %页眉左上角
 
+初看有点复杂，学习曲线蛮陡的。不懂的话，知道是样式就可以了，反正可以用现成的模板。
 
-## 其他常用格式的出版方案 ##
+工具软件[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出latex格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
+
+这里主要讨论PDF的格式，实际上epub/mobi格式的用pandoc生成也很方便。
+
+### 其他常用格式的出版方案 ###
 
 计算机类图书对格式要求不是很多，图文、章节、源代码基本就够了，就算有些复杂公式，也可用图来显示。这也从理论上说明，它不需要复杂的格式。现在对这类技术书出版我的理解主要有几种：
 
  1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它（对技术没追求，鄙视）。简单好学，但是不擅长自动化，是开源的死敌。
- 2. Latex格式（就是Donald E. Knuth（高德纳）发明的，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
- 3. docbook格式是最有名的（从SGML演化过来？），Orielly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
+ 2. 直接用LaTeX格式，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
+ 3. docbook格式是最有名的（从SGML演化过来），O’Reilly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
  4. 通过蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)开源书，我也了解reStructureText也是和markdown差不多纯文本（plain text)的，也是蛮流行的，结合[sphinx](http://sphinx-doc.org/)也所向无敌。
 
 ## 自己动手产生电子书 ##
