@@ -17,7 +17,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 多说无益，先来看看效果吧。下面是我去年写的一本小册子：[跟我学企业敏捷开发](https://github.com/downloads/larrycai/sdcamp/sdcamp.zh.snapshot.pdf) 在PDF阅读器中的效果。注意还有完整的目录和页眉。
 
-![Markdown产生的书][http://larrycai.github.com/images/mkbokpdf.png]
+![Markdown产生的书](http://larrycai.github.com/images/mkbokpdf.png)
 
 书的内容就全是用markdown格式写的，上图相对应的文件内容片断如下。
 
@@ -61,7 +61,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 有兴趣了，就可以聊聊markdown了，简单来说，markdown格式的文件看着像一般的文本文件，里面只是加了很少的格式标记，因此看文本文件也不影响理解，这种格式也有很多工具帮你去转化，而且很容自动化解决。并且这些技术大多数是开源或免费的。
 
-如 `## Cucumber 简介 ##`就可以转换成html的`h2`或者书中的小节, 空四个就是表示代码，是否很简单。具体可以看图灵社区的文章 [Markdown语法说明（详解版](http://www.ituring.com.cn/article/504)
+如 `## Cucumber 简介 ##`就可以转换成html的`<h2>Cucumber 简介</h2>`或者书中的小节, 空四个就是表示代码，是否很简单。具体可以看图灵社区的文章 [Markdown语法说明（详解版](http://www.ituring.com.cn/article/504)
 
 ### 那为什么要用markdown呢？###
 
@@ -75,11 +75,9 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 产生电子书一般有两种方案，一种是产生HTML中间格式再转换出电子书，另一种是产生[LaTeX](http://zh.wikipedia.org/zh/LaTeX)格式，再产生PDF，达到标准书籍出版的质量（完整的封面，目录，页眉等等），这里主要讨论第二种。
 
-![Markdown产生的书技术方案][http://larrycai.github.com/images/mk2pdf.jpg]]
+![Markdown产生的书技术方案](http://larrycai.github.com/images/mk2pdf.jpg)
 
-LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，有关LaTeX，自己看看相关学习吧。
-
-在这里LaTeX和markdown就有点像HTML和CSS的关系: Markdown管内容，LaTeX负责表现形式。像页眉、目录、字体之类的和内容无关就全部有LaTeX搞定了。
+LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，在这里LaTeX和markdown就有点像HTML和CSS的关系: Markdown管内容，LaTeX负责表现形式。像页眉、目录、字体之类的和内容无关的就全部有LaTeX搞定了。
 
 	\tableofcontents\newpage\thispagestyle{empty} % 设定了目录显示
 	\fancyhead[LE]{\color{colorheader}\quad\small\textbf\thepage\quad\quad\small\leftmark} %页眉左上角
@@ -175,5 +173,6 @@ Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌�
 # 相关资料 #
  * 图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)
  * 设想中的开源书项目 https://github.com/larrycai/kaiyuanbook
+ * 我再图灵社区的文章[开源书和开源技术-PDF中蛋疼的中文字体](http://www.ituring.com.cn/article/904)
  * Pandoc : http://johnmacfarlane.net/pandoc/
  
