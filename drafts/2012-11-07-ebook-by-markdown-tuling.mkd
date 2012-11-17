@@ -19,7 +19,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 ![Markdown产生的书](http://larrycai.github.com/images/mkbokpdf.png)
 
-书的内容就全是用markdown格式写的，上图相对应的文件内容片断如下。
+书的内容就全是用markdown格式写的，上图相对应的文件内容（6.2节）片断如下。
 
 	## Cucumber 简介 ##
 	Cucumber（英文：黄瓜）(官方网站是<http://cukes.info/>)是一个实例化需求的极佳实现伴侣。它是基于Ruby的开源测试工具，得益于Ruby便于创建和使用DSL的特性，它可以通过自然语言（文本文字）来描述需求（业务层），并通过关键字驱动和正则表达式匹配告诉去做哪些事情（驱动层），在运行自动化测试结束以后，还会给出详细的报告。
@@ -35,7 +35,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 	    As a math idiot
 	    I want to be told the sum of two numbers
 
-下面就是书的全部章节文件，我把它分成了序、前言、致谢、正文和附录，蛮像回事吧。有兴趣的朋友可以看看[作译者手册](http://www.phei.com.cn/wstg/zyzxz)，来了解标准的书是怎么组成的。
+下面就是书的全部markdown文件，每一章一个文件。我把它们分成了序、前言、致谢、正文和附录，蛮像回事吧。有兴趣的朋友可以看看[作译者手册](http://www.phei.com.cn/wstg/zyzxz)，来了解标准的书是怎么组成的。
 
 	$ find zh
 	zh
@@ -56,6 +56,8 @@ title: 用Markdown来写自由书籍-开源技术的方案
 	zh/2appendix/02-chapter2-cc2git.markdown
 
 全书的内容够可以在github上找到<https://github.com/larrycai/sdcamp/tree/master/zh>
+
+样式的产生全部有模板完成，一般不需要改动，这个稍后讲。
 
 ### 那什么是markdown ？###
 
@@ -79,12 +81,13 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，在这里LaTeX和markdown就有点像HTML和CSS的关系: Markdown管内容，LaTeX负责表现形式。像页眉、目录、字体之类的和内容无关的就全部有LaTeX搞定了。
 
+	\documentclass[a4paper]{book}                 % 指定书的格式
 	\tableofcontents\newpage\thispagestyle{empty} % 设定了目录显示
 	\fancyhead[LE]{\color{colorheader}\quad\small\textbf\thepage\quad\quad\small\leftmark} %页眉左上角
 
 初看有点复杂，学习曲线蛮陡的。不懂的话，知道是样式就可以了，反正可以用现成的模板。
 
-工具软件[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出latex格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
+工具软件[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出LaTeX格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
 
 这里主要讨论PDF的格式，实际上epub/mobi格式的用pandoc生成也很方便。
 
@@ -94,7 +97,7 @@ LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至
 
  1. Microsoft的Word格式，虽然国内出版界如日中天，缺省就认它（对技术没追求，鄙视）。简单好学，但是不擅长自动化，是开源的死敌。
  2. 直接用LaTeX格式，这是很棒的东西，特别适合学术类的各种复杂的公式等，不过学习曲线很高，国内也只有几家学术期刊使用。
- 3. docbook格式是最有名的（从SGML演化过来），O’Reilly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
+ 3. DocBook格式是最有名的（从SGML演化过来），O’Reilly和Pragmatic出版社缺省就用它，它能    很方便的转化出出版要的各种样式。如[Jenkins - the definition guide](http://www.wakaleo.com/books/jenkins-the-definitive-guide)开源书就是采用docbook。但由于是XML格式，很多人不习惯，而且多人网上协作不是很方便。
  4. 通过蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)开源书，我也了解reStructureText也是和markdown差不多纯文本（plain text)的，也是蛮流行的，结合[sphinx](http://sphinx-doc.org/)也所向无敌。
 
 ## 自己动手产生电子书 ##
@@ -116,7 +119,7 @@ LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至
     $ sudo apt-get install pandoc 
 	$ sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra # 安装texlive 2011
 
-因为是中文PDF，需要把字体嵌入在文件中，因此需要安装字体文件（如果不是Ubuntu中文版）
+因为是中文PDF，需要把字体嵌入在文件中，因此需要安装字体文件（如果不是Ubuntu中文版），具体可看我在图灵社区的文章[开源书和开源技术-PDF中蛋疼的中文字体](http://www.ituring.com.cn/article/904)
 
 	$ sudo apt-get install ttf-arphic-gbsn00lp ttf-arphic-ukai ttf-wqy-microhei ttf-wqy-zenhei
 
@@ -126,29 +129,15 @@ LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至
 
 ### mkbok 脚本 ###
 
-多说一点，`mkbok`是基于[Pro Git](http://github.com/progit/progit)里面的脚本`makeebooks`和`makepdfs`开发的。Scott原来还用[calibre](http://calibre-ebook.com/)产生epub文件，我统一用pandoc。还在原有的基础上进行了扩展，统一为`mkbok`脚本。
+pandoc本身也支持模板，但很多情况下，还需要调整，写个脚本就方便多了。我用的脚本`mkbok`是基于[Pro Git](http://github.com/progit/progit)里面的脚本`makeebooks`和`makepdfs`开发的。原书作者Scott原来还用[calibre](http://calibre-ebook.com/)产生epub文件，我统一用pandoc。还在原有的基础上进行了扩展，统一为`mkbok`脚本。
 
 	$ ./mkbok --build pdf,html,epub --lang zh --template latex/template.tex
 
-这样就可一次性完成电子书的活，而且还改造了LaTeX模板（加了前言、致谢和页眉等，使它最后的结果更像一份标准的书。
-
-	$ cat .mkbok.yml
-	---
-	  name: kaiyuanbook
-	  build: pdf,epub,html
-	  lang: zh
-	  license: ccbyncnd30
-	  config: latex/config.yml
-	  template: latex/template.tex
-	  preface-files: preface/*.markdown
-	  chapter-files: chapters/*.markdown
-	  appendix-files: appendix/*.markdown
-
-东西差不多，但是扩展应该会更好些，特别是有机会更方便的采用不同的专业模板。
+这样就可一次性完成电子书的活，而且还改造了LaTeX模板（加了前言、致谢和页眉等，使它最后的结果更像一份标准的书。主要功能差不多，但是扩展应该会更好些，特别是有机会更方便的采用不同的专业模板。
 
 ## 基于Github和Travis-ci的互联网在线方案 ##
 
-我一直想建一套使用上述技术的更方便的出版系统，一直没时间搞下去。现在最简单的还是应用互联网的服务，混搭一下。Github和Travis-ci就是我要利用的。
+我一直想建一套使用上述技术的更方便的出版系统，一直没时间搞下去。现在最简单的还是应用互联网的服务，混搭一下。Github和Travis-ci就是我要利用的服务。
 
 Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌的博客](http://www.juvenxu.com/2012/03/06/travis-ci/)和蒋鑫的[Got Github](http://www.worldhello.net/gotgithub/)，强烈建议你先试一下。要不下期码农吧。
 
@@ -173,6 +162,6 @@ Github和Travis CI这里就不介绍怎么使用了，具体可以先看[晓斌�
 # 相关资料 #
  * 图灵社区的文章[为什么写作自由书籍？](http://www.ituring.com.cn/article/details/764)
  * 设想中的开源书项目 https://github.com/larrycai/kaiyuanbook
- * 我再图灵社区的文章[开源书和开源技术-PDF中蛋疼的中文字体](http://www.ituring.com.cn/article/904)
+ * 我在图灵社区的文章[开源书和开源技术-PDF中蛋疼的中文字体](http://www.ituring.com.cn/article/904)
  * Pandoc : http://johnmacfarlane.net/pandoc/
  
