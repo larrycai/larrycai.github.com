@@ -87,7 +87,7 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
 
 	\section{Cucumber 简介} % 
 
-就是上面有`## Cucumber 简介 ##`自动生成的LaTeX内容，表示小节。
+就是上面由`## Cucumber 简介 ##`自动生成的LaTeX内容，表示小节。
 
 余下书的表现形式就有预先调好的LaTeX的模板来处理，像页眉、目录、字体之类的和内容无关的就全部有LaTeX搞定了。不同的出版社或者图书系列都会有特定的模板，这和作者的内容无关。
 
@@ -99,7 +99,7 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
 		{\color{colorsection}\normalfont\Large\bfseries}
 		{\color{colorsection}\thesection}{1em}{}
 
-\bfseries 是让 LaTeX 使用粗体字排版，这儿选择了文泉驿的微黑。
+`\bfseries` 是让 LaTeX 使用粗体字排版，这儿选择了文泉驿的微黑。
 
 下面这一段是调出页眉左上角（`LE=Left Head`）的：显示页码和内容，颜色设定为钢铁蓝，
 
@@ -110,7 +110,7 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
 
 工具软件[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出LaTeX格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
 
-这里主要讨论PDF的格式，实际上epub/mobi格式的用pandoc生成也很方便。
+这里主要讨论PDF的格式，实际上epub/mobi格式的用`pandoc`生成也很方便。
 
 ### 其他常用格式的出版方案 ###
 
@@ -135,7 +135,7 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
     
 	$ git clone https://github.com/larrycai/sdcamp.git
 	
-生成PDF是一个比较复杂的东西，用到了[pandoc](http://johnmacfarlane.net/pandoc/)和[TexLive](http://www.tug.org/texlive/)软件，用Ubuntu库里就可以了。
+生成PDF是一个比较复杂的东西，用到了[pandoc](http://johnmacfarlane.net/pandoc/)和[TexLive](http://www.tug.org/texlive/)软件，用Ubuntu库里就可以了。关于Pandoc，可以看图灵社区翻译的文章[关于通用文档转换器Pandoc](http://www.ituring.com.cn/article/679)，TexLive就是LaTeX的工具集。
     
     $ sudo apt-get install pandoc 
 	$ sudo apt-get install texlive-xetex texlive-latex-recommended texlive-latex-extra # 安装texlive 2011
@@ -150,7 +150,7 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
 
 ### mkbok 脚本 ###
 
-pandoc本身也支持模板，但很多情况下，还需要调整，写个脚本就方便多了。我用的脚本`mkbok`是基于[Pro Git](http://github.com/progit/progit)里面的脚本`makeebooks`和`makepdfs`开发的。原书作者Scott原来还用[calibre](http://calibre-ebook.com/)产生epub文件，我统一用pandoc。还在原有的基础上进行了扩展，统一为`mkbok`脚本。
+`pandoc`本身也支持模板，但很多情况下，还需要调整，写个脚本就方便多了。我用的脚本`mkbok`是基于[Pro Git](http://github.com/progit/progit)里面的脚本`makeebooks`和`makepdfs`开发的。原书作者Scott原来还用[calibre](http://calibre-ebook.com/)产生epub文件，我统一用`pandoc`。并原有的基础上进行了扩展，统一为`mkbok`脚本。
 
 	$ ./mkbok --build pdf,html,epub --lang zh --template latex/template.tex
 
