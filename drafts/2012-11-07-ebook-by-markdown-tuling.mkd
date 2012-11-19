@@ -110,6 +110,8 @@ Markdown可以通过工具自动转换出LaTeX的标准内容。
 
 工具软件[pandoc](http://johnmacfarlane.net/pandoc/)能帮着从markdown转换出LaTeX格式，然后通过[TexLive](http://www.tug.org/texlive/)软件中的`xelatex`再转成PDF格式。
 
+强烈建议你到[Pandoc的在线实验环境](http://johnmacfarlane.net/pandoc/try)试一下。
+
 这里主要讨论PDF的格式，实际上epub/mobi格式的用`pandoc`生成也很方便。
 
 ### 其他常用格式的出版方案 ###
