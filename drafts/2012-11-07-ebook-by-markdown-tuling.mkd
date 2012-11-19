@@ -79,7 +79,7 @@ title: 用Markdown来写自由书籍-开源技术的方案
 
 从Markdown源文件产生电子书一般有两种方案：一种是产生HTML中间格式再转换出电子书，另一种是对应地转换产生出[LaTeX](http://zh.wikipedia.org/zh/LaTeX)文件格式，再和LaTeX模板合在一起，最后转换产生PDF，达到标准书籍出版的质量（完整的封面，目录，页眉等等），这里主要讨论第二种。
 
-![Markdown产生的书技术方案](http://larrycai.github.com/images/mk2pdf.jpg)
+![Markdown产生的书技术方案](http://larrycai.github.com/images/mk2pdf.png)
 
 LaTeX（就是Donald E. Knuth（高德纳）发明的）是一个出版界（至少是科技界）常用的格式，PDF也能很容易的产生出来，它的好处是内容和形式是很容易分开的，感谢大师的设计。
 
