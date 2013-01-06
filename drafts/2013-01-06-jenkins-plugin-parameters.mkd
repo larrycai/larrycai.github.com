@@ -1,29 +1,40 @@
 ---
 layout: post
 title: Jenkins 插件（Plugin）系列一：如何使用参数类插件控制任务。
+tags: jenkins, jenkins plugin, continuous integration, ci
 ---
 #{{ page.title }}#
-## 背景 ##
+## Jenkins和插件 ##
 
-软件开发离不开持续集成，
+软件开发离不开持续集成，最有名的开源软件是Jenkins <http://jenkins-ci.org/>，架设非常容易。它的强大在于它有很好的生态系统，这里边各种有用的插件（Plugin）是它的一个亮点，具体请看 <https://wiki.jenkins-ci.org/display/JENKINS/Plugins>。
 
-## markdown能做出什么效果呢 ##
+我希望有机会在这里介绍一些插件来更好地使用Jenkins，今天讨论的是参数类（Parameter）插件。
+
+1. Parameterized Trigger Plugin 
+2. NodeLabel Parameter Plugin & Random String Parameter Plugin  &   Validating String Parameter Plugin 
+3. Rebuild Plugin or Rerun inside BuildPipeline
+4. Job Exporter Plugin
+5.  Simple Parameterized Builds Report plugin & Show Build Parameters Plugin
+6. Extended Choice Parameter plugin & Extended+Choice+Parameter+Script+plugin 
+7. Global Variable String Parameter Plugin 
+8. Jenkins Dynamic Parameter Plug-in
+9. 
+
+## 通过参数 ##
+
+
+
+## 在两个任务中传参数 ##
+
+## 在任务中显示具体的参数 ##
+
+## 重新运行传过参数的中间任务 ##
 
 
 ## 结尾 ##
 
-里面的技术细节还有蛮多的，不知是否你都明白，实际上照着试一遍，你会发现不是那么复杂。如果有问题，尽管找我 （@larrycaiyu）
-
-我一直设想中有一天上面提到的各个环节都能打磨得非常流畅，吸引更多的使用者。然后能够有很多人有兴趣用它来写书，可能是自娱自乐，也可以免费出版。不管怎样都是促进图书业。
-
-出版界或者LaTeX的高手可以提供设计些更好的LaTeX模板（可以收费）供大家使用。
-
-图灵出版社也提供网上的编辑服务（当然是可以收费的），对一些想把书写得专业点的作者提供额外的帮助，这样或许是一个很好的增值服务。至少像我这样的文笔超烂的技术人员很想得到的。
-
-这些本是我2012想做到的事情：[设想中的开源书项目](https://github.com/larrycai/kaiyuanbook)，而且域名都买好了，留个遗憾放到明年吧。
-
-技术无极限，只怕没追求。 
-
+下面给出一些链接
+ * 
     
  
  
