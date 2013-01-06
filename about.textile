@@ -11,6 +11,6 @@ private "English blog:http://codeslife.com":http://codeslife.com
 
 h2. About This Site
 
-This site is built using the "Jekyll":http://github.com/mojombo/jekyll library and hosted on "GitHub":http://github.com/. The source code used to create this library is "publicly available on GitHub":http://github.com/larrycai/larrycai.github.com as well.
+This site is built using the "Jekyll":http://github.com/mojombo/jekyll library 
 
 The template comes from "mbleigh.github.com":http://github.com/mbleigh/mbleigh.github.com
