@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Jenkins 插件（Plugin）系列一：如何使用参数类插件控制任务。
-tags: jenkins, jenkins plugin, continuous integration, ci
 ---
 #{{ page.title }}#
 ## Jenkins和插件 ##
