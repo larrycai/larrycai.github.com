@@ -77,5 +77,5 @@ Groovy是一种Java平台语言。它能够与Java代码很好地结合，也能
  2. Juvenxu网站上：使用email-ext替换Jenkins(Hudson)的默认邮件通知：<http://www.juvenxu.com/2011/05/18/hudson-email-ext/>
  3. email-ext插件： <http://wiki.jenkins-ci.org/display/JENKINS/Email-ext+plugin>
  
-  [img-travis-ci-email]: http://larrycai.github.com/images/travis-ci-email.png
-  [img-groovy-email]: http://larrycai.github.com/images/groovy-email.png
+  [img-travis-ci-email]: /images/travis-ci-email.png
+  [img-groovy-email]: /images/groovy-email.png

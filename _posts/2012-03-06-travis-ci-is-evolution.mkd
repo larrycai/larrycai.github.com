@@ -106,6 +106,6 @@ Travis CI现在只是支持Github的公开项目，但已经爆发出它的优�
  1. Juven Xu的“Travis CI，翩翩而至的CI云” <http://www.juvenxu.com/2012/03/06/travis-ci/>
  2. 免费的持续集成测试服务 <http://saberma.me/other/2011/11/29/travis-ci-is-a-free-continuous-integration-test-server.html>
 
- [img-jenkins-jobs]: http://larrycai.github.com//images/jenkins-jobs.jpg
- [img-building-status-tag]: http://larrycai.github.com/images/building-status-tag.png
- [img-build-matrix]: http://larrycai.github.com/images/build-matrix.png
+ [img-jenkins-jobs]: /images/jenkins-jobs.jpg
+ [img-building-status-tag]: /images/building-status-tag.png
+ [img-build-matrix]: /images/build-matrix.png
