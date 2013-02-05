@@ -5,7 +5,7 @@ title: 敏捷转型的3个阶段和教练的选择
 #{{ page.title }}#
 ## 背景 ##
 
-@Michael-李俊 在新浪微博上问了个好问题 “推行敏捷大概有哪几个阶段？对教练有哪些不同要求？” - http://weibo.com/2477254141/zhmzQCSyQ
+@Michael-李俊 在新浪微博上问了个好问题 “推行敏捷大概有哪几个阶段？对教练有哪些不同要求？” - <http://weibo.com/2477254141/zhmzQCSyQ>
 
 在公司中，其他部门也经常问我类似的问题，正好一并做个解答，权作抛砖引玉，一起来讨论，且做免责声明。
 
@@ -63,7 +63,10 @@ title: 敏捷转型的3个阶段和教练的选择
 
 ## 推荐图书 ##
 
-1. 程序员的职业素养 (The Clean Coder) <http://www.ituring.com.cn/book/838>
-2. 代码整洁之道 (Clean Code) <http://book.douban.com/subject/4199741/>
- 
+1. 硝烟中的Scrum和XP (Scrum and XP from the Trenches) <http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches>
+2. 看板和Scrum——相得益彰 (Kanban and Scrum - making the most of both) <http://www.infoq.com/cn/minibooks/kanban-scrum-minibook-cn>
+3. 精益和敏捷开发大型应用指南 (Scale Lean & Agile Development) <http://www.amazon.cn/dp/B00305HIXE>
+4. 精益和敏捷开发大型应用实战 (Practices for Scaling Lean & Agile Development) <http://www.amazon.cn/dp/B004I6DWY8>
+5. 持续集成:软件质量改进和风险降低之道 (Continuous Integration:Improving Software Quality and Reducing Risk) <http://www.amazon.cn/dp/B008AY9XCY/>
+5. 持续交付:发布可靠软件的系统方法 (Continuous Delivery) <http://www.amazon.cn/dp/B005V9BB1M>
  
