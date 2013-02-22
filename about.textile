@@ -3,11 +3,11 @@ title: About Larry Cai
 layout: master
 ---
 
-h2. About Larry Cai
+h2. 关于我
 
 Larry Cai is the author of this blog, which records his software development experience.
 
-private "English blog:http://codeslife.com":http://codeslife.com
+"English blog:http://larrycaiyu.com/blog":http://larrycaiyu.com/blog
 
 h2. About This Site
 
