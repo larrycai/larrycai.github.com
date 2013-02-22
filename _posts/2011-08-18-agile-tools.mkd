@@ -125,7 +125,7 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
 #参考#
  1. 中文敏捷宣言：<http://agilemanifesto.org/iso/zhchs/>
  2.	Redmine: <http://redmine.org/>
- 3.《Agile ALM》：<http://www.manning.com/huettermann/>
+ 3. 《Agile ALM》：<http://www.manning.com/huettermann/>
  4.	持续集成理论和实践的新进展：<http://www.infoq.com/cn/articles/ci-theory-practice>
  5.	Jenkins：<http://jenkins-ci.org/>
  6.	Hudson正式更名为Jenkins：<http://www.infoq.com/cn/news/2011/02/jenkins>
@@ -134,12 +134,12 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
  9.	李剑翻译的《硝烟中的Scrum和XP》： <http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches>
  10. Gerrit：<http://code.google.com/p/gerrit/>
  11. Android的代码审阅：<https://review.source.android.com/>
- 12.《Git权威指南》：<http://www.ossxp.com/doc/gotgit/>
- 13.《Maven实战》和许晓斌：<http://www.juvenxu.com/mvn-in-action/>
+ 12. 《Git权威指南》：<http://www.ossxp.com/doc/gotgit/>
+ 13. 《Maven实战》和许晓斌：<http://www.juvenxu.com/mvn-in-action/>
  14. 敏捷之旅中国：<http://agiletour.cn/>
  
 #作者简介#
-[@larrycaiyu][larryweibo]作为软件实践的先行者，公司的主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
+[@larrycaiyu][larryweibo]作为软件实践的先行者，在公司的主要工作就是探索软件开发的最好最适合的方法和工具，使得该研发中心成为IT领域顶尖人才向往的地方之一。同时他是一个开源，协作和敏捷的布道者。
 
 本文提到的内容在 ScrumGathering上海2011上做过专题演讲，参见[演讲稿件](http://t.cn/aCKFrd)。
 
