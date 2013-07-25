@@ -15,9 +15,9 @@ title: 阅读者 - "Cucumber行为驱动开发指南" 能带给我们什么
 
 也或许只想在炎炎夏日看一本解渴的书。
 
-所有这些，我都推荐最近翻译出版的黄瓜书 "Cucumber行为驱动开发指南" （cucumber中文是黄瓜），原书是Pragmatic出版社出版的“The Cucumber book：The Bevaiour-Driven Development for Testers and Developers”，在[美国亚马逊网站](http://www.amazon.com/The-Cucumber-Book-Behaviour-Driven-Development/dp/1934356808)上是全五星书，强烈建议你也去看看那些评价
+所有这些，我都推荐最近翻译出版的黄瓜书 "Cucumber行为驱动开发指南" （cucumber中文是黄瓜），原书是Pragmatic出版社出版的“[The Cucumber book：The Bevaiour-Driven Development for Testers and Developers](http://www.amazon.com/The-Cucumber-Book-Behaviour-Driven-Development/dp/1934356808)”，在[美国亚马逊网站]上是全五星书，强烈建议你也去看看那些评价
 
-# Cucumber行为驱动开发指南
+## Cucumber行为驱动开发指南 ##
 
 这本书是讲述如何用Cucumber工具来建立一个自动化测试，以此来推进业务驱动开发过程，确保软件开发的质量。
 
@@ -34,7 +34,7 @@ Cucumber实际上是一个工具的名字，他帮你把需求用自然语言写
 第三部分是讲如何应用Cucumber来处理不同的系统如Web界面和命令行等等，他提供了一组配方来解决你的特定问题。
 
 
-# 亮点
+## 亮点 ##
 
 作为一个软件开发者，我经常关注和学习最新的软件开发方法和相应的工具。很早就对ATDD（Acceptance Test Driven Development 验收测试驱动开发）感兴趣，2011年也参加了Gojko Adzic的”实例化需求“的讲座，进行了尝试，也有一些心得。
 
@@ -46,9 +46,15 @@ Cucumber实际上是一个工具的名字，他帮你把需求用自然语言写
 
 这里学到的原则可以运用在任何其他工具中使用。
 
-我最喜欢的是第六章（第一部分），最值钱的地方: 作者列出了一些常见问题，并给出了咨询师才能给出的解决方案。
+我最喜欢的是第一部分中的第六章，可能也是最值钱的地方: 作者列出了一些自动化测试中的常见问题，并给出了咨询师才能给出的解决方案。
 
 
-## 推荐
+## 推荐 ##
 
-我愿意把这本书推荐给那些不了解如何处理需求和自动化测试的开发经理和开发者,以及熟悉了一点自动化测试的，正在寻求扩展的技能开发人员。
+我愿意把这本书推荐给那些不了解如何处理需求和自动化测试的开发经理和开发者。
+
+也推荐给那些熟悉了一点自动化测试的，正在寻求扩展的技能开发人员。
+
+实际上对每个软件开发人员都会有点启示。
+
+这么热的天，来根黄瓜。
