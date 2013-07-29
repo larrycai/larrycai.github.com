@@ -15,13 +15,13 @@ title: 阅读者 - "Cucumber行为驱动开发指南" 能带给我们什么
 
 也或许只想在炎炎夏日看一本解渴的书。
 
-所有这些，我都推荐最近翻译出版的黄瓜书 "Cucumber行为驱动开发指南" （cucumber中文是黄瓜），原书是Pragmatic出版社出版的“[The Cucumber book：The Bevaiour-Driven Development for Testers and Developers](http://www.amazon.com/The-Cucumber-Book-Behaviour-Driven-Development/dp/1934356808)”，在[美国亚马逊网站]上是全五星书，强烈建议你也去看看那些评价
+所有这些，我都推荐最近翻译出版的黄瓜书 "Cucumber行为驱动开发指南"，原书是Pragmatic出版社出版的“[The Cucumber book：The Bevaiour-Driven Development for Testers and Developers](http://www.amazon.com/The-Cucumber-Book-Behaviour-Driven-Development/dp/1934356808)”，在[美国亚马逊网站]上是全五星书，强烈建议你也去看看那些评价
 
 ## Cucumber行为驱动开发指南 ##
 
 这本书是讲述如何用Cucumber工具来建立一个自动化测试，以此来推进业务驱动开发过程，确保软件开发的质量。
 
-Cucumber实际上是一个工具的名字，他帮你把需求用自然语言写清楚，以便于沟通，协调提高。这些需求也是可读性很强的测试用例，而且可以自动化运行，这样的测试就一目了然，帮助软件开发的你从头到尾监控好需求的实施进展。
+Cucumber实际上是一个工具的名字，他帮你把需求用自然语言写清楚，以便于沟通，协调提高。这些需求也是可读性很强的测试用例，Cucumber能够帮助你自动化运行这些需求，来验证你的软件对需求的实现程度，使你能够从头到尾监控好需求的实施进展。
 
 本书的目标不是介绍工具，他让你如何有效的用工具来驾驭需求。工具中的语法是死的，他告诉如何运用Cucumber解决实际问题，而不是纸上谈兵。
 
