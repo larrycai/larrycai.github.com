@@ -83,3 +83,5 @@ Web服务接口常用JSON来体现，这个在测试用例中往往会变得很�
 实际上对每个软件开发人员都会有点启示。
 
 这么热的天，来根“黄瓜”解解渴。
+
+Shared in <a href="https://plus.google.com/100729724738053223351?rel=author">Google</a>
