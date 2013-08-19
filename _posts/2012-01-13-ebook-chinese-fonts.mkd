@@ -93,3 +93,5 @@ Adobe的中文字体有[官方下载](http://www.adobe.com/support/downloads/det
     
 # 参考 #
  1. 中文字体没有版权问题的解决方案？http://bbs.ctex.org/viewthread.php?tid=46106&extra=&page=1	
+
+Shared in <a href="https://plus.google.com/100729724738053223351?rel=author">Google</a>
