@@ -7,42 +7,62 @@ title: 使用Docker的Jenkins持续集成-1：docker插件
 
 !!! 本文章已发表于[InfoQ Docker栏目]()， 转载请注明InfoQ出处 !!!
 
+基于Jenkins的持续集成部署已深入人心，它的一个重要的使用实践是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
 
-基于Jenkins的持续集成已深入人心，它的一个重要的实践是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
+![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
 
-【图片1】
-
-管理Slave机器能从侧面看出一个公司配置管理和自动化程度的专业性。Slave机器是构建的主要场所，涉及到的环境如果产品要求多，那么它就会非常复杂，一般有一下几个问题
+管理Slave机器的能力实际上从很大程度能从侧面看出一个公司配置管理和自动化程度的专业性。Slave机器是构建的主要场所，涉及到的环境如果产品要求多，那么它就会非常复杂，一般有一下几个问题：
 
 1. 构建平台：不同操作系统 （Redhat/Ubuntu/SuSE)、不同语言环境（Ruby/Python/C/Java）和各个版本。有些语言有天生的跨平台，但也涉及到不同版本的切换，保证每个场景都有一个适合的机器用来构建会很繁琐。云和虚拟机是一个很好的方向。
 2. 平衡干净系统和启动速度：为了保证构建的准确性，每次系统重启是个最有效的办法 （travis-ci就是这么做的），只是启动速度会受一些影响，这两者需要平衡。
-3. 保留构建现场：构建经常会有出错的情况，开发人员总是希望能登陆到构建机器上重现，特别是复杂的情况。但是由于机器的限制，一般都只是保留Log（日志）来诊断，会耽误不少时间。如果是虚拟机，有些情况可以Snapshot（快照）构建机器，但是由于硬盘大小和Snapshot的开销，采用的也不常见。
+3. 保留构建现场：构建经常会有出错的情况，开发人员总是希望能登陆到构建机器上重现，特别是复杂的情况。但是由于机器的限制，一般都只是保留Log（日志）来诊断，会耽误不少时间。
 
-Docker的出现可以从技术上一定程度解决这个问题，这篇文章就是介绍如何使用[Jenkins Docker Plugin]()来了解docker在持续集成中的作用。
+虚拟化（Virtualization)和云（cloud）平台的出现，在一定程度上解决了机器有效利用和管理的问题，但是每次如果重启干净环境的话，开销还是比较大的（几分钟到十几分钟）。再有需要保留现场可以Snapshot（快照）构建机器，但是由于硬盘大小（几G到几十G）和Snapshot的开销，采用的也不常见。
+
+Docker的出现可以从技术上一定程度解决这个问题，它的快速启动和极小的存储代价解决了其中的大部分问题。具体可以参见文章xxx （找一篇infoq的文章做链接）
+
+这篇文章就是介绍如何使用[Jenkins Docker Plugin]()来了解docker在持续集成中的作用。
+
 
 ## 演示环境 ##
 
-废话少说，直接运行上演示环境，如果没有docker的运行环境，请自己安装。Windows/Mac用户推荐[boot2docker](http://boot2docker.com)
+废话少说，直接运行上基于docker的演示环境，如果没有docker的运行环境，请自己安装。Windows/Mac用户推荐[boot2docker](http://boot2docker.com)
 
-    $ docker run -v /var/lib/docker.sock:/docker.sock larrycai/jenkins-docker-demo1
+    $ docker run -t -p 8080:8080 larrycai/jenkins-docker-demo1
 
-它会自动下载相关的docker container（容器）并运行，主要是一个Jenkins container作为Jenkins Master、一个Ubuntu还有一个CentOS的container作为Slave机器。
+它会下载`larrycai/jenkins-docker-demo1`这个docker image并运行。Jenkins服务的端口是`8080`，如果是`boot2docker`，那就是 http://192.168.59.103:8080
 
-[图2. 架构]
+![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
 
-Jenkins服务的端口是8180，如果是boot2docker，那就是 http://192.168.59.103:8180
+你可以直接运行里面的演示Job（任务）：`docker-demo`，启动后它会自动下载配套的`larrycai/ubuntu-slave`作为Slave来运行，非常简洁。
 
-[图3：界面]
+![jenkins-demo1-console](http://larrycaiyu.com/images/jenkins-demo1-console.png)
 
-你可以直接运行里面的Job（任务）：docker-demo，它会启动两个子任务在Ubuntu和CentOS系统上编译并打包，一个任务会出错。
+## 在Jenkins中使用Docker ##
+三种方式
+
+### 拿Docker container作为简单的Slave机器 ###
+当然你可以像管理一般的机器一样管理docker的从属机：
+
+1. 启动docker从属机。
+2. 在Jenkins中配置从属机。
+
+这样的话
+
+### 自己写脚本管理Docker container ###
+
+### 用Jenkins Docker Plugin原生态 ###
+
+## Jenkins配置 ##
+
+![jenkins-demo1-build1](http://larrycaiyu.com/images/jenkins-demo1-build1.png)
+![jenkins-demo1-build2](http://larrycaiyu.com/images/jenkins-demo1-build2.png)
 
 出错的任务的现场会保留，你可以启动并登陆检验错误在哪里
 
     $ docker run -it docker-demo-222 bash
 
 下面我们来讲解docker起的作用和怎么配置的。
-
-## Jenkins配置 ##
 
 ### docker plugin ###
 
@@ -54,21 +74,30 @@ docker插件需要Jenkins 。。。版本支持，幸好最新的LTS版本已经
 
 配置界面
 
-[配置界面图]
+![jenkins-demo1-global-config](http://larrycaiyu.com/images/jenkins-demo1-global-config.png)
 
 ### Job中配置Slave ###
 
-[Job界面图]
+![jenkins-demo1-job-config](http://larrycaiyu.com/images/jenkins-demo1-job-config.png)
 
 ## 总结 ##
 
-通过。。。
+通过上面的演示和解析，相信你开始学会如何在Jenkins中灵活运用好Docker了，Docker在Jenkins中能够：
 
-本文中所用的所有演示源代码都在github上 http://github.com/larrycai/jenkins-docker-demo1 。有些技巧你可以借用 
+1. 可以配置各种构建环境（不同的操作系统，不同的语言环境和不同的版本），别忘了，这些在Docker社区比虚拟机更容易得到和管理（依赖http://hub.docker.com和`Dockerfile`）
+2. 每一个Docker image都提供了一个干净的构建环境，这些环境可以被快速启动（特别是和虚拟机相比）
+3. 依赖Docker的层级特性，构建现场很容易被保留传输（依赖私有的Docker仓库），提高了开发的效率。
+
+当然也必须看到Docker是个新生物，Jenkins Docker plugin和其他插件比起来远没有到完善的程度（建议关注issues）， 
+
+如果不用docker插件，你会发现管理这些Slave端口和启停Slave机器会很成问题，这个留待你自己思考。
+
 
 ## 结尾 ##
 
 这只是我一些粗浅的使用Docker经验，Docker是一个新技术，我也在不断的学习进步中，欢迎一起切磋。
+
+本文中所用的所有演示源代码都在github上http://github.com/larrycai/jenkins-docker-demo1 。有些技巧你可以借用。 
 
 如果喜欢这篇文章，请给个赞 （微博 @larrycaiyu），鼓励我再写几篇docker的文章。
 
