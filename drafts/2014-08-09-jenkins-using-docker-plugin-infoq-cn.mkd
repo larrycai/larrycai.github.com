@@ -7,7 +7,7 @@ title: 使用Docker的Jenkins持续集成-1：docker插件
 
 !!! 本文章已发表于[InfoQ Docker栏目]()， 转载请注明InfoQ出处 !!!
 
-基于Jenkins的持续集成部署已深入人心，它的一个重要的使用实践是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
+基于Jenkins的持续集成部署已深入人心，它的一个重要的使用方式就是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
 
 ![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
 
@@ -19,9 +19,9 @@ title: 使用Docker的Jenkins持续集成-1：docker插件
 
 虚拟化（Virtualization)和云（cloud）平台的出现，在一定程度上解决了机器有效利用和管理的问题，但是每次如果重启干净环境的话，开销还是比较大的（几分钟到十几分钟）。再有需要保留现场可以Snapshot（快照）构建机器，但是由于硬盘大小（几G到几十G）和Snapshot的开销，采用的也不常见。
 
-Docker的出现可以从技术上一定程度解决这个问题，它的快速启动和极小的存储代价解决了其中的大部分问题。具体可以参见文章xxx （找一篇infoq的文章做链接）
+Docker的出现可以从技术上一定程度解决这个问题，它的快速启动和极小的存储代价解决了其中的大部分问题。具体可以参见[InfoQ上的深入浅出其他系列文章](http://www.infoq.com/cn/dockers)
 
-这篇文章就是介绍如何使用[Jenkins Docker Plugin]()来了解docker在持续集成中的作用。
+这篇文章就是介绍如何使用[Jenkins Docker Plugin][jenkins-docker-plugin]来了解docker在持续集成中的作用。
 
 
 ## 演示环境 ##
@@ -80,6 +80,12 @@ docker插件需要Jenkins 。。。版本支持，幸好最新的LTS版本已经
 
 ![jenkins-demo1-job-config](http://larrycaiyu.com/images/jenkins-demo1-job-config.png)
 
+## 缺点 ##
+
+由于Docker插件还是0.7版本，好多功能还没有，如私有Docker仓库的支持、多Docker container的启动和部署（建议关注github上的issues）。这些在现在时刻只能用自己的脚本来处理。
+
+但是这不妨碍在一些简单的环境中开始使用起来，而且相信在不久的将来，这些问题都会解决掉。这就是开源社区的力量。
+
 ## 总结 ##
 
 通过上面的演示和解析，相信你开始学会如何在Jenkins中灵活运用好Docker了，Docker在Jenkins中能够：
@@ -88,7 +94,7 @@ docker插件需要Jenkins 。。。版本支持，幸好最新的LTS版本已经
 2. 每一个Docker image都提供了一个干净的构建环境，这些环境可以被快速启动（特别是和虚拟机相比）
 3. 依赖Docker的层级特性，构建现场很容易被保留传输（依赖私有的Docker仓库），提高了开发的效率。
 
-当然也必须看到Docker是个新生物，Jenkins Docker plugin和其他插件比起来远没有到完善的程度（建议关注issues）， 
+当然也必须看到Docker是个新生物，[Jenkins Docker插件][jenkins-docker-plugin]和其他插件比起来远没有到完善的程度（建议关注issues）， 
 
 如果不用docker插件，你会发现管理这些Slave端口和启停Slave机器会很成问题，这个留待你自己思考。
 
@@ -110,6 +116,8 @@ docker插件需要Jenkins 。。。版本支持，幸好最新的LTS版本已经
 2. [jenkins docker plugin](https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin)
 3. [The Docker book](http://www.dockerbook.com/) 
 4. Docker CodingWithMe 90分钟教材：[Learn Docker](http://www.slideshare.net/larrycai/learn-docker-in-90-minutes),[Build Service with Docker](http://www.slideshare.net/larrycai/build-service-withdockerin90mins)
+
+[jenkins-docker-plugin]: https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin
     
  
  
