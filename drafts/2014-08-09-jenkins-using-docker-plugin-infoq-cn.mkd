@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用Docker的Jenkins持续集成-1：docker插件
+title: Docker的Jenkins持续集成-1：使用docker插件
 ---
 #{{ page.title }}#
 ## 背景 ##
@@ -9,15 +9,15 @@ title: 使用Docker的Jenkins持续集成-1：docker插件
 
 基于Jenkins的持续集成部署已深入人心，它的一个重要的使用方式就是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
+![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-arch.png)
 
 管理Slave机器的能力实际上从很大程度能从侧面看出一个公司配置管理和自动化程度的专业性。Slave机器是构建的主要场所，涉及到的环境如果产品要求多，那么它就会非常复杂，一般有一下几个问题：
 
 1. 构建平台：不同操作系统 （Redhat/Ubuntu/SuSE)、不同语言环境（Ruby/Python/C/Java）和各个版本。有些语言有天生的跨平台，但也涉及到不同版本的切换，保证每个场景都有一个适合的机器用来构建会很繁琐。云和虚拟机是一个很好的方向。
 2. 平衡干净系统和启动速度：为了保证构建的准确性，每次系统重启是个最有效的办法 （travis-ci就是这么做的），只是启动速度会受一些影响，这两者需要平衡。
-3. 保留构建现场：构建经常会有出错的情况，开发人员总是希望能登陆到构建机器上重现，特别是复杂的情况。但是由于机器的限制，一般都只是保留Log（日志）来诊断，会耽误不少时间。
+3. 保留构建现场：构建经常会有出错的情况，开发人员总是希望能登陆到构建机器上重现，特别是复杂的情况。但是由于资源的限制，一般都只是保留Log（日志）来诊断，会耽误不少时间。
 
-虚拟化（Virtualization)和云（cloud）平台的出现，在一定程度上解决了机器有效利用和管理的问题，但是每次如果重启干净环境的话，开销还是比较大的（几分钟到十几分钟）。再有需要保留现场可以Snapshot（快照）构建机器，但是由于硬盘大小（几G到几十G）和Snapshot的开销，采用的也不常见。
+虚拟化（Virtualization)和云（cloud）平台的出现，在一定程度上解决了机器有效利用和管理的问题，但是每次如果重启干净环境的话，开销还是比较大的（几分钟到十几分钟）。再有需要保留现场可以Snapshot（快照）构建机器，但是由于硬盘大小（几G到几十G）和快照（Snapshot）的开销，采用的也不常见。
 
 Docker的出现可以从技术上一定程度解决这个问题，它的快速启动和极小的存储代价解决了其中的大部分问题。具体可以参见[InfoQ上的深入浅出其他系列文章](http://www.infoq.com/cn/dockers)
 
@@ -34,22 +34,19 @@ Docker的出现可以从技术上一定程度解决这个问题，它的快速�
 
 ![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
 
-你可以直接运行里面的演示Job（任务）：`docker-demo`，启动后它会自动下载配套的`larrycai/ubuntu-slave`作为Slave来运行，非常简洁。
+你可以直接运行里面的演示任务（job）：`docker-demo`，启动后它会自动下载配套的`larrycai/ubuntu-slave`作为Slave来运行，里面是一个C++的编译环境，非常简洁。
 
 ![jenkins-demo1-console](http://larrycaiyu.com/images/jenkins-demo1-console.png)
 
 ## 在Jenkins中使用Docker ##
-三种方式
 
-### 拿Docker container作为简单的Slave机器 ###
-当然你可以像管理一般的机器一样管理docker的从属机：
+在Jenkins中常见有三种方式可以使用：
 
-1. 启动docker从属机。
-2. 在Jenkins中配置从属机。
+1. 拿Docker container作为简单的Slave机器，像管理一般的机器一样管理docker的从属机。
+2. 在Jenkins中用配置从属机，自己写脚本管理Docker container，自动读取IP地址和端口。
+3. 用[Docker插件][jenkins-docker-plugin]。
 
-这样的话
-
-### 自己写脚本管理Docker container ###
+前两种比较繁琐，不太Docker化，接下来主要讲如何用[Docker插件][[jenkins-docker-plugin]来使用Docker，这也是上面的演示环境中如何使用Docker的。
 
 ### 用Jenkins Docker Plugin原生态 ###
 
@@ -66,7 +63,7 @@ Docker的出现可以从技术上一定程度解决这个问题，它的快速�
 
 ### docker plugin ###
 
-docker插件需要Jenkins 。。。版本支持，幸好最新的LTS版本已经支持了。
+docker插件需要Jenkins 。。。版本支持，幸好最新的长期支持版本（LTS）已经支持了。
 
 为了作为docker container在Jenkins Slave中使用，Java环境和SSH服务需要配置好，已经有好多文章了，这里就不啰嗦了。
 
