@@ -1,0 +1,41 @@
+---
+layout: post
+title: 2014 Container技术大会的提交材料
+categories: [docker, conference]
+---
+
+# 介绍 #
+
+[2014 Container技术大会](http://con2.csdn.net/) 将于10月18日在北京举办，一下是我的提交的演讲题目。
+
+## 提交材料 ##
+Docker有很多很棒的特性，本演讲就利用实践案例来讲解它们在软件开发中实际意义，以此更好的加深了解docker的实际用途，并且能够立马运用到实处。
+
+已有的经验：
+
+1. 更快的更小的虚拟机，使得产品开发可以本地化，提高效率
+- 结合内部的私有docker仓库，快速地部署多节点的产品。以前都必须要openstack或VMWare虚拟机远程实现
+- 使得部分测试可以挪到本地PC机上完成。
+- 演示也更加容易，更加了解产品。
+
+2. Dockerfile实现了对虚拟化的机器也能进行配置管理）
+- 开发的编译打包系统以前是在不同的平台不同版本之上，有IT部门通过目录管理，流程复杂，容易搞错。
+  现在可以用Dockerfile进行配置管理，统一产生docker image，真正做到了infrastructure as code。同时它也可以
+- 开发产品的安装透明化，产品安装确保用Dockerfile实现
+
+3. docker是个生态系统，合理利用能事半功倍。
+- 可以利用docker-hub上的已有资源，快速体验和尝试新的工具和应用。不需要自己找机器安装，费时费力。
+- 可以现有的Dockerfile来理解这些应用的安装和使用，有官方，也有不同场景的其他方法，可以学习采纳。
+
+我们也正在开始尝试：
+
+4. 用docker的image deliver方式在内部实现DevOps的类似场景（Docker image也能实现持续集成）
+非互联网公司没有PaaS的场景，但也可以在内部尝试利用
+- 通过CI不断产生最新的产品docker image给开发团队，开发团队利用image直接部署，来节省安装部署环节。
+- 产品的安装测试CI中用Dockerfile已经自动化实现，在初期可以单独安排团队
+
+docker是个新鲜事物，在开发中推广使用并不容易，本演讲还会对如何在公司内部推广docker的使用和一些碰到的问题给出一些分享。
+
+## 相关链接 ##
+
+* 我的英文博客： http://larrycaiyu.com/blog/2014/09/19/three-cases-using-docker-to-improve-development-efficiency/
