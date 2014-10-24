@@ -294,3 +294,28 @@ code {
 .float-right { float: right; }
 
 a img { border: 0; }
+
+li form .ts-search-input{
+  height: 24px !important;
+  margin-top: 20px; 
+  margin-left: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+/* 改变搜索结果字体颜色 */
+.tinysou-widget .autocomplete ul li p.title {
+  color: #5a8422;
+}
+/* 改变选中的搜索结果的背景 */
+.tinysou-widget .autocomplete ul li.active {
+  background: none;
+  background-color: #5a8422;
+  border-top: 1px solid #226622;
+  border-bottom: 1px solid #226622;
+  -webkit-box-shadow: 0 1px 0 #226622 inset;
+}
+/* 改变section的字体颜色 */
+.tinysou-widget .autocomplete ul li.active .sections em {
+  color: white;
+}

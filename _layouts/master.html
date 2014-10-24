@@ -7,7 +7,7 @@
     <title>Larry Cai - {{ page.title }}</title>
     <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8"/>
     <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8"/>
-    <script src="/javascripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/javascripts/jquery.github.js" type="text/javascript" charset="utf-8"></script>
     <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -32,6 +32,7 @@
             <li><a href='http://github.com/larrycai' target='_blank' title='GitHub' rel='me' id='github_link'>GitHub</a></li>
             <li><a href='http://cn.linkedin.com/in/larrycaiyu' title='LinkedIn' target='_blank' rel='me' id='linkedin_link'>LinkedIn</a></li>
             <li><a href='http://weibo.com/larrycaiyu' title='Weibo' target='_blank' rel='me' id='weibo_link'>Weibo</a></li>
+            <li><form><input type='text' id='ts-search-input' class='ts-search-input'></form></li>
           </ul>
         </div>
       </div>
@@ -54,6 +55,22 @@
             s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
+    </script>
+     <script>
+      var option = {
+        engineKey: 'fec7094be53f709f28a9'
+      };
+      (function(w,d,t,u,n,s,e){
+        s = d.createElement(t);
+        s.src = u;
+        s.async = 1;
+        w[n] = function(r){
+          w[n].opts = r;
+        };
+        e = d.getElementsByTagName(t)[0];
+        e.parentNode.insertBefore(s, e);
+      })(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+      _ts(option);
     </script>
   </body>
 </html>
