@@ -26,7 +26,7 @@ Docker的出现可以从技术上一定程度解决这个问题，它的快速�
 
 ## 演示环境 ##
 
-废话少说，直接运行上基于docker的演示环境，如果没有docker的运行环境，请自己安装。Windows/Mac用户推荐[boot2docker](http://boot2docker.com)
+废话少说，直接运行上基于docker的演示环境，如果没有docker的运行环境，请自己安装。Windows/Mac用户推荐[boot2docker](http://boot2docker.com)（也可以使用在线的环境如ustack.com的CoreOS环境，看最后)。
 
     $ docker run -t -p 8080:8080 larrycai/jenkins-docker-demo1
 
