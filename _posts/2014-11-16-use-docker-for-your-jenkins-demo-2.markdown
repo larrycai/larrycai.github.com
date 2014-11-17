@@ -4,19 +4,18 @@ title: 使用docker来提升你的Jenkins演示 - 2
 ---
 ## 回顾
 
-在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
+在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也可以很轻松地下载自己尝试。
 
 如果你真的捧场尝试过得化，你可能已经发现了一些问题：
 
 1. 那个任务的配置文件`config.xml`那样运行容器通过命令取到还是繁琐，不太直观。
-2. 当考虑到系统的配置文件和其他配置内容时，一堆文件在`Dockerfile`中被`ADD`进去，还是不干净。
-3. 常见的主从模拟（master/slave）需要配置从节点也没有提到
+2. 如果还要调整系统的配置文件和其他配置内容时，一堆文件在`Dockerfile`中被`ADD`进去，还是不干净。
 
-那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现第一、第二个这些目标。
+那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现这这两个目标。
 
-## 更加Dockerize
+## 更加Docker化（Dockerize）
 
-软件开发离不开重构，通过不断的学习用新的技术来提升这个Dockerfile。
+软件开发离不开重构，现在继续通过不断的研磨来提升这个Dockerfile。
 
 ### 把零散的文件放在一起
 
@@ -26,9 +25,8 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 常用的如下：
 
-* $JENKINS_HOME/jobs # 各个任务的配置和历史记录，一般拷贝`config.xml`即可
-* $JENKINS_HOME/config.xml # 这是jenkins全局配置文件，如从属节点的信息
-* $JENKINS_HOME/credentials.xml # 这是一些Jenkins的认证信息，如从属节点的用户认证。
+* `$JENKINS_HOME/jobs`        # 各个任务的配置和历史记录，一般拷贝`config.xml`即可
+* `$JENKINS_HOME/config.xml`  # 这是jenkins全局配置文件，如从属节点的信息
 
 按照`JENKINS`的目录结构，把`config.xml`放在任务下面，顺势把启动脚本也搁在里面，这样`Dockerfile`看上去及其清爽
 
@@ -55,7 +53,7 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 `JENKINS_HOME`下的数据现在还是上次博客中介绍的，怎么才能最方便的准备好这个目录下的内容呢？
 
-第一个想到的办法就是里面启动`ssh`服务，然后`scp`拷贝出来，这样会“污染”docker镜像（有多余的内容）。
+第一个想到的办法就是在容器里面启动`ssh`服务，然后`scp`拷贝出来，这样会“污染”docker镜像（有多余的内容）。
 
 现在介绍一种办法不用`ssh`登陆把运行中的`$JENKINS_HOME`下的数据提取出来。（如果你有其他好办法，请告知）
 
@@ -71,7 +69,7 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
     $ docker run -v ~/jenkins:/data -P larrycai/jenkins-demo2
 
-启动刚做好的镜像`larrycai/jenkins-demo2`,并且在前台运行方便查看输出的日志，再另一个终端看看容器的Id
+启动刚做好的镜像`larrycai/jenkins-demo2`，并且在前台运行方便查看输出的日志，再另一个终端看看容器的Id。
 
     $ docker ps # 得到容器的ID
 	docker@boot2docker:~$ docker ps
@@ -127,7 +125,7 @@ title: 使用docker来提升你的Jenkins演示 - 2
 	jobs/craft2/builds/2014-11-16_18-00-52/build.xml
 	jobs/craft2/builds/2014-11-16_18-00-52/log
 	jobs/craft2/builds/2014-11-16_18-00-52/changelog.xml
-	root@f20b2f3c09eb:/opt/jenkins/data# cat config.xml
+	root@f20b2f3c09eb:/opt/jenkins/data# cat config.xml #显示部分内容
     ..
     <hudson.slaves.EnvironmentVariablesNodeProperty>
       <envVars serialization="custom">
@@ -146,15 +144,15 @@ title: 使用docker来提升你的Jenkins演示 - 2
     </hudson.slaves.EnvironmentVariablesNodeProperty>
     ...
 
-我们就可以拷贝出来，先放到docker容器中`/data`目录，它对应的就是主机的`$HOME/jenkins`目录。
+我们就在docker容器中可以把这些需要拷贝到`/data`目录，它对应的就是主机的`$HOME/jenkins`目录。
 
 	root@f20b2f3c09eb:/opt/jenkins/data# cp -rf jobs /data
 	root@f20b2f3c09eb:/opt/jenkins/data# cp -rf config.xml /data 
    
-然后在主机docker镜像构建目录中再把它们拷过去。（注意由于boot2docker使用的是`aufs`文件系统，拷贝带有软连接的那些任务构建文件会出错）
+然后在主机docker镜像构建目录中再把它们拷过去。
 
-	user@ubuntu:~/git/jenkins-demo2/JENKINS_HOME$ cp ~/jenkins/jobs . 
-	user@ubuntu:~/git/jenkins-demo2/JENKINS_HOME$ cp ~/jenkins/config.xml .
+	docker@boot2docker:~/git/jenkins-demo2/JENKINS_HOME$ cp ~/jenkins/jobs . 
+	docker@boot2docker:~/git/jenkins-demo2/JENKINS_HOME$ cp ~/jenkins/config.xml .
 
 最后重新构建并运行，发现新的内容也打包在里面了，bingo！
 
@@ -162,10 +160,10 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 ## 摘要
 
-在这篇博客中，我们演示了如何更进一步dockerize你的Jenkins应用程序，学到了如何管理配置文件和巧妙地使用`docker run --volume`和`docker exec`来获取容器内的数据。
+在这篇博客中，我们演示了如何更进一步docker化你的Jenkins应用程序，学到了如何管理配置文件和巧妙地使用`docker run --volume`和`docker exec`来获取容器内的数据。演示的内容也增加了。
 
 所有的代码你都可以在[github上的jenkins-demo2](https://github.com/larrycai/docker-images/tree/master/jenkins-demo2)上找到。
 
 在接下来的博客中，我将展示如何更好地用docker来做为jenkins的从属节点，并且简单发布。
 
-Docker可以帮助我们做很多事情，关注新浪微博 [@larrycaiyu](http://weibo.com/larrycaiyu] [@Docker中文社区](http://weibo.com/dockboard) [@infoq的docker专栏](http://www.infoq.com/cn/dockers)
+Docker可以帮助我们做很多事情，关注新浪微博 [@larrycaiyu](http://weibo.com/larrycaiyu) [@Docker中文社区](http://weibo.com/dockboard) [@infoq的docker专栏](http://www.infoq.com/cn/dockers)
