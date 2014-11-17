@@ -4,19 +4,19 @@ title: 使用docker来提升你的Jenkins演示 - 2
 ---
 ## 回顾
 
-在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的下载自己尝试。
+在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
 
-如果你真的捧场尝试过得化，你会发现还是有些问题
+如果你真的捧场尝试过得化，你可能已经发现了一些问题：
 
-1. 那个任务的配置文件`config.xml`那样运行容器通过命令取到还是繁琐。
+1. 那个任务的配置文件`config.xml`那样运行容器通过命令取到还是繁琐，不太直观。
 2. 当考虑到系统的配置文件和其他配置内容时，一堆文件在`Dockerfile`中被`ADD`进去，还是不干净。
 3. 常见的主从模拟（master/slave）需要配置从节点也没有提到
 
-那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现这些目标。
+那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现第一、第二个这些目标。
 
 ## 更加Dockerize
 
-软件开发离不开重构，通过不断的学习用新的技术来提升这个Dockerfile
+软件开发离不开重构，通过不断的学习用新的技术来提升这个Dockerfile。
 
 ### 把零散的文件放在一起
 
@@ -43,15 +43,20 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 ### 调试时，共享目录来传递运行数据
 
-`JENKINS_HOME`下的数据还是上次的，我们现在通过docker run中的`-v`参数使得容器中的内容能够暴露在外面，在结合docker 1.3开始支持的`docker exec`可以让我们直接把数据拷贝出来。
+`JENKINS_HOME`下的数据还是上次博客中介绍的，现在介绍一种办法不用`ssh`登陆把运行中的`$JENKINS_HOME`下的数据提取出来。
 
-    docker build -t larrycai/jenkins-demo2 .
-    mkdir -p $PWD/jenkins
-    docker run -v $PWD/jenkins:/data -P larrycai/jenkins-demo2
-    docker ps # 得到容器的ID
-    docker exec -it <容器的id> bash
+这儿用到docker的两个技术。
 
-构建启动后，通过exec命令进入容器。现在容器中的`/data`目录就是docker主机上的`$PWD/jenkins`目录。你就可以把需要的文件倒腾出来，一般来说是：
+1. 通过docker run中的`-v`参数使得容器中的内容能够暴露在外面
+2. 结合docker 1.3开始支持的`docker exec`可以让我们直接登陆到运行中的容器而无需`ssh`或者[nsenter](https://github.com/jpetazzo/nsenter)命令。
+
+    $ docker build -t larrycai/jenkins-demo2 .
+    $ mkdir -p $PWD/jenkins
+    $ docker run -v $PWD/jenkins:/data -P larrycai/jenkins-demo2
+    $ docker ps # 得到容器的ID
+    $ docker exec -it <容器的id> bash
+
+在本地构建启动后，通过exec命令进入容器。现在容器中的`/data`目录就是docker主机上的`$PWD/jenkins`目录。你就可以把需要的文件倒腾出来，一般来说是：
 
 * $JENKINS_HOME/jobs # 各个任务的配置和历史记录，一般拷贝`config.xml`即可
 * $JENKINS_HOME/config.xml # 这是jenkins全局配置文件，如从属节点的信息
