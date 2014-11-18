@@ -4,11 +4,11 @@ title: 使用docker来提升你的Jenkins演示 - 2
 ---
 ## 回顾
 
-在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也可以很轻松地下载自己尝试。
+在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和作业配置放到了Jenkins docker容器中，使得你很容易演示，别人也可以很轻松地下载自己尝试。
 
 如果你真的捧场尝试过得化，你可能已经发现了一些问题：
 
-1. 那个任务的配置文件`config.xml`那样运行容器通过命令取到还是繁琐，不太直观。
+1. 那个作业的配置文件`config.xml`那样运行容器通过命令取到还是繁琐，不太直观。
 2. 如果还要调整系统的配置文件和其他配置内容时，一堆文件在`Dockerfile`中被`ADD`进去，还是不干净。
 
 那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现这这两个目标。
@@ -25,10 +25,10 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 常用的如下：
 
-* `$JENKINS_HOME/jobs`        # 各个任务的配置和历史记录，一般拷贝`config.xml`即可
+* `$JENKINS_HOME/jobs`        # 各个作业的配置和历史记录，一般拷贝`config.xml`即可
 * `$JENKINS_HOME/config.xml`  # 这是jenkins全局配置文件，如从属节点的信息
 
-按照`JENKINS`的目录结构，把`config.xml`放在任务下面，顺势把启动脚本也搁在里面，这样`Dockerfile`看上去及其清爽
+按照`JENKINS`的目录结构，把`config.xml`放在作业下面，顺势把启动脚本也搁在里面，这样`Dockerfile`看上去及其清爽
 
 	$ find JENKINS_HOME/
 	JENKINS_HOME/
@@ -88,13 +88,13 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 现在容器中的`/data`目录就是docker主机上的`$HOME/jenkins`目录。
 
-## 创建第二个任务和一个系统配置
+## 创建第二个作业和一个系统配置
 
 活学活用，现在先在系统环境中设置变量`DOCKER_HOST`
 
 ![](http://larrycaiyu.com/images/jenkins-demo2-1.png)
 
-然后创建第二个任务`craft2`，其中打印出环境变量
+然后创建第二个作业`craft2`，其中打印出环境变量
 
 ![](http://larrycaiyu.com/images/jenkins-demo2-2.png)
 
