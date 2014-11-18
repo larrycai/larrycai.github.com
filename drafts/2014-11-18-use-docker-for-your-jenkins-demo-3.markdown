@@ -1,67 +1,49 @@
 ---
 layout: post
-title: 使用docker来提升你的Jenkins演示 - 2 
+title: 使用docker来提升你的Jenkins演示 - 3
 ---
 ## 回顾
 
-在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
 
-如果你真的捧场尝试过得化，你可能已经发现了一些问题：
 
-1. 那个任务的配置文件`config.xml`那样运行容器通过命令取到还是繁琐，不太直观。
-2. 当考虑到系统的配置文件和其他配置内容时，一堆文件在`Dockerfile`中被`ADD`进去，还是不干净。
-3. 常见的主从模拟（master/slave）需要配置从节点也没有提到
+* 第一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和任务配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
+* 第二篇[使用docker来提升你的Jenkins演示 - 2，](http://www.larrycaiyu.com/2014/11/16/use-docker-for-your-jenkins-demo-2.html)我们演示了如何更进一步docker化你的Jenkins应用程序，学到了如何管理配置文件和巧妙地使用`docker run --volume`和`docker exec`来获取容器内的数据
 
-那就对了，这就是这个博客系列的第二篇文章，我会用一些例子一步一步来说明如何实现第一、第二个这些目标。
+前两篇还是很简单，搭了个架子而已，在Jenkins的持续集成部署中，它的一个重要的使用方式就是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
+
+![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-arch.png)
+
+这就是这个博客系列的第三篇文章，我会用一些例子一步一步来说明如何用docker实现这种演示，如果你对Jenkins的这种使用还不熟悉的话，正好可以一起学习。
+
+
+## 演示环境 ##
+
+废话少说，直接运行上基于docker的演示环境，如果没有docker的运行环境，请自己安装。Windows/Mac用户推荐[boot2docker](http://boot2docker.com)（也可以使用在线的环境如ustack.com的CoreOS环境，看最后)。
+
+    $ docker run -t -p 8080:8080 larrycai/jenkins-demo3
+
+它会下载`larrycai/jenkins-docker-demo1`这个docker image并运行。Jenkins服务的端口是`8080`，如果是`boot2docker`，那就是 http://192.168.59.103:8080
+
+![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo1-main.png)
+
+你可以直接运行里面的演示任务（job）：`docker-demo`，启动后它会自动下载配套的`larrycai/ubuntu-slave`作为Slave来运行，里面是一个C++的编译环境，非常简洁。
+
+![jenkins-demo1-console](http://larrycaiyu.com/images/jenkins-demo1-console.png)
+
+## 在Jenkins中使用Docker ##
+
+在Jenkins中常见有三种方式可以使用：
+
+1. 拿Docker container作为简单的Slave机器，像管理一般的机器一样管理docker的从属机。
+2. 在Jenkins中用配置从属机，自己写脚本管理Docker container，自动读取IP地址和端口。
+3. 用[Docker插件][jenkins-docker-plugin]。
+
+前两种比较繁琐，不太Docker化，接下来主要讲如何用[Docker插件][[jenkins-docker-plugin]来使用Docker，这也是上面的演示环境中如何使用Docker的。
+
 
 ## 更加Dockerize
 
 软件开发离不开重构，通过不断的学习用新的技术来提升这个Dockerfile。
-
-### 把零散的文件放在一起
-
-先来解决第二个问题，与其把文件一个个加上去，为什么不把整个目录在本地准备好，直接加入目录岂不更好。
-
-	# ADD JENKINS_HOME 
-	ADD JENKINS_HOME $JENKINS_HOME
-	RUN chmod +x $JENKINS_HOME/start.sh
-	
-	EXPOSE 8080
-	
-	CMD [ "/opt/jenkins/data/start.sh" ]
-
-然后按照`JENKINS`的目录结构，把`config.xml`放在任务下面，顺势把启动脚本也搁在里面，这样`Dockerfile`看上去及其清爽
-
-	$ find JENKINS_HOME/
-	JENKINS_HOME/
-	JENKINS_HOME/jobs
-	JENKINS_HOME/jobs/craft
-	JENKINS_HOME/jobs/craft/config.xml
-	JENKINS_HOME/start.sh
-
-试着docker build再运行一下，结果和上次一样，v5。
-
-### 调试时，共享目录来传递运行数据
-
-`JENKINS_HOME`下的数据还是上次博客中介绍的，现在介绍一种办法不用`ssh`登陆把运行中的`$JENKINS_HOME`下的数据提取出来。
-
-这儿用到docker的两个技术。
-
-1. 通过docker run中的`-v`参数使得容器中的内容能够暴露在外面
-2. 结合docker 1.3开始支持的`docker exec`可以让我们直接登陆到运行中的容器而无需`ssh`或者[nsenter](https://github.com/jpetazzo/nsenter)命令。
-
-    $ docker build -t larrycai/jenkins-demo2 .
-    $ mkdir -p $PWD/jenkins
-    $ docker run -v $PWD/jenkins:/data -P larrycai/jenkins-demo2
-    $ docker ps # 得到容器的ID
-    $ docker exec -it <容器的id> bash
-
-在本地构建启动后，通过exec命令进入容器。现在容器中的`/data`目录就是docker主机上的`$PWD/jenkins`目录。你就可以把需要的文件倒腾出来，一般来说是：
-
-* $JENKINS_HOME/jobs # 各个任务的配置和历史记录，一般拷贝`config.xml`即可
-* $JENKINS_HOME/config.xml # 这是jenkins全局配置文件，如从属节点的信息
-* $JENKINS_HOME/credentials.xml # 这是一些Jenkins的认证信息，如从属节点的用户认证。
-
 
 ## 用docker容器作为从属机器
 
@@ -85,6 +67,8 @@ title: 使用docker来提升你的Jenkins演示 - 2
 第四种情况听起来不错，但是坑很多，留待下一篇博客专门来批判。
 
 第二、第三种都需要要用到docker里的docker技术，其中第二种需要改变jenkins里的任务脚本，不够简洁，下面着重讨论第三种。
+
+* $JENKINS_HOME/credentials.xml # 这是一些Jenkins的认证信息，如从属节点的用户认证。
 
 ### 结果
 
