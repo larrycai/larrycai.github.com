@@ -8,7 +8,7 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 * 第一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)：把需要的Jenkins软件、插件和作业配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
 * 第二篇[使用docker来提升你的Jenkins演示 - 2](http://www.larrycaiyu.com/2014/11/16/use-docker-for-your-jenkins-demo-2.html)：演示了如何更进一步docker化你的Jenkins应用程序，学到了如何管理配置文件和巧妙地使用`run --volume`和`exec`来获取容器内的数据。
-* 第三篇：用docker中的docker来解决Jenkins主从机的演示
+* 第三篇[使用docker来提升你的Jenkins演示 - 3](http://www.larrycaiyu.com/2014/11/24/use-docker-for-your-jenkins-demo-3.html)：用docker中的docker来解决Jenkins主从机的演示
 * 第四篇：巧用ENTRYPOINT/CMD配合脚本来解决复杂的环境
 * 第五篇：讨厌的Jenkins docker插件
 
@@ -65,9 +65,10 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 一级棒，它工作了。
 
-用上一篇博客教的方式把数据拷贝出来放到镜像里，重新构建镜像实验一下。其中这次要多加一个配置文件
+用上一篇博客教的方式把数据拷贝出来放到镜像里，重新构建镜像实验一下。
 
-* $JENKINS_HOME/credentials.xml # 这是一些Jenkins的认证信息，如从属节点的用户认证。
+* $JENKINS_HOME/credentials.xml # 这是一些Jenkins的认证信息（私钥）。
+* $JENKINS_HOME/config.xml      # 包含了从属节点的配置
 
 ## 自动启动从属节点 ##
 
@@ -80,7 +81,7 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 第一种用脚本的方式肯定可以，但是感觉有点老土，而且还要下载其他脚本，何况也不能确定fig等工具是否能运行。
 
-第四种情况听起来不错，但是坑很多，留待下一篇博客专门来批判。
+第四种情况听起来不错，但是坑很多，留待以后的博客专门来批判。
 
 第二、第三种都需要要用到docker里的docker技术，其中第二种需要改变jenkins里的任务脚本，不够简洁，下面着重讨论第三种。
 
@@ -88,14 +89,14 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 Docker是有客户端和服务器Daemon端组成，具体请看Infoq上的[Docker源码分析（一）：Docker架构](http://www.infoq.com/cn/articles/docker-source-code-analysis-part1)。
 
-所以我们可以在镜像装好docker客户端，很简单就是一个二进制文件。
+所以我们可以在镜像装好docker客户端，很简单，就是一个二进制文件而已。
 
 	RUN curl https://get.docker.io/builds/Linux/x86_64/docker-latest -o /usr/local/bin/docker
 	RUN chmod +x /usr/local/bin/docker
 
 为了访问，我们必须传递访问的套接字`/var/run/docker.sock`，这个用我们学过的标记`-v`就可以了。
 
-我们把这段写在已有的`start.sh`脚本中，放在启动jenkins之前。
+我们把这段写在已有的`start.sh`脚本中，放在启动`jenkins`之前。
 
 	#!/bin/bash
 	
@@ -104,20 +105,22 @@ Docker是有客户端和服务器Daemon端组成，具体请看Infoq上的[Docke
 	
 	exec java -jar /opt/jenkins/jenkins.war
 
-重新构建运行一下（别忘了`docker.sock`）。
+重新构建运行一下（别忘了传递Docker主机的`docker.sock`）。
 
 	docker run -v /var/run/docker.sock:/docker.sock -p 8080:8080 -it larrycai/jenkins-demo3
 
 就这么简单！是的，docker就是简洁，永远的v5。
 
+当然现在的`start.sh`还是比较简单，如果第二次运行或者想每次强制更新从属机的镜像还不行，留待下次讨论，不过你可以想想，如果是你怎么解决。
+
 ## 摘要
 
-在这篇博客中，我们演示了如何dockerize你的Jenkins应用程序，它包含了必须的插件和配置和实例任务。 这将会很容易让你的听众了解你想演示的功能。
+在这篇博客中，我们讲解了如何用Docker演示Jenkins持续集成的主从应用实践，和利用docker中的docker技术来自动启动从属机器。
 
-所有的代码你都可以在[github上的jenkins-demo1](https://github.com/larrycai/docker-images/tree/master/jenkins-demo1)上找到。
+所有的代码你都可以在[github上的jenkins-demo3](https://github.com/larrycai/docker-images/tree/master/jenkins-demo3)上找到。
 
-现在，您可以把您的漂亮的Jenkins新功能打包到Docker到处演示。
+现在，您可以更新您的Jenkins新功能打包到Docker到处演示。
 
-在接下来的博客中，我将展示如何更好地组织Jenkins目录。
+在接下来的博客中，我将展示如何更好地用docker和脚本来控制jenkins的从属节点。
 
-Docker可以帮助我们做很多事情。
+Docker可以帮助我们做很多事情，关注新浪微博 [@larrycaiyu](http://weibo.com/larrycaiyu) [@Docker中文社区](http://weibo.com/dockboard) [@infoq的docker专栏](http://www.infoq.com/cn/dockers)

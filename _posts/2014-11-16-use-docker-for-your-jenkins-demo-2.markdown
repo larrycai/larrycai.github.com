@@ -2,6 +2,17 @@
 layout: post
 title: 使用docker来提升你的Jenkins演示 - 2 
 ---
+## 系列介绍
+
+使用docker来提升你的Jenkins演示会安排五篇文章循序渐进地学习：
+
+* 第一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)：把需要的Jenkins软件、插件和作业配置放到了Jenkins docker容器中，使得你很容易演示，别人也很轻松的可以下载自己尝试。
+* 第二篇[使用docker来提升你的Jenkins演示 - 2](http://www.larrycaiyu.com/2014/11/16/use-docker-for-your-jenkins-demo-2.html)：演示了如何更进一步docker化你的Jenkins应用程序，学到了如何管理配置文件和巧妙地使用`run --volume`和`exec`来获取容器内的数据。
+* 第三篇[使用docker来提升你的Jenkins演示 - 3](http://www.larrycaiyu.com/2014/11/24/use-docker-for-your-jenkins-demo-3.html)：用docker中的docker来解决Jenkins主从机的演示
+* 第四篇：巧用ENTRYPOINT/CMD配合脚本来解决复杂的环境
+* 第五篇：讨厌的Jenkins docker插件
+
+
 ## 回顾
 
 在上一篇[使用docker来提升你的Jenkins演示 - 1](http://www.larrycaiyu.com/2014/11/04/use-docker-for-your-jenkins-demo-1.html)，我们把需要的Jenkins软件、插件和作业配置放到了Jenkins docker容器中，使得你很容易演示，别人也可以很轻松地下载自己尝试。
