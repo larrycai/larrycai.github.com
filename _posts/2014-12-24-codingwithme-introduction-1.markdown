@@ -33,7 +33,7 @@ categories: [codingwithme]
 
 更多的例子可以查看 http://www.slideshare.net/larrycai/presentations
 
-# 如何在组织CodingWithMe活动 #
+# 如何组织CodingWithMe活动 #
 
 CodingWithMe可以单个发布和使用，但是一般建议将多个议题集中在一起发布。因为在实际操作中，并不是一个人提出一个“CodingWithMe”，就马上安排会议室来学习。一则，每个人的兴趣不同，某些主题可能较为生僻，参与人数较少，进而失去开展的意义。二则，我们有意识将“CodingWithMe”作为一个时间固定的活动，类似于谷歌的“20%时间”。
 
