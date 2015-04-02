@@ -14,7 +14,7 @@ title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子
 
 打开浏览器，查看界面
 
-![rabbitmq-2](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-2.png)
+![rabbitmq-1](http://www.larrycaiyu.com/images/rabbitmq-docker-1.png)
 
 ## RabbitMQ Python客户端 ##
 
@@ -116,11 +116,11 @@ accepting AMQP connection <0.311.0> (172.17.0.17:35606 -> 172.17.0.16:5672)
 
 突然发现界面上面有红色的，提示空间不够
 
-![rabbitmq-2](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-2.png)
+![rabbitmq-2](http://www.larrycaiyu.com/images/rabbitmq-docker-2.png)
 
 再检查，果然是boot2docker虚拟机中的空间又不够了，而且也发现在[rabbit python的入门][rabbitmqtut]中最后提到了这一点
 
-![rabbitmq-3](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-3.png)
+![rabbitmq-3](http://www.larrycaiyu.com/images/rabbitmq-docker-3.png)
 
 # 总结 #
 
