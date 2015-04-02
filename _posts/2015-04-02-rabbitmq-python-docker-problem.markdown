@@ -1,42 +1,42 @@
 ---
 layout: post
-title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子的问题
+title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子
 ---
 # 介绍
 
-使用官方的docker image来学习 RabbitMQ和Python客户端的使用
+使用官方的docker image来学习 RabbitMQ和Python客户端的使用非常方便。我的环境是Windows 7下的boot2docker 1.5版本。
 
-参考： 
 
-* https://www.rabbitmq.com/tutorials/tutorial-one-python.html 
-* https://registry.hub.docker.com/_/rabbitmq/ 
+## RabbitMQ 服务器 ##
+启动RabbitMQ docker容器，这里使用`rabbitmq:3-management`，如果用`rabbitmq:3`就没有管理界面（15672端口），不适合初学者。
 
-启动RabbitMQ docker容器
+	docker run -d -e RABBITMQ_NODENAME=rabbit --name rabbit -p 8080:15672 rabbitmq:3-management    
 
-    docker run -d -P  -e RABBITMQ_NODENAME=rabbit --hostname rabbit --name rabbit rabbitmq:3
+打开浏览器，查看界面
+
+![rabbitmq-2](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-2.png)
+
+## RabbitMQ Python客户端 ##
+
+例子都来自[rabbit python的入门][rabbitmqtut]，这里不讲解了。
 
 启动Python docker容器，同docker的name/link方式，访问rabbit容器通信
 
     docker run -v $PWD:/code -w /code --link=rabbit:rabbit -it python:2 bash
-    # pip install pika==0.9.8
-    # # 安装最新版有问题
     
-安装 pika库，和运行`send.py`的例子，没问题
+### 发送端 ### 
+
+安装 pika库，和运行`send.py`的例子（源程序在我的docker主机上编辑，共享进去）。
 
 <pre>
-root@7848479ed0d2:/code# pip install pika==0.9.8
-
-Collecting pika==0.9.8
-  Downloading pika-0.9.8.tar.gz (56kB)
-    100% |################################| 57kB 1.0MB/s
-Installing collected packages: pika
-  Running setup.py install for pika
-Successfully installed pika-0.9.8
+root@7848479ed0d2:/code# pip install pika
 root@7848479ed0d2:/code# ./send.py
  [x] Sent 'Hello World!'
 </pre>
 
-源程序
+你可以在管理界面上看到消息已收到。
+
+源程序来自[rabbit python的入门][rabbitmqtut]，RabbitMQ主机名从`localhost`改为`rabbit`
 
 <pre>
 #!/usr/bin/env python
@@ -55,14 +55,19 @@ print " [x] Sent 'Hello World!'"
 connection.close()
 </pre>
     
-但是运行`receive.py`时，它就挂死在那里了
+### 接受端 ###
+
+你可以用`docker exec`命令进入发送端的python容器，也可以再启动一个。
+
+运行`receive.py`，前面的消息就收到了。
 
 <pre>
 root@7848479ed0d2:/code# ./receive.py
  [*] Waiting for messages. To exit press CTRL+C
+ [x] Received 'Hello World!'
 </pre>
 
-源程序：
+源程序来自[rabbit python的入门][rabbitmqtut]：
 
 <pre>
 #!/usr/bin/env python
@@ -86,7 +91,12 @@ channel.basic_consume(callback,
 channel.start_consuming()
 </pre>
 
-观察RabbitMQ docker容器正常
+
+## 碰到的问题 ##
+
+### 收不到消息 ###
+
+一开始`receive.py`程序运行后，收不到消息（但连接正常 `accepting AMQP connection ...`）。
 
 <pre>
 $ docker logs -f rabbit
@@ -96,8 +106,29 @@ Server startup complete; 0 plugins started.
 
 =INFO REPORT==== 31-Mar-2015::17:00:57 ===
 accepting AMQP connection <0.311.0> (172.17.0.17:35606 -> 172.17.0.16:5672)
-
-=INFO REPORT==== 31-Mar-2015::17:03:23 ===
-accepting AMQP connection <0.361.0> (172.17.0.17:35613 -> 172.17.0.16:5672)
 </pre>
 
+以为这个程序错了，后来启动admin管理界面，在界面上发送消息后，立马就收到了。
+
+### 发送不了消息 ###
+
+`send.py`程序运行后，正常退出，一开始以为是发送成功了，后来发现接受正确后，继续研究。
+
+突然发现界面上面有红色的，提示空间不够
+
+![rabbitmq-2](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-2.png)
+
+再检查，果然是boot2docker虚拟机中的空间又不够了，而且也发现在[rabbit python的入门][rabbitmqtut]中最后提到了这一点
+
+![rabbitmq-3](http://www.larrycaiyu.com/blog/images/rabbitmq-docker-3.png)
+
+# 总结 #
+
+用docker特别方便学东西，容易架设。而且很容易重现，当我发现其他人运行正确后，我能确保不是docker镜像和网络通信的问题。
+
+# 参考 #
+
+* https://www.rabbitmq.com/tutorials/tutorial-one-python.html 
+* https://registry.hub.docker.com/_/rabbitmq/ 
+
+[rabbitmqtut]: https://www.rabbitmq.com/tutorials/tutorial-one-python.html
