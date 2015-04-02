@@ -1,3 +1,7 @@
+---
+layout: post
+title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子的问题
+---
 # 介绍
 
 使用官方的docker image来学习 RabbitMQ和Python客户端的使用

@@ -103,11 +103,11 @@ title: 使用docker来提升你的Jenkins演示 - 2
 
 活学活用，现在先在系统环境中设置变量`DOCKER_HOST`
 
-![](http://larrycaiyu.com/images/jenkins-demo2-1.png)
+![](http://www.larrycaiyu.com/images/jenkins-demo2-1.png)
 
 然后创建第二个作业`craft2`，其中打印出环境变量
 
-![](http://larrycaiyu.com/images/jenkins-demo2-2.png)
+![](http://www.larrycaiyu.com/images/jenkins-demo2-2.png)
 
 假设这就是我们要的演示环境，包括构建日志，我们可以查看一下容器内的数据，确认是我们需要的。
 

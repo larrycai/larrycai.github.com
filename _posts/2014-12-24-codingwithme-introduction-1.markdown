@@ -1,7 +1,6 @@
 ---
 layout: post
 title: CodingWithMe介绍-1
-categories: [codingwithme]
 ---
 
 # 简介 #
@@ -23,7 +22,7 @@ categories: [codingwithme]
 
 先来看一个例子 [Learn REST API with Python in 90 minutes][learnREST]
 
-![codingwithme](http://larrycaiyu.com/blog/images/codingwithme-1.png)
+![codingwithme](http://www.larrycaiyu.com/blog/images/codingwithme-1.png)
 
 第一个练习（Exercise）都非常简单，类似于用编程语言写一个“Hello World”。必须确保会议开始二十分钟内便进入这个环节。
 
@@ -39,7 +38,7 @@ CodingWithMe可以单个发布和使用，但是一般建议将多个议题集�
 
 我们目前一般累积几个主题之后，在每月固定的时间推出，以培养员工参加此类活动的习惯。第三，每个学员也会有更多选择。下面是我们某一季的活动海报
 
-![codingwithme](http://larrycaiyu.com/blog/images/codingwithme-3.png)
+![codingwithme](http://www.larrycaiyu.com/blog/images/codingwithme-3.png)
 
 海报上列出了活动的时间、授课内容、授课的老师以及参与的方式，将上课工程师的头像放在上面，也可以提高工程师的自豪感。
 

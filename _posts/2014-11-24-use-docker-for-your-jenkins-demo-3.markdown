@@ -16,7 +16,7 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 前两篇还是很简单，搭了个架子而已，在Jenkins的持续集成部署中，它的一个重要的使用方式就是构建的实际任务放在Slave（从属）机器上，Jenkins Master（主机）主要负责调度。这样能确保干净的构建环境和整体性能。
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo3-1.png)
+![jenkins-demo1-main](http://www.larrycaiyu.com/images/jenkins-demo3-1.png)
 
 这就是这个博客系列的第三篇文章，我会用一些例子一步一步来说明如何用docker实现这种演示，如果你对Jenkins的这种使用还不熟悉的话，正好可以一起学习。
 
@@ -47,21 +47,21 @@ title: 使用docker来提升你的Jenkins演示 - 3
 
 先在系统中配好从节点，如下：
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo3-2.png)
+![jenkins-demo1-main](http://www.larrycaiyu.com/images/jenkins-demo3-2.png)
 
 `Host`要选`172.17.42.1`这是boot2docker的主机IP地址，每个docker容器都能访问，端口就是映射出的`2222`端口。这里也可以直接访问从属机的IP地址，那么端口就是标准的`22`了。
 
 其中还要配好ssh访问的私钥。
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo3-3.png)
+![jenkins-demo1-main](http://www.larrycaiyu.com/images/jenkins-demo3-3.png)
 
 最后创建好新的工作craft3。
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo3-4.png)
+![jenkins-demo1-main](http://www.larrycaiyu.com/images/jenkins-demo3-4.png)
 
 里面配好从属机和工作脚本，运行一下看看
 
-![jenkins-demo1-main](http://larrycaiyu.com/images/jenkins-demo3-5.png)
+![jenkins-demo1-main](http://www.larrycaiyu.com/images/jenkins-demo3-5.png)
 
 一级棒，它工作了。
 
