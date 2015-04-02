@@ -4,8 +4,9 @@ title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子
 ---
 # 介绍
 
-使用官方的docker image来学习 RabbitMQ和Python客户端的使用非常方便。我的环境是Windows 7下的boot2docker 1.5版本。
+这篇博客介绍如何使用官方的docker镜像来学习RabbitMQ和Python客户端的使用，中间碰到问题也比较容易寻求帮助和定位，非常方便。
 
+我的环境是Windows 7下的boot2docker 1.5版本。
 
 ## RabbitMQ 服务器 ##
 启动RabbitMQ docker容器，这里使用`rabbitmq:3-management`，如果用`rabbitmq:3`就没有管理界面（15672端口），不适合初学者。
@@ -24,7 +25,7 @@ title: 用Docker镜像来学习RabbitMQ和Python客户端使用例子
 
     docker run -v $PWD:/code -w /code --link=rabbit:rabbit -it python:2 bash
     
-### 发送端 ### 
+### 发送端 ###
 
 安装 pika库，和运行`send.py`的例子（源程序在我的docker主机上编辑，共享进去）。
 
