@@ -4,7 +4,7 @@ title: 在Ustack公有云上体验Hyper-一个基于Hypervisor的容器化解决
 ---
 # 介绍 #
 
-现在Docker和容器如日中天，大家都在谈论，这些都是基于LXC的。前一阵子在微博上，[马全一讲国内的技术流容器相关的创业项目时，提到了Hyper](http://weibo.com/1642262644/Cpi2p7emf)，兴趣大增。
+现在Docker和容器如日中天，大家都在谈论，这些都是基于LXC的。前一阵子在微博上，[马全一讲国内容器相关的的技术流创业项目时，提到了Hyper](http://weibo.com/1642262644/Cpi2p7emf)，兴趣大增。
 
 先阅读了InfoQ的文章[Hyper是一个基于Hypervisor的容器化解决方案][hyperinfoq]，还有官方网站[http://hyper.sh](http://hyper.sh)，都不是特别理解如何在虚拟机上启动docker（是不是笨了好多）和它的效果。
 
