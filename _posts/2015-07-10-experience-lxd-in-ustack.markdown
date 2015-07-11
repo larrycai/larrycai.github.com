@@ -59,7 +59,45 @@ title: (没有写完）在Ustack公有云上体验LXD：一个基于Linux容器�
 	Temporary failure in name resolution
 	error: Get https://images.linuxcontainers.org:8443/1.0: read tcp 192.99.34.219:8443: connection reset by peer
 
-是不是要用linode或者自己搭个机器
+	root@lxd:~# lxd-images import lxc ubuntu trusty amd64 --alias ubuntu
+	Downloading the GPG key for https://images.linuxcontainers.org
+	Downloading the image list for https://images.linuxcontainers.org
+	Validating the GPG signature of /tmp/tmp7cwp4e4u/index.json.asc
+	Downloading the image: https://images.linuxcontainers.org/images/ubuntu/trusty/amd64/default/20150619_19:15/lxd.tar.xz
+	Validating the GPG signature of /tmp/tmp7cwp4e4u/ubuntu-trusty-amd64-default-20150619_19:15.tar.xz.asc
+	Image imported as: 04aac4257341478b49c25d22cea8a6ce0489dc6c42d835367945e7596368a37f
+	Setup alias: ubuntu
+		
+	root@lxd:~# lxc launch ubuntu
+	Creating container...done
+	Starting container...done
+	root@lxd:~# lxc list
+	+---------------+---------+------------+------+-----------+
+	|     NAME      |  STATE  |    IPV4    | IPV6 | EPHEMERAL |
+	+---------------+---------+------------+------+-----------+
+	| apneic-kamron | RUNNING | 10.0.3.221 |      | NO        |
+	+---------------+---------+------------+------+-----------+
+	
+	root@lxd:~# lxc info apneic-kamron
+	Name: apneic-kamron
+	Status: RUNNING
+	Init: 3627
+	Ips:
+	  eth0:  IPV4   10.0.3.221
+	  lo:    IPV4   127.0.0.1
+	  lo:    IPV6   ::1
+
+	root@lxd:~# lxc image list
+	+--------------+--------------+--------+-----------------------+--------+------------------------------+
+	|    ALIAS     | FINGERPRINT  | PUBLIC |      DESCRIPTION      |  ARCH  |         UPLOAD DATE          |
+	+--------------+--------------+--------+-----------------------+--------+------------------------------+
+	| ubuntu       | 04aac4257341 | no     |                       | x86_64 | Jul 11, 2015 at 4:31pm (CST) |
+	| ubuntu-32    | 230c0c42fa5a | no     | Ubuntu trusty (i386)  | i686   | Jul 10, 2015 at 9:44am (CST) |
+	| jessie-amd64 | f86a94578985 | no     | Debian jessie (amd64) | x86_64 | Jul 10, 2015 at 9:45am (CST) |
+	+--------------+--------------+--------+-----------------------+--------+------------------------------+
+	
+	root@lxd:~# lxc exec ub /bin/bash
+	error: websocket: bad handshake
 
 # 再看看 #
 
@@ -80,5 +118,7 @@ title: (没有写完）在Ustack公有云上体验LXD：一个基于Linux容器�
 * https://insights.ubuntu.com/2015/04/28/getting-started-with-lxd-the-container-lightervisor/
 * https://insights.ubuntu.com/2015/06/30/publishing-lxd-images/
 * http://blog.scottlowe.org/2015/05/06/quick-intro-lxd/
+* https://github.com/lxc/lxd/issues/756
+* https://images.linuxcontainers.org/images
 
 [ustack]: https://www.ustack.com
