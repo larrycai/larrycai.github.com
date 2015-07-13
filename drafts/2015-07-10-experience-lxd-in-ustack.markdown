@@ -107,7 +107,10 @@ title: (没有写完）在Ustack公有云上体验LXD：一个基于Linux容器�
 ## lxc ##
 ## docker下的lxc ##
 
-
+## 问题 ##
+* https://github.com/lxc/lxd/blob/master/scripts/lxd-images 
+* https://github.com/lxc/lxd/issues/833
+* https://github.com/lxc/lxd/issues/832
 # 总结 #
 
 
