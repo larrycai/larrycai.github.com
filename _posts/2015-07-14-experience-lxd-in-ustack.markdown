@@ -156,26 +156,6 @@ docker中：
 
 在容器外面服务器上，都能看到这个运行的进程。
 
-
-# 碰到的问题 #
-    root@lxd:~# lxc exec ub /bin/bash
-	error: websocket: bad handshake
-
-
-	root@lxd:~# lxc launch lxc-org:/ubuntu/trusty/i386 ubuntu-32
-	Creating container...
-
-这个就一直停在这儿
-
-	root@lxd:~# lxc image copy lxc-org:/ubuntu/trusty/amd64 local: --alias=ubuntu-64
-
-这儿一直没搞定，返回不同的错
-
-	error: UNIQUE constraint failed: images.fingerprint
-	error: Post http://unix.socket/1.0/images: unexpected EOF
-	Temporary failure in name resolution
-	error: Get https://images.linuxcontainers.org:8443/1.0: read tcp 192.99.34.219:8443: connection reset by peer
-
 # 总结 #
 
 通过几个简单的实验，可以看出LXD是在一个基于container的Linux容器虚拟机，结合了linux容器和虚拟机的优点，目标是云里替换KVM虚拟机。因此他还有一个openstack的组件`nova-compute-lxd`。
@@ -185,6 +165,24 @@ docker中：
 LXD一再强调他自己是系统级的container，docker/CoreOS是业务层的App container，两者互补，并不冲突。不过docker和CoreOS像是并不买它的账，毕竟没有这一层，容器也可以运行的很好。
 
 技术就是这样，不是你说好就是好。
+
+## 碰到的问题 ##
+
+中间还碰到了各种问题
+
+    root@lxd:~# lxc launch lxc-org:/ubuntu/trusty/i386 ubuntu-32
+	Creating container...
+
+这个就一直停在这儿，估计就是网速慢的原因，后来我用`lxd-images import`命令，问题看得清楚一些。
+
+	root@lxd:~# lxc image copy lxc-org:/ubuntu/trusty/amd64 local: --alias=ubuntu-64
+
+这儿网速慢时，会返回下面各种不同的错，反正我也用`lxd-images import`命令替换，功能都一样。
+
+	error: UNIQUE constraint failed: images.fingerprint
+	error: Post http://unix.socket/1.0/images: unexpected EOF
+	Temporary failure in name resolution
+	error: Get https://images.linuxcontainers.org:8443/1.0: read tcp 192.99.34.219:8443: connection reset by peer
 
 ## 参考 ##
 
