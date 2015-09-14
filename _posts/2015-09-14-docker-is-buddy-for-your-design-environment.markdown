@@ -101,7 +101,7 @@ http://localhost:3030/sample （用chrome/firefox打开，不支持早期IE版�
 
 ![](http://www.larrycaiyu.com/images/docker-dev-demo-2.png)
 
-http://localhost:8080 是jenkins的，创建一个新Job叫`longjobs`，然后配好系统的Groovy脚本。这个`longjobs_to_dashing.groovy`就是在git repo中的，现在已经在jenkins容器中了。
+http://localhost:8080 是jenkins的，创建一个新Job叫`longjobs`，然后配好系统的Groovy脚本。这个`longjobs_to_dashing.groovy`就是在git repo中的，现在已经可以在jenkins容器中被访问到了。
 
 ![](http://www.larrycaiyu.com/images/docker-dev-demo-1.png)
 
@@ -109,9 +109,11 @@ http://localhost:8080 是jenkins的，创建一个新Job叫`longjobs`，然后�
 
 ![](http://www.larrycaiyu.com/images/docker-dev-demo-3.png)
 
+你也可以创建一个包含`sleep 1000`的脚本来模拟长运行的job，使得后续构建等在队列中。感兴趣的可以单独联系。
+
 ## 调试代码 ##
 
-到现在为止，还没有改一行代码，实际上你就是在用docker环境很方便的验证我写的代码！！
+到现在为止，还没有改一行代码。不过实际上你就像是和我奋斗在一个团队，现在在代码审阅前，用docker环境方便地验证我写的新功能！！
 
 来点变化吧，简单的代码编辑器我就用[Notepad++](https://notepad-plus-plus.org/), sublime太贵，一直没舍得买 ；-）。
 
