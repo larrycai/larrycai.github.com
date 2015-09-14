@@ -41,7 +41,7 @@ Docker公司的docker registry也是开源的，我们可以很容易的架设�
 
 让我们先来看看这个nginx+registry的服务是怎么组成的。
 
-![](http://larrycaiyu.com/images/docker-registry1-1.png)
+![](http://www.larrycaiyu.com/images/docker-registry1-1.png)
 
 `dokk.co` 这是docker服务器的名字也就是你的公司docker私有服务器的地址，因为https的SSL证书不能用IP地址，我就随便找了个名字，做实验没有问题。
 
@@ -117,7 +117,7 @@ Docker公司的docker registry也是开源的，我们可以很容易的架设�
 
 实际上也打开浏览器访问 [https://192.168.59.103](https://192.168.59.103), `192.168.59.103`是boot2docker的VM的IP地址(你可以换成你的docker机器的IP地址）
 
-![](http://larrycaiyu.com/images/docker-registry1-2.png)
+![](http://www.larrycaiyu.com/images/docker-registry1-2.png)
 
 忽略安全告警后，输入用户名和密码`larrycai:passwd`，还是正确的访问到了上游的registry了。我用的是chrome，如果是IE，可能会要你存盘才能看到`"\"docker-registry server\""`这行字符串。
 

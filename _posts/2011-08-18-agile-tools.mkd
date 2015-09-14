@@ -143,10 +143,10 @@ Gerrit刚开始实施可能会有点不习惯，毕竟整个工作流有所变�
 
 本文提到的内容在 ScrumGathering上海2011上做过专题演讲，参见[演讲稿件](http://t.cn/aCKFrd)。
 
-[img-alm-overview]: http://larrycaiyu.com/images/alm-overview.jpg
-[img-whiteboard]: http://larrycaiyu.com/images/whiteboard.jpg
-[img-jenkins-logo]: http://larrycaiyu.com/images/jenkins-logo.jpg
-[img-jenkins-jobs]: http://larrycaiyu.com/images/jenkins-jobs.jpg
-[img-gerrit-demo]: http://larrycaiyu.com/images/gerrit-demo.jpg
+[img-alm-overview]: http://www.larrycaiyu.com/images/alm-overview.jpg
+[img-whiteboard]: http://www.larrycaiyu.com/images/whiteboard.jpg
+[img-jenkins-logo]: http://www.larrycaiyu.com/images/jenkins-logo.jpg
+[img-jenkins-jobs]: http://www.larrycaiyu.com/images/jenkins-jobs.jpg
+[img-gerrit-demo]: http://www.larrycaiyu.com/images/gerrit-demo.jpg
 [larryweibo]: http://weibo.com/larrycaiyu
 

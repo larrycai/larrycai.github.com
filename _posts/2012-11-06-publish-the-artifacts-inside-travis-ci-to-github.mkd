@@ -4,7 +4,7 @@ title: 把Travis-ci的结果上传回Github
 ---
 
 #介绍#
-半年前我写了篇博客[Travis CI会替代Jenkins吗?](http://larrycaiyu.com/2012/03/06/travis-ci-is-evolution.html)后就一直在使用它，因为它实在是简单又好用。
+半年前我写了篇博客[Travis CI会替代Jenkins吗?](http://www.larrycaiyu.com/2012/03/06/travis-ci-is-evolution.html)后就一直在使用它，因为它实在是简单又好用。
 
 ## 基本原理 ##
 当你把代码推送到Github时，就可以触发Travis-ci的构建。Travis-ci会启动一个基于Virtualbox的Ubuntu的虚拟机（当前是12.04版本），然后根据你的`.travis-ci.yml`中的配置来`构建`你的产品。构建结束后，虚拟机会被删除掉。
@@ -63,7 +63,7 @@ Github早已经提供了“仓库下载API”来帮助你上传文件到你Git�
 国内的云服务也可以考虑类似的方案，简介高效，怎么就没人搞个travis-ci克隆版呢？
 
 # 相关阅读 #
- 1. 我自己的“Travis CI会替代Jenkins吗?” <http://larrycaiyu.com/2012/03/06/travis-ci-is-evolution.html>
+ 1. 我自己的“Travis CI会替代Jenkins吗?” <http://www.larrycaiyu.com/2012/03/06/travis-ci-is-evolution.html>
  2. Juven Xu的“Travis CI，翩翩而至的CI云” <http://www.juvenxu.com/2012/03/06/travis-ci/>
  3. <http://stackoverflow.com/questions/12724139/add-secret-environment-variable-to-travis-ci>
  4. <https://github.com/wereHamster/ghup>

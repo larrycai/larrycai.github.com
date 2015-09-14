@@ -101,7 +101,7 @@ Jenkins 的应用程序 (`.war`)可以在[http://jenkins-ci.org/](http://jenkins
 
 所有的插件可以在镜像站点上找到：[http://mirrors.jenkins-ci.org/](http://mirrors.jenkins-ci.org/), 你需要找到你的插件Plugin Id像`ansicolor`，它会映射到[http://mirrors.jenkins-ci.org/plugins/ansicolor/latest/ansicolor.hpi](http://mirrors.jenkins-ci.org/plugins/ansicolor/latest/ansicolor.hpi)
 
-![](http://larrycaiyu.com/images/jenkins-demo1-7.png)
+![](http://www.larrycaiyu.com/images/jenkins-demo1-7.png)
 
 在jenkins中，作业（job）的配置保存为`config.xml`。这里我们提前做好了，把它放在docker镜像里的`$JENKINS_HOME/jobs/craft`目录下。
 

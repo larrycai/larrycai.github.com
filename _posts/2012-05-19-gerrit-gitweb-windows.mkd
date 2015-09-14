@@ -54,4 +54,4 @@ Gitweb实际上是用perl写的CGI脚本，一般都是在Apache中使用。在G
  * Git for Windows <http://msysgit.github.com/>
  * Gerrit Code Review for Git <http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/index.html>
 
-  [img-gerrit-gitweb]: http://larrycaiyu.com/images/gerrit-gitweb.png
+  [img-gerrit-gitweb]: http://www.larrycaiyu.com/images/gerrit-gitweb.png

@@ -40,4 +40,4 @@ docker是个新鲜事物，在开发中推广使用并不容易，本演讲还�
 
 ## 相关链接 ##
 
-* 我的英文博客： http://larrycaiyu.com/blog/2014/09/19/three-cases-using-docker-to-improve-development-efficiency/
+* 我的英文博客： http://www.larrycaiyu.com/blog/2014/09/19/three-cases-using-docker-to-improve-development-efficiency/
