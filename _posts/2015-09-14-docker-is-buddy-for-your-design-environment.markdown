@@ -4,20 +4,20 @@ title: Docker挺适合用于软件开发环境
 ---
 # 介绍 #
 
-前几天在微信中看到一篇翻译的文章[Docker根本不适合用于本地开发环境](http://dockone.io/article/660)，翻译得很流畅，一下子看懂了，但对于原作者的观点实在不敢苟同。我有点不敢确认是否作者真心研究过docker对于软件开发环境带来的好处。因为我从去年年初开始用docker以后的感触是：部署docker行不行还有待商榷，但是用在开发中是极其适合的、应极力推广的。
+前几天在微信中看到一篇翻译的文章[Docker根本不适合用于本地开发环境](http://dockone.io/article/660)，翻译得很流畅，一下子看懂了，但对于原作者的观点实在不敢苟同。我有点不敢确认是否作者真心研究过docker对于软件开发环境带来的好处。因为我从去年年初开始用docker以后的感触是：部署docker行不行还有待商榷，但是用在开发中是足够了、可以极力推广的。
 
-这篇博客用我实际工作中的一个例子让大家跟着我一起体会一下，我是如何舒舒服服地用docker来作为开发环境的，并给出我使用的一些小技巧，最后也对原文中提到的几个问题一一进行解释。
+这篇博客用我实际工作中的一个例子让大家跟着我一起体会一下，我是如何用docker来作为开发环境的，并给出我使用的一些小技巧，最后也对原文中提到的几个问题一一进行探讨。
 
 # 真实案例 #
 
-最近我一直在和Jenkins、[Dashing](dashing.io)打交道，前几周，有人提需求要把Jenkins中在等待构建队列（Queue）中超过一定时间的Job显示在Dashing的Widget中，以便于他们及时发现解决。
+最近我一直在和[Jenkins](http://jenkins-ci.org/)、[Dashing](dashing.io)打交道，前几周，有人提需求要把Jenkins中在等待构建队列（Queue）中超过一定时间的Job显示在Dashing的Widget中，以便于他们及时发现解决。
 
 Jenkins是Java写的，Dashing是Ruby的，为了完成这个任务，我决定使用Groovy来写个Jenkins的Job定期检测并发到dashing上。
 
-Docker开始派上大用场了。
+Docker开始派上大用场了。如果要在Windows上把这些一一搭建还是蛮费周折的，如果用虚拟机的话，重用性和灵活性会打个折扣。
 
 ## 开发环境 ##
-我上班使用的是Windows 7，所以就以Windows环境为例子，Mac类似，Linux更方便点。为了在Win上使用Docker，它和MacOS一样需要安装[Docker Toolbox](https://www.docker.com/toolbox)（原来叫Boot2docker）, [MobaXterm](http://mobaxterm.mobatek.net/)是一个终端软件比PuTTY好用（季浩小盆友推荐的），它用来处理Docker环境。
+我上班使用的是Windows 7，所以就以Windows环境为例子，Mac类似，Linux更方便点。为了在Windowns上使用Docker，它和MacOS一样需要安装[Docker Toolbox](https://www.docker.com/toolbox)（原来叫Boot2docker）, [MobaXterm](http://mobaxterm.mobatek.net/)是一个终端软件比PuTTY好用（季浩小盆友推荐的），我用它来处理Docker环境，而不是Windows下的Git Bash终端。
 
 ![](https://www.docker.com/sites/default/files/products/tbox.jpg)
 
@@ -26,19 +26,21 @@ Docker开始派上大用场了。
 代码当然是用Git来处理，我习惯在Windows上运行Git，如果你习惯，也可以用在docker中。
 
 
-**技巧一**：把代码克隆到用户目录下，这样就可以映射到docker主机中被访问，对应的目录是`/c/User/<id>`,
+**技巧一**：把代码克隆到用户目录下，这样就可以映射到docker主机中被访问，对应的目录是`/c/User/<id>`。
+
+在Windows的Git Bash中克隆下代码。 
 
 	cd ~/git/docker
     git clone https://github.com/larrycai/docker-dev-demo.git
 
 里面两个目录`dashing`、`jenkins`代表了我要编程的工作目录，第一版工作的代码已经在里面了。
 
-启动Docker Toolbox，然后使用MobaXterm登陆到docker主机上。
+启动Docker Toolbox，然后使用MobaXterm一键登陆到docker主机上（提前存好了配置）。进去以后，你可以发现在docker主机中能看到克隆下来的文件了。
 
 	docker@default:~$ ls /c/Users/larrycai/git/docker/docker-dev-demo/
 	README.md   dashing/    dashing.sh  jenkins/    jenkins.sh  start.sh    stop.sh
 
-你可以发现在docker主机中能看到克隆下来的文件了。它说明了Windows目录下的文件能够共享到docker主机中。这个不是docker做的，它只是集成进了Virtualbox的共享文件夹功能。
+它说明了Windows目录下的文件能够共享到docker主机中。这个不是docker做的，它只是集成进了Virtualbox的共享文件夹功能。
 
 
 **技巧二**：建立一些软链接到缺省的`docker`用户下，不然这个目录下的文件重启就重置了。
@@ -52,14 +54,14 @@ Docker开始派上大用场了。
 
 ## Docker镜像 ##
 
-Jenkins和Dashing都做了相应的Docker镜像（嘚瑟一下，[第一本Docker书](http://book.douban.com/subject/26285268/)中的Jenkins镜像代码还是用了我提供的一个版本）
+Jenkins和Dashing我都做了相应的Docker镜像，可以提前下载。
 
 	docker pull larrycai/jenkins
 	docker pull larrycai/dashing
 
 ## 启动docker应用容器 ##
 
-先把工作的容器启动起来，我的代码也会共享进去。看不懂的建议买本书温习一下。
+先来把工作的容器启动起来，我的代码也会共享进去。看不懂没关系，大概知道一下就可以了。稍后买本书（推荐[第一本Docker书](http://book.douban.com/subject/26285268/)温习一下。
 
 	$ cd ~/git/docker/docker-dev-demo
 	$ docker run --rm --name dashing -it -p 3030:3030 \
@@ -81,7 +83,9 @@ Jenkins和Dashing都做了相应的Docker镜像（嘚瑟一下，[第一本Docke
 	...
 	INFO: Jenkins is fully up and running
 
-再开个Shell窗口，打个`docker exec`命令进入容器看看，bingo，你可以看到Windows上的代码在容器中也已经妥妥的了。
+![](http://www.larrycaiyu.com/images/docker-dev-demo-4.png)
+
+再开启一个Shell窗口，打个`docker exec`命令进入容器看看，bingo，你可以看到Windows上的代码在容器中也已经妥妥的了。
 
 	$ docker exec -it jenkins bash
 	root@3e026f490f2a:/# ls $JENKINS_HOME/jobs/longjobs/workspace
@@ -135,7 +139,7 @@ http://localhost:8080 是jenkins的，创建一个新Job叫`longjobs`，然后�
 
 # 总结 #
 
-上面的工作方式也是我常用的，很流畅吧。里面的技巧还需要自己体会。
+上面的工作方式也是我常用的，里面的技巧还需要你自己体会。
 
 再来看看原来的文章，我认为原来的文章中主要有三个方面没解决好，结果导致了错误的结论。
 
@@ -145,9 +149,12 @@ http://localhost:8080 是jenkins的，创建一个新Job叫`longjobs`，然后�
 
 上面用到的是脚本，实际上对编译型的开发环境也一样。有一阵子在学习陈迪豪的[Seagull海鸥项目](https://github.com/tobegit3hub/seagull)，程序是用golang写的，我也是完完全全用docker环境来开发的，很顺畅。有问题时，因为环境一样，重现也很方便。
 
-docker用来支撑你的开发环境真的很棒，我们还用在了很多其他地方，有机会再分享。
+docker用来支撑你的开发环境真的很棒，今天只是分享了其中的一种用法，我们还用在了很多其他地方，有机会再分享。
 
-虽然我不能打包票你的开发环境也一定很适合用Docker，但是如果你碰到了问题，我很希望一起见面聊聊，看看怎么来解决。如果能在上海凌空SOHO附近的见面的话，一起来喝杯咖啡，如果我解决不了，我买单。反之，你懂的。
+虽然我不能打包票你的开发环境也一定很适合用Docker，但是如果你碰到了问题，我很希望一起见面聊聊，看看怎么来解决。
 
+## 感谢 ##
+
+[李乾坤](http://qiankunli.github.io/)也给我提供了很好的建议
 
 
