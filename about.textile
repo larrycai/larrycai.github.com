@@ -7,7 +7,7 @@ h2. 关于我
 
 Larry Cai is the author of this blog, which records his software development experience.
 
-"English blog:http://larrycaiyu.com/blog":http://larrycaiyu.com/blog
+"English blog:http://larrycai.github.io/blog":http://larrycai.github.io/blog
 
 h2. About This Site
 
