@@ -1,0 +1,38 @@
+---
+layout: post
+title: STEAM - 简单模拟电路 - 001
+---
+# 介绍 #
+
+STEAM https://zhuanlan.zhihu.com/p/77065397 ，网上讲到STEAM都是偏编程的
+
+Arduino 门槛比较高
+Raspberry Pi 是个小电脑，结合比较不错。
+
+选购了 Freenove Super Starter Kit for Raspberry Pi 
+
+# 材料 #
+
+## 电源板/面包板 ##
+
+https://microcontrollerslab.com/mb102-breadboard-power-supply-module-pinout-and-how-to-use-it/
+
+发光二极管，9v叠成电池，200欧姆电阻
+
+# 电路图 #
+
+[](analog-001-1.png)
+
+## 面包板 ##
+
+# 理论知识 #
+
+超好的一篇文章 https://theengineeringmindset.com/led-circuit-design-how-to-design-led-circuits/ 还有youtube视频
+
+# 参考 #
+
+* https://microcontrollerslab.com/mb102-breadboard-power-supply-module-pinout-and-how-to-use-it/
+* Freenove Super Starter Kit for Raspberry Pi@Github https://github.com/Freenove/Freenove_Super_Starter_Kit_for_Raspberry_Pi
+* Freenove Super Starter Kit for Raspberry Pi@Amazon https://www.amazon.com/Freenove-Electronics-Programming-Solderless-Breadboard/dp/B06WP7169Y
+* https://theengineeringmindset.com/led-circuit-design-how-to-design-led-circuits/
+* https://www.circuitlab.com/
