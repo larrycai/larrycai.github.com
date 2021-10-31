@@ -21,7 +21,7 @@ https://microcontrollerslab.com/mb102-breadboard-power-supply-module-pinout-and-
 
 # 电路图 #
 
-[](analog-001-1.png)
+![](analog-001-1.png)
 
 ## 面包板 ##
 
