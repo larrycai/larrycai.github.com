@@ -44,7 +44,7 @@
 "npm": "11.8.0",
 "qunit-assert-step": "1.0.3",
 "qunitjs": "1.17.1",
-"requirejs": "2.1.17",
+"requirejs": "2.3.7",
 "sinon": "1.12.2",
 "sizzle": "2.2.1",
 "strip-json-comments": "1.0.3",
